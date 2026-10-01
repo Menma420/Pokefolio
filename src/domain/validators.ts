@@ -28,7 +28,7 @@ export function validateContent(
     const parse = ProjectDefSchema.safeParse(p);
     if (!parse.success) {
       const msg = parse.error.message;
-      if (msg.includes('String must contain at most')) {
+      if (msg.includes('String must contain at most') || msg.includes('Too big')) {
         errors.push(`V10 Error in Project ${p.id}: field exceeds length limits.`);
       } else {
         errors.push(`Zod Error in Project ${p.id}: ${msg}`);
@@ -63,7 +63,7 @@ export function validateContent(
     const parse = QuestionTreeSchema.safeParse(t);
     if (!parse.success) {
       const msg = parse.error.message;
-      if (msg.includes('String must contain at most') || msg.includes('Array must contain at most')) {
+      if (msg.includes('String must contain at most') || msg.includes('Array must contain at most') || msg.includes('Too big')) {
         errors.push(`V10 Error in Tree ${t.projectId}/${t.audienceId}: Page limits exceeded.`);
       } else {
         errors.push(`Zod Error in Tree ${t.projectId}/${t.audienceId}: ${msg}`);
