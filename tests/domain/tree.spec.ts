@@ -1,83 +1,56 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { compileTree, getChildren, resolveTree } from '../../src/domain/tree';
-import { QuestionTree, ProjectDef, AudienceDef } from '../../src/domain/types';
-import { AckoClinicRecruiterTree } from '../../src/content/projects/acko-clinic/recruiter';
-import { AckoClinicDef } from '../../src/content/projects/acko-clinic';
+import { AudienceDef, ProjectDef, QuestionTree } from '../../src/domain/types';
+import { getAuthoredTrees, getProjectDefinitions } from '../../src/content/registry';
 import { Audiences, AUDIENCE_RECRUITER } from '../../src/content/audiences';
+import { PROJECT_IDS } from '../../src/content/projects/catalog';
 
-describe('Domain Tree Logistics', () => {
-  it('compileTree translates structured input into a CompiledTree retaining pure references', () => {
-    const res = compileTree(AckoClinicRecruiterTree);
-    expect(res.ok).toBe(true);
-    if (!res.ok) return;
+const authoredTree = getAuthoredTrees().find((tree) => tree.projectId === PROJECT_IDS.ACKO_CLINIC && tree.audienceId === AUDIENCE_RECRUITER);
+const project = getProjectDefinitions().find((item) => item.id === PROJECT_IDS.ACKO_CLINIC);
 
-    const cTree = res.value;
-    expect(cTree.projectId).toBe(AckoClinicRecruiterTree.projectId);
-    expect(cTree.audienceId).toBe(AckoClinicRecruiterTree.audienceId);
+if (!authoredTree || !project) throw new Error('Expected authored Acko Clinic content.');
 
-    // Assert Root Topics parsed correctly
-    expect(cTree.rootChildren.length).toBe(AckoClinicRecruiterTree.topics.length);
-    
-    // Test node reference translation
-    const firstRootId = cTree.rootChildren[0];
-    if (firstRootId) {
-      const node = cTree.nodes[firstRootId];
-      expect(node).toBeDefined();
-      if (node) {
-        expect(node.depth).toBe(1);
-        expect(node.parent).toBeNull();
-      }
-    }
+describe('Question tree compiler', () => {
+  it('compiles authored source data and preserves its project/audience identity', () => {
+    const result = compileTree(authoredTree);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+
+    expect(result.value.projectId).toBe(authoredTree.projectId);
+    expect(result.value.audienceId).toBe(authoredTree.audienceId);
+    expect(result.value.rootChildren).toHaveLength(authoredTree.topics.length);
+    expect(result.value.nodes[result.value.rootChildren[0]!]!.depth).toBe(1);
+    expect(result.value.nodes[result.value.rootChildren[0]!]!.parent).toBeNull();
   });
 
-  it('getChildren computes accurate descendants of a specific context layer', () => {
-    const res = compileTree(AckoClinicRecruiterTree);
-    if (!res.ok) throw new Error();
-
-    // From actual root depth (null)
-    const rootNodes = getChildren(res.value, null);
-    expect(rootNodes.length).toBe(2);
-
-    // From the first root node
-    if (rootNodes[0]) {
-      const descendants = getChildren(res.value, rootNodes[0].id);
-      expect(descendants.length).toBe(2);
-      expect(descendants[0]!.depth).toBe(2);
-      expect(descendants[0]!.parent).toBe(rootNodes[0].id);
-    }
+  it('returns the authored child topics for a focus node', () => {
+    const result = compileTree(authoredTree);
+    if (!result.ok) throw new Error('Authored tree did not compile.');
+    const roots = getChildren(result.value, null);
+    expect(roots).toHaveLength(2);
+    expect(getChildren(result.value, roots[0]!.id)).toHaveLength(3);
   });
 
-  it('resolveTree pulls specific definitions deterministically', () => {
-    const acko = AckoClinicDef;
-    const aud = Audiences[AUDIENCE_RECRUITER];
-    if (!aud) throw new Error('aud missing');
-
-    const mockGetter = (p: ProjectDef, a: AudienceDef) => {
-      if (p.id === acko.id && a.id === aud.id) return AckoClinicRecruiterTree;
-      return undefined;
-    };
-
-    const treeData = resolveTree(acko, aud, mockGetter);
-    expect(treeData.ok).toBe(true);
-    if (treeData.ok) {
-      expect(treeData.value).toBe(AckoClinicRecruiterTree);
-    }
+  it('resolves a tree by project and audience', () => {
+    const audience = Audiences[AUDIENCE_RECRUITER];
+    if (!audience) throw new Error('Recruiter audience is missing.');
+    const getTree = (candidateProject: ProjectDef, candidateAudience: AudienceDef) =>
+      candidateProject.id === project.id && candidateAudience.id === audience.id ? authoredTree : undefined;
+    const result = resolveTree(project, audience, getTree);
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.value).toBe(authoredTree);
   });
 
-  it('compileTree intercepts duplicate node ID graph collisions gracefully', () => {
-    const duplicateTree: QuestionTree = {
-      projectId: AckoClinicDef.id,
-      audienceId: AUDIENCE_RECRUITER,
-      status: 'stub',
+  it('rejects duplicate node IDs', () => {
+    const invalid: QuestionTree = {
+      ...authoredTree,
       topics: [
-        { id: '1', label: '1', answer: { pages: ['1'] } },
-        { id: '1', label: '2', answer: { pages: ['2'] } }, // Intentionally duplicated
-      ]
+        { id: 'duplicate', label: 'first', answer: { pages: ['first'] } },
+        { id: 'duplicate', label: 'second', answer: { pages: ['second'] } },
+      ],
     };
-    const compileResult = compileTree(duplicateTree);
-    expect(compileResult.ok).toBe(false);
-    if (!compileResult.ok) {
-      expect(compileResult.error[0]!.message).toContain('Duplicate node ID detected: 1');
-    }
+    const result = compileTree(invalid);
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.error[0]?.message).toContain('Duplicate node ID detected');
   });
 });

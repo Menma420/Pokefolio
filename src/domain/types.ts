@@ -42,6 +42,7 @@ export interface CompiledNode {
 export interface CompiledTree {
   projectId: ProjectId;
   audienceId: AudienceId;
+  rootPrompt?: AnswerBlock;
   nodes: Record<string, CompiledNode>;
   rootChildren: NodeId[];
 }

@@ -1,16 +1,15 @@
-import { z } from 'zod';
 import { Result, ok, err } from './result';
 import { 
-  ProjectDef, QuestionTree, PartyConfig, 
-  CompiledTree, AudienceId, ProjectId 
+  ProjectDef, QuestionTree,
+  AudienceId, ProjectId
 } from './types';
 import { 
-  ProjectDefSchema, QuestionTreeSchema, PartyConfigSchema 
+  ProjectDefSchema, QuestionTreeSchema
 } from './schemas';
 import { compileTree } from './tree';
-import { PROJECT_TYPE_REGISTRY } from '../content/project-types';
+import { PROJECT_TYPE_REGISTRY } from './project-types';
 import { LIMITS } from './limits';
-import { AUDIENCE_RECRUITER, AUDIENCE_ENGINEER, AUDIENCE_FRIEND } from '../content/audiences';
+
 
 export interface ValidationIssues {
   errors: string[];
@@ -19,7 +18,7 @@ export interface ValidationIssues {
 export function validateContent(
   projects: ProjectDef[],
   trees: QuestionTree[],
-  party: PartyConfig,
+  parties: Record<AudienceId, ProjectId[]>,
   isReleaseMode = false
 ): Result<boolean, ValidationIssues> {
   const errors: string[] = [];
@@ -44,14 +43,18 @@ export function validateContent(
     }
   }
 
-  const pReParse = PartyConfigSchema.safeParse(party);
-  if (!pReParse.success) errors.push(`Zod Error in Party: ${pReParse.error.message}`);
-
-  if (party.activeProjectIds.length !== 6) {
-    errors.push(`V9 Error: Party must contain exactly 6 active projects.`);
-  }
-  if (!party.activeProjectIds.includes(party.defaultFirst)) {
-    errors.push(`V9 Error: Party defaultFirst is not in activeProjectIds.`);
+  for (const [aud, activeIds] of Object.entries(parties)) {
+    if (activeIds.length !== 6) {
+      errors.push(`V9 Error: Party for ${aud} must contain exactly 6 active projects.`);
+    }
+    if (new Set(activeIds).size !== activeIds.length) {
+      errors.push(`V9 Error: Party for ${aud} contains duplicate projects.`);
+    }
+    for (const projectId of activeIds) {
+      if (!projects.some((project) => project.id === projectId)) {
+        errors.push(`V9 Error: Party for ${aud} references unknown project ${projectId}.`);
+      }
+    }
   }
 
   const projectTrees = new Map<ProjectId, Map<AudienceId, QuestionTree>>();
@@ -59,7 +62,11 @@ export function validateContent(
     projectTrees.set(p.id, new Map());
   }
 
+  const seenTreeKeys = new Set<string>();
   for (const t of trees) {
+    const treeKey = `${t.projectId}:${t.audienceId}`;
+    if (seenTreeKeys.has(treeKey)) errors.push(`V1 Error: Duplicate tree ${treeKey}.`);
+    seenTreeKeys.add(treeKey);
     const parse = QuestionTreeSchema.safeParse(t);
     if (!parse.success) {
       const msg = parse.error.message;
@@ -95,6 +102,10 @@ export function validateContent(
       
       if (cTree.rootChildren.length < LIMITS.MIN_ROOT_TOPICS) {
          errors.push(`V5 Error: Tree ${t.projectId}/${t.audienceId} root lacks minimum 2 topics.`);
+      }
+
+      if (cTree.rootChildren.length > LIMITS.MAX_TOPICS) {
+        errors.push(`V5 Error: Tree ${t.projectId}/${t.audienceId} root exceeds ${LIMITS.MAX_TOPICS} topics.`);
       }
 
       for (const node of Object.values(cTree.nodes)) {
@@ -143,14 +154,17 @@ export function validateContent(
     }
   }
 
-  for (const pid of party.activeProjectIds) {
-    const audiences = [AUDIENCE_RECRUITER, AUDIENCE_ENGINEER, AUDIENCE_FRIEND];
-    for (const aud of audiences) {
+  for (const [aud, activeProjectIds] of Object.entries(parties)) {
+    for (const pid of activeProjectIds) {
       const pTree = projectTrees.get(pid);
-      if (!pTree || !pTree.has(aud)) {
+      if (!pTree || !pTree.has(aud as AudienceId)) {
         errors.push(`V1 Error: Active project ${pid} missing tree for audience ${aud}`);
       }
     }
+  }
+
+  if (trees.length !== 18) {
+    errors.push(`V1 Error: Expected 18 authored project/audience trees, found ${trees.length}.`);
   }
 
   return errors.length ? err({ errors }) : ok(true);

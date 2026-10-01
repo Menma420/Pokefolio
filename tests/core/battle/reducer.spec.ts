@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { battleReduce } from '../../../src/core/battle/reducer';
 import { BattleContext, BattleEvent, ViewType } from '../../../src/core/battle/types';
+import { AudienceId, CompiledTree, NodeId, ProjectId } from '../../../src/domain/types';
 
 describe('Battle Reducer State Machine Exhaustive Explicit Map', () => {
   const VIEWS: ViewType[] = [
@@ -14,7 +15,7 @@ describe('Battle Reducer State Machine Exhaustive Explicit Map', () => {
   ];
 
   const dummyDeps = {
-    getTree: () => ({ nodes: { n1: { id: 'n1', parent: null, childIds: [], answer: { pages: [''] } } }, rootChildren: [] } as any),
+    getTree: () => ({ nodes: { n1: { id: 'n1', parent: null, childIds: [], answer: { pages: [''] } } }, rootChildren: [] } as unknown as CompiledTree),
     getReactionPool: () => undefined,
     cooldownPolicy: { maxCooldown: 10 }
   };
@@ -27,7 +28,7 @@ describe('Battle Reducer State Machine Exhaustive Explicit Map', () => {
     if (['entry', 'switching', 'exiting', 'closed'].includes(view)) {
       if (eType === 'TRANSITION_DONE') {
         if (view === 'entry') return 'sendout';
-        if (view === 'switching') return 'root'; // Fallback mapping in test
+        if (view === 'switching') return 'sendout';
         if (view === 'exiting') return 'closed';
         if (view === 'closed') return null; // drops
       }
@@ -82,16 +83,18 @@ describe('Battle Reducer State Machine Exhaustive Explicit Map', () => {
     for (const v of VIEWS) {
       for (const e of EVENTS) {
         const ctx: BattleContext = {
-          audienceId: 'AUD' as any, projectId: 'PRJ' as any, partyOrder: [],
-          view: v, focusId: v === 'answer' ? 'n1' as any : null, pageIndex: 0,
+          audienceId: 'AUD' as AudienceId, projectId: 'PRJ' as ProjectId, partyOrder: [],
+          view: v, focusId: v === 'answer' ? 'n1' as NodeId : null, pageIndex: 0,
           answerPhase: 'reading',
           resume: { view: 'root', focusId: null, pageIndex: 0 },
           visited: new Set(), reactionCooldown: 0, reactionCounts: {}
         };
         
-        let ev: any = { type: e };
-        if (e === 'SELECT_TOPIC') ev.nodeId = 'n1';
-        if (e === 'SELECT_PROJECT') ev.projectId = 'PRJ2';
+        let ev: BattleEvent;
+        if (e === 'SELECT_TOPIC') ev = { type: 'SELECT_TOPIC', nodeId: 'n1' as NodeId };
+        else if (e === 'SELECT_PROJECT') ev = { type: 'SELECT_PROJECT', projectId: 'PRJ2' as ProjectId };
+        // @ts-expect-error: Intentionally passing invalid event type to test reducer boundary robustness
+        else ev = { type: e };
 
         const expected = getExpectedTransition(v, e);
         const res = battleReduce(ctx, ev, dummyDeps);

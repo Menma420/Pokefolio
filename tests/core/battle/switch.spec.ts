@@ -1,15 +1,18 @@
 import { describe, it, expect } from 'vitest';
 import { resolveSwitch } from '../../../src/core/battle/switch';
-import { CompiledTree, NodeId, ProjectId, AudienceId } from '../../../src/domain/types';
+import { CompiledTree, CompiledNode, NodeId, ProjectId, AudienceId } from '../../../src/domain/types';
 
 function createMockTree(treeId: string, nodeKeys: Record<string, string | undefined>, parentMap: Record<string, string | null>): CompiledTree {
-  const nodes: Record<string, any> = {};
+  const nodes: Record<string, CompiledNode> = {};
   for (const [id, key] of Object.entries(nodeKeys)) {
     nodes[id] = {
       id: id as NodeId,
       parent: (parentMap[id] as NodeId) || null,
       topicKey: key,
-      childIds: Object.keys(parentMap).filter(k => parentMap[k] === id).map(k => k as NodeId)
+      childIds: Object.keys(parentMap).filter(k => parentMap[k] === id).map(k => k as NodeId),
+      depth: 1, // resolveSwitch only reads topicKey/parent/childIds; depth value is unused
+      label: id,
+      answer: { pages: [''] }
     };
   }
   return {
@@ -17,7 +20,7 @@ function createMockTree(treeId: string, nodeKeys: Record<string, string | undefi
     audienceId: 'AUD' as AudienceId,
     nodes,
     rootChildren: Object.keys(parentMap).filter(id => parentMap[id] === null).map(id => id as NodeId)
-  } as any;
+  };
 }
 
 describe('Switch Resolution (D2)', () => {

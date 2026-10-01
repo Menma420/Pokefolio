@@ -51,6 +51,7 @@ export function compileTree(tree: QuestionTree): Result<CompiledTree, { message:
   return ok({
     projectId: tree.projectId,
     audienceId: tree.audienceId,
+    rootPrompt: tree.rootPrompt,
     nodes,
     rootChildren,
   });

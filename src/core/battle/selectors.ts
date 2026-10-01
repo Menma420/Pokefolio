@@ -1,5 +1,5 @@
 import { BattleContext, BattleDeps } from './types';
-import { CompiledNode, NodeId } from '../../domain/types';
+import { CompiledNode } from '../../domain/types';
 import { getChildren } from '../../domain/tree';
 
 export function getTree(ctx: BattleContext, deps: BattleDeps) {
@@ -25,12 +25,18 @@ export function getCurrentPageText(ctx: BattleContext, deps: BattleDeps): string
   return node.answer.pages[ctx.pageIndex] || '';
 }
 
-export function getAvailableCommands(ctx: BattleContext, deps: BattleDeps): string[] {
-  const cmds: string[] = [];
-  if (ctx.view === 'root' || ctx.view === 'answer' || ctx.view === 'topics') {
-    cmds.push('DETAILS');
-    cmds.push('PARTY');
-    cmds.push('EXIT');
+export function getCurrentSummary(ctx: BattleContext, deps: BattleDeps): string {
+  return getTree(ctx, deps)?.rootPrompt?.pages[0] ?? '';
+}
+
+export type BattleCommand = 'DETAILS' | 'LINK' | 'PARTY' | 'EXIT' | 'BACK';
+
+export function getAvailableCommands(ctx: BattleContext): BattleCommand[] {
+  if (ctx.view === 'root') {
+    return ['DETAILS', 'LINK', 'PARTY', 'EXIT'];
   }
-  return cmds;
+  if (ctx.view === 'answer' && ctx.answerPhase === 'commands') {
+    return ['DETAILS', 'BACK', 'PARTY', 'EXIT'];
+  }
+  return [];
 }

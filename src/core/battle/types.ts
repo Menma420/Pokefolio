@@ -48,8 +48,9 @@ export type BattleEvent =
 
 export type BattleEffect =
   | { type: 'OPEN_LINK' } // Link execution is external
-  | { type: 'START_TRANSITION'; name: string }
+  | { type: 'START_TRANSITION'; name: 'battle-wipe' | 'switch-short' | 'exit-short' }
   | { type: 'SHOW_REACTION'; reactionText: string }
+  | { type: 'SHOW_NOTICE'; message: string }
   | { type: 'PLAY_SFX'; name: string }
   | { type: 'BATTLE_ENDED' };
 

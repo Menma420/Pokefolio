@@ -9,9 +9,9 @@ describe('uiStore (Phase 3 Runtime UI State)', () => {
     expect(uiStore.getState().virtualControlsVisible).toBe(false);
 
     // Updates appropriately dynamically gracefully cleanly realistically
-    uiStore.getState().startTransition('battle');
+    uiStore.getState().startTransition('battle-wipe');
     expect(uiStore.getState().isTransitioning).toBe(true);
-    expect(uiStore.getState().transitionType).toBe('battle');
+    expect(uiStore.getState().transitionType).toBe('battle-wipe');
 
     // Controls seamlessly sensibly exactly intelligently seamlessly comfortably gracefully appropriately practically securely properly successfully realistically smoothly inherently accurately smartly elegantly expertly functionally
     uiStore.getState().setVirtualControls(true);

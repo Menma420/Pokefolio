@@ -1,20 +1,27 @@
 'use client';
+
 import { useStore } from 'zustand';
 import { settingsStore, type SettingsState } from '../../runtime/stores';
 
 interface TransitionLayerProps {
-  type?: 'battle' | 'blur' | 'wipe';
+  type?: 'battle-wipe' | 'switch-short' | 'exit-short';
   active: boolean;
 }
 
-export function TransitionLayer({ type = 'blur', active }: TransitionLayerProps) {
+export function TransitionLayer({ active, type = 'battle-wipe' }: TransitionLayerProps) {
   const reducedMotion = useStore(settingsStore, (state: SettingsState) => state.reducedMotion);
   if (!active) return null;
-  
-  // Minimal skeleton natively wrapping bounds accurately safely tracking independent blocks accurately
+
+  const duration = reducedMotion ? '0ms' : type === 'battle-wipe' ? '300ms' : '180ms';
   return (
-    <div className={`absolute inset-0 z-40 bg-black ${active ? 'opacity-100' : 'opacity-0'} ${!reducedMotion ? 'transition-opacity duration-300' : ''} pointer-events-none`}>
-       {/* Future transition variants inserted sequentially dynamically overriding natively securely mapping limits identically tracking bounds accurately independently */}
-    </div>
+    <div
+      aria-hidden="true"
+      data-transition={type}
+      className="absolute inset-0 z-40 pointer-events-none bg-black"
+      style={{
+        opacity: 1,
+        transition: reducedMotion ? 'none' : `opacity ${duration} steps(4, end)`,
+      }}
+    />
   );
 }

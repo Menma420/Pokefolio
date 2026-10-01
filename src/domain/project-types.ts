@@ -1,4 +1,4 @@
-import { ProjectTypeId } from '../domain/types';
+import { ProjectTypeId } from './types';
 
 export const PROJECT_TYPES = {
   BACKEND: 'BACKEND' as ProjectTypeId,

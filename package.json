@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint . && depcruise src",
+    "typecheck": "tsc --noEmit",
+    "check:deps": "depcruise src",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",

@@ -97,7 +97,7 @@ export const progressStore = createStore<ProgressState & {
 // --- UI STORE (Transient Runtime) ---
 export interface UiState {
   isTransitioning: boolean;
-  transitionType: 'blur' | 'wipe' | 'battle' | null;
+  transitionType: 'battle-wipe' | 'switch-short' | 'exit-short' | null;
   virtualControlsVisible: boolean;
 }
 
@@ -118,4 +118,3 @@ export const uiStore = createStore<UiState & {
   endTransition: () => set({ isTransitioning: false, transitionType: null }),
   setVirtualControls: (visible) => set({ virtualControlsVisible: visible })
 }));
-

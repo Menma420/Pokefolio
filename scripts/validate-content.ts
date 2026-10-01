@@ -1,47 +1,26 @@
 import { validateContent } from '../src/domain/validators';
-import { Party } from '../src/content/party';
-import { AckoClinicDef } from '../src/content/projects/acko-clinic';
-import { AckoClinicRecruiterTree } from '../src/content/projects/acko-clinic/recruiter';
-import { AckoClinicEngineerTree } from '../src/content/projects/acko-clinic/engineer';
-import { AckoClinicFriendTree } from '../src/content/projects/acko-clinic/friend';
-import { BmaDef, PdfDef, PortDef, NomDef, IotDef } from '../src/content/projects/seeds';
-import { QuestionTree } from '../src/domain/types';
+import { AudienceId } from '../src/domain/types';
+import { AUDIENCE_ENGINEER, AUDIENCE_FRIEND, AUDIENCE_RECRUITER } from '../src/content/audiences';
+import { getParty } from '../src/content/party';
+import { getAuthoredTrees, getProjectDefinitions } from '../src/content/registry';
 
-// Accumulating current content
-const projects = [AckoClinicDef, BmaDef, PdfDef, PortDef, NomDef, IotDef];
+const parties = {
+  [AUDIENCE_RECRUITER]: getParty(AUDIENCE_RECRUITER),
+  [AUDIENCE_ENGINEER]: getParty(AUDIENCE_ENGINEER),
+  [AUDIENCE_FRIEND]: getParty(AUDIENCE_FRIEND),
+} as Record<AudienceId, ReturnType<typeof getParty>>;
 
-// In a real load it parses `.ts` files, here we directly import
-const trees: QuestionTree[] = [
-  ...[AckoClinicRecruiterTree, AckoClinicEngineerTree, AckoClinicFriendTree],
-];
-
-// Replicate missing stubs dynamically for validation testing
-for (const p of [BmaDef, PdfDef, PortDef, NomDef, IotDef]) {
-  trees.push({
-    projectId: p.id, audienceId: 'RECRUITER' as any, status: 'stub',
-    topics: [{ id: `1-${p.id}`, label: 'a', answer: { pages: ['x'] }, topicKey: 'what' }, { id: `2-${p.id}`, label: 'b', answer: { pages: ['y'] }, topicKey: 'how' }]
-  });
-  trees.push({
-    projectId: p.id, audienceId: 'ENGINEER' as any, status: 'stub',
-    topics: [{ id: `3-${p.id}`, label: 'a', answer: { pages: ['x'] }, topicKey: 'why' }, { id: `4-${p.id}`, label: 'b', answer: { pages: ['y'] }, topicKey: 'hard' }]
-  });
-  trees.push({
-    projectId: p.id, audienceId: 'FRIEND' as any, status: 'stub',
-    topics: [{ id: `5-${p.id}`, label: 'a', answer: { pages: ['x'] }, topicKey: 'what' }, { id: `6-${p.id}`, label: 'b', answer: { pages: ['y'] }, topicKey: 'how' }]
-  });
-}
-
-const isReleaseMode = process.env.STRICT_RELEASE === 'true';
-
-const result = validateContent(projects, trees, Party, isReleaseMode);
+const result = validateContent(
+  getProjectDefinitions(),
+  getAuthoredTrees(),
+  parties,
+  process.env.STRICT_RELEASE === 'true',
+);
 
 if (!result.ok) {
-  console.error('\x1b[31;1mCRITICAL CONTENT VALIDATION FAILURES:\x1b[0m');
-  for (const err of result.error.errors) {
-    console.error(` - ${err}`);
-  }
-  process.exit(1);
+  console.error('Content validation failed:');
+  for (const issue of result.error.errors) console.error(`- ${issue}`);
+  process.exitCode = 1;
+} else {
+  console.log(`Validated ${getAuthoredTrees().length} authored project/audience trees.`);
 }
-
-console.log('\x1b[32;1mContent Validated Successfully (V1-V13)\x1b[0m');
-process.exit(0);

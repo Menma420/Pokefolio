@@ -1,7 +1,7 @@
 'use client';
 import { useStore } from 'zustand';
 import { settingsStore, type SettingsState } from '../../runtime/stores';
-import { ReactNode, CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 
 interface CursorProps {
   className?: string;

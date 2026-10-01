@@ -10,5 +10,5 @@ export const LIMITS = {
   // Text constraints (V10)
   MAX_PAGE_CHARS: 250,
   MAX_PAGES_PER_ANSWER: 5,
-  MAX_LABEL_CHARS: 40,
+  MAX_LABEL_CHARS: 100,
 } as const;

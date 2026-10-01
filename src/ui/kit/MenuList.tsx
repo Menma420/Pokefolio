@@ -1,5 +1,6 @@
 'use client';
-import { ReactNode } from 'react';
+
+import React from 'react';
 import { Cursor } from './Cursor';
 
 interface MenuListProps {
@@ -7,24 +8,23 @@ interface MenuListProps {
   activeIndex: number;
   className?: string;
   style?: React.CSSProperties;
+  onSelect?: (index: number) => void;
 }
 
-export function MenuList({ options, activeIndex, className = '', style }: MenuListProps) {
+export function MenuList({ options, activeIndex, className = '', style, onSelect }: MenuListProps) {
   return (
-    <div className={`flex flex-col gap-y-[calc(4*var(--u))] py-[calc(2*var(--u))] ${className}`} style={style}>
-      {options.map((opt, i) => {
-        const active = i === activeIndex;
-        return (
-          <div key={i} className="flex flex-row items-center relative pl-[calc(8*var(--u))]">
-            <div className="absolute left-0">
-              {active && <Cursor />}
-            </div>
-            <span style={{ fontSize: 'calc(8 * var(--u))', lineHeight: 'calc(10 * var(--u))', color: 'white' }}>
-              {opt}
-            </span>
-          </div>
-        );
-      })}
+    <div role="group" aria-label="Interview topics" className={`flex flex-col gap-y-[calc(3*var(--u))] py-[calc(2*var(--u))] ${className}`} style={style}>
+      {options.map((option, index) => (
+        <button
+          key={option}
+          type="button"
+          onClick={() => onSelect?.(index)}
+          className="flex min-h-[calc(14*var(--u))] items-start gap-[calc(2*var(--u))] text-left font-mono text-[calc(7*var(--u))] leading-[calc(9*var(--u))] text-white"
+        >
+          <span className="w-[calc(8*var(--u))] shrink-0">{index === activeIndex ? <Cursor /> : null}</span>
+          <span>{option}</span>
+        </button>
+      ))}
     </div>
   );
 }

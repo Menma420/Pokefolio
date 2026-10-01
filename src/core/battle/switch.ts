@@ -1,5 +1,5 @@
 import { CompiledTree, NodeId } from '../../domain/types';
-import { ViewSnapshot, ViewType } from './types';
+import { ViewSnapshot } from './types';
 import { getChildren } from '../../domain/tree';
 
 /**

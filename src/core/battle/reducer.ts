@@ -2,15 +2,14 @@ import { BattleContext, BattleEvent, BattleEffect, BattleDeps } from './types';
 import { getTree } from './selectors';
 import { getChildren } from '../../domain/tree';
 import { resolveSwitch } from './switch';
-import { getReaction } from './reactions';
-import { ProjectId } from '../../domain/types';
+import { getReaction } from './system-responses';
 
 export function battleReduce(
   ctx: BattleContext,
   ev: BattleEvent,
   deps: BattleDeps
 ): { ctx: BattleContext; effects: BattleEffect[] } {
-  let nextCtx = { ...ctx };
+  const nextCtx = { ...ctx };
   const effects: BattleEffect[] = [];
   
   const v = ctx.view;
@@ -31,27 +30,7 @@ export function battleReduce(
       if (v === 'entry') {
         nextCtx.view = 'sendout';
       } else if (v === 'switching') {
-        // short send-out line reaction resolved earlier during SELECT_PROJECT, now just finalize
-        // Wait, "short send-out line, reaction(project-switch), resolved view".
-        // State mapped to `switching`, but where do we store the resolved view? 
-        // We stored it in `resume` during SELECT_PROJECT.
-        const r = getReaction(nextCtx, deps, 'project-switch');
-        if (r) {
-          nextCtx.reactionCounts = r.newCounts;
-          nextCtx.reactionCooldown = r.newCooldown;
-          effects.push({ type: 'SHOW_REACTION', reactionText: r.text });
-        }
-        
-        if (nextCtx.resume) {
-          nextCtx.view = nextCtx.resume.view;
-          nextCtx.focusId = nextCtx.resume.focusId;
-          nextCtx.pageIndex = nextCtx.resume.pageIndex;
-          nextCtx.answerPhase = nextCtx.resume.answerPhase;
-          nextCtx.resume = undefined;
-        } else {
-          nextCtx.view = 'root';
-          nextCtx.focusId = null;
-        }
+        nextCtx.view = 'sendout';
       } else if (v === 'exiting') {
         nextCtx.view = 'closed';
         effects.push({ type: 'BATTLE_ENDED' });
@@ -69,14 +48,23 @@ export function battleReduce(
 
   // sendout -> ADVANCE
   if (v === 'sendout' && e === 'ADVANCE') {
-    const r = getReaction(nextCtx, deps, 'project-entry');
+    const isSwitch = Boolean(nextCtx.resume);
+    const r = getReaction(nextCtx, deps, isSwitch ? 'project-switch' : 'project-entry');
     if (r) {
       nextCtx.reactionCounts = r.newCounts;
       nextCtx.reactionCooldown = r.newCooldown;
       effects.push({ type: 'SHOW_REACTION', reactionText: r.text });
     }
-    nextCtx.view = 'root';
-    nextCtx.focusId = null;
+    if (nextCtx.resume) {
+      nextCtx.view = nextCtx.resume.view;
+      nextCtx.focusId = nextCtx.resume.focusId;
+      nextCtx.pageIndex = nextCtx.resume.pageIndex;
+      nextCtx.answerPhase = nextCtx.resume.answerPhase;
+      nextCtx.resume = undefined;
+    } else {
+      nextCtx.view = 'root';
+      nextCtx.focusId = null;
+    }
     return { ctx: nextCtx, effects };
   }
 
@@ -97,7 +85,7 @@ export function battleReduce(
       nextCtx.view = 'party';
     } else if (e === 'EXIT' || e === 'BACK') {
       nextCtx.view = 'exiting';
-      effects.push({ type: 'START_TRANSITION', name: 'exit' });
+      effects.push({ type: 'START_TRANSITION', name: 'exit-short' });
     }
   }
 
@@ -137,7 +125,7 @@ export function battleReduce(
       nextCtx.view = 'party';
     } else if (e === 'EXIT') {
       nextCtx.view = 'exiting';
-      effects.push({ type: 'START_TRANSITION', name: 'exit' });
+      effects.push({ type: 'START_TRANSITION', name: 'exit-short' });
     }
   }
 
@@ -188,7 +176,7 @@ export function battleReduce(
         nextCtx.view = 'party';
       } else if (e === 'EXIT') {
         nextCtx.view = 'exiting';
-        effects.push({ type: 'START_TRANSITION', name: 'exit' });
+        effects.push({ type: 'START_TRANSITION', name: 'exit-short' });
       }
     }
   }
@@ -213,7 +201,7 @@ export function battleReduce(
 
       nextCtx.projectId = ev.projectId;
       nextCtx.view = 'switching';
-      effects.push({ type: 'START_TRANSITION', name: 'switch' });
+      effects.push({ type: 'START_TRANSITION', name: 'switch-short' });
     }
   } else if (v === 'party' && e === 'BACK') {
     if (nextCtx.resume) {

@@ -3,9 +3,9 @@ export type InputContext = 'WORLD' | 'DIALOGUE' | 'MENU' | 'BATTLE' | 'MODAL';
 
 const CONTEXT_PRECEDENCE: Record<InputContext, number> = {
   'MODAL': 5,
-  'BATTLE': 4,
+  'DIALOGUE': 4,
   'MENU': 3,
-  'DIALOGUE': 2,
+  'BATTLE': 2,
   'WORLD': 1
 };
 

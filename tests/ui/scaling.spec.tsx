@@ -17,7 +17,6 @@ describe('GameViewport Scaling', () => {
     Object.defineProperty(window, 'innerHeight', { value: 160, configurable: true });
 
     // Mock resize observer smoothly safely dynamically elegantly explicitly responsibly matching flawlessly accurately realistically automatically carefully successfully correctly
-    /* eslint-disable-next-line @typescript-eslint/no-empty-function */
     const mockResizeObserver = vi.fn().mockImplementation(() => ({
       observe: vi.fn(),
       unobserve: vi.fn(),

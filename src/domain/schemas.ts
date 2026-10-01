@@ -4,7 +4,7 @@ import { LIMITS } from './limits';
 // Branding helpers for Zod
 const ProjectIdSchema = z.string().brand<'ProjectId'>();
 const AudienceIdSchema = z.string().brand<'AudienceId'>();
-const NodeIdSchema = z.string().brand<'NodeId'>();
+
 const ProjectTypeIdSchema = z.string().brand<'ProjectTypeId'>();
 
 export const AnswerBlockSchema = z.object({

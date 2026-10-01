@@ -2,9 +2,8 @@ import { describe, it } from 'vitest';
 import fc from 'fast-check';
 import { battleReduce } from '../../../src/core/battle/reducer';
 import { resolveSwitch } from '../../../src/core/battle/switch';
-import { BattleContext } from '../../../src/core/battle/types';
+import { BattleContext, BattleEvent, ViewType, ViewSnapshot } from '../../../src/core/battle/types';
 import { CompiledTree, NodeId, ProjectId, AudienceId } from '../../../src/domain/types';
-import { getChildren } from '../../../src/domain/tree';
 
 // Pure generators spanning all inputs systematically
 const viewGen = fc.constantFrom('entry','sendout','root','topics','answer','party','switching','notice','reaction','exiting','closed');
@@ -37,12 +36,12 @@ describe('Fast-Check Invariants over 10_000 iterations', () => {
         (view, eType, focusTarget) => {
           const ctx: BattleContext = {
             audienceId: 'AUD' as AudienceId, projectId: 'PRJ' as ProjectId, partyOrder: [],
-            view: view as any, focusId: focusTarget as NodeId | null, pageIndex: 0,
+            view: view, focusId: focusTarget as NodeId | null, pageIndex: 0,
             visited: new Set(), reactionCooldown: 0, reactionCounts: {}
           };
-          let ev: any = { type: eType };
-          if (eType === 'SELECT_TOPIC') ev.nodeId = 'n2';
-          if (eType === 'SELECT_PROJECT') ev.projectId = 'PRJ2';
+          let ev: BattleEvent = { type: eType } as BattleEvent;
+          if (eType === 'SELECT_TOPIC') ev = { type: 'SELECT_TOPIC', nodeId: 'n2' as NodeId };
+          if (eType === 'SELECT_PROJECT') ev = { type: 'SELECT_PROJECT', projectId: 'PRJ2' as ProjectId };
 
           const res = battleReduce(ctx, ev, deps);
           if (res.ctx.focusId) {
@@ -63,12 +62,12 @@ describe('Fast-Check Invariants over 10_000 iterations', () => {
         (view, eType, focusTarget) => {
           const ctx: BattleContext = {
             audienceId: 'AUD' as AudienceId, projectId: 'PRJ' as ProjectId, partyOrder: [],
-            view: view as any, focusId: focusTarget as NodeId | null, pageIndex: 0,
+            view: view, focusId: focusTarget as NodeId | null, pageIndex: 0,
             visited: new Set(), reactionCooldown: 0, reactionCounts: {}
           };
-          let ev: any = { type: eType };
-          if (eType === 'SELECT_TOPIC') ev.nodeId = 'n2';
-          if (eType === 'SELECT_PROJECT') ev.projectId = 'PRJ2';
+          let ev: BattleEvent = { type: eType } as BattleEvent;
+          if (eType === 'SELECT_TOPIC') ev = { type: 'SELECT_TOPIC', nodeId: 'n2' as NodeId };
+          if (eType === 'SELECT_PROJECT') ev = { type: 'SELECT_PROJECT', projectId: 'PRJ2' as ProjectId };
 
           const res = battleReduce(ctx, ev, deps);
           if (res.ctx.focusId) {
@@ -88,7 +87,7 @@ describe('Fast-Check Invariants over 10_000 iterations', () => {
         (view, focusTarget) => {
           const ctx: BattleContext = {
             audienceId: 'AUD' as AudienceId, projectId: 'PRJ' as ProjectId, partyOrder: [],
-            view: view as any, focusId: focusTarget as NodeId | null, pageIndex: 0,
+            view: view, focusId: focusTarget as NodeId | null, pageIndex: 0,
             answerPhase: 'reading', visited: new Set(), reactionCooldown: 0, reactionCounts: {}
           };
           const res = battleReduce(ctx, { type: 'BACK' }, deps);
@@ -111,7 +110,7 @@ describe('Fast-Check Invariants over 10_000 iterations', () => {
           const normalizedFocus = view === 'root' ? null : (focusTarget as NodeId | null);
           const ctx: BattleContext = {
             audienceId: 'AUD' as AudienceId, projectId: 'PRJ' as ProjectId, partyOrder: [],
-            view: view as any, focusId: normalizedFocus, pageIndex: 0,
+            view: view, focusId: normalizedFocus, pageIndex: 0,
             answerPhase: 'reading', visited: new Set(), reactionCooldown: 0, reactionCounts: {}
           };
           
@@ -135,7 +134,7 @@ describe('Fast-Check Invariants over 10_000 iterations', () => {
       fc.property(
         fc.constantFrom('root', 'topics', 'answer'), fc.constantFrom(null, 'n1', 'n2', 'n3'),
         (view, focusTarget) => {
-          const snap = { view: view as any, focusId: focusTarget as NodeId | null, pageIndex: 0 };
+          const snap: ViewSnapshot = { view: view as ViewType, focusId: focusTarget as NodeId | null, pageIndex: 0 };
           const resolved = resolveSwitch(dummyTree, snap, dummyTree); 
           if (resolved.focusId === null) return resolved.view === 'root' || resolved.view === 'topics';
           return dummyTree.nodes[resolved.focusId] !== undefined && (resolved.view === 'topics' || resolved.view === 'answer');
@@ -152,13 +151,13 @@ describe('Fast-Check Invariants over 10_000 iterations', () => {
         (view, eType, focusTarget) => {
           const ctx: BattleContext = {
             audienceId: 'AUD' as AudienceId, projectId: 'PRJ' as ProjectId, partyOrder: [],
-            view: view as any, focusId: focusTarget as NodeId | null, pageIndex: 0,
+            view: view, focusId: focusTarget as NodeId | null, pageIndex: 0,
             visited: new Set(), reactionCooldown: 0, reactionCounts: {}
           };
           
-          let ev: any = { type: eType };
-          if (eType === 'SELECT_TOPIC') ev.nodeId = 'n2';
-          if (eType === 'SELECT_PROJECT') ev.projectId = 'PRJ2';
+          let ev: BattleEvent = { type: eType } as BattleEvent;
+          if (eType === 'SELECT_TOPIC') ev = { type: 'SELECT_TOPIC', nodeId: 'n2' as NodeId };
+          if (eType === 'SELECT_PROJECT') ev = { type: 'SELECT_PROJECT', projectId: 'PRJ2' as ProjectId };
 
           const res = battleReduce(ctx, ev, deps);
           return res.ctx.view !== undefined && res.ctx.view !== null;
