@@ -1,0 +1,421 @@
+[
+  {
+    "filename": "b2-title-1x.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "state": "Flow TITLE; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040126858,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    }
+  },
+  {
+    "filename": "b2-title-3x.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "state": "Flow TITLE; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040126858,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    }
+  },
+  {
+    "filename": "b2-title-4x.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow TITLE; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040126858,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-title-largest-fit.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "integerScale": 5,
+    "state": "Flow TITLE; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040126858,
+    "physicalPixels": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "filename": "b2-sequence-01-intro-1-1.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040127508,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-intro-1x.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040127508,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    }
+  },
+  {
+    "filename": "b2-intro-3x.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040127508,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    }
+  },
+  {
+    "filename": "b2-intro-largest-fit.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "integerScale": 5,
+    "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040127508,
+    "physicalPixels": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "filename": "b2-sequence-01-intro-2-1.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040127658,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-sequence-01-intro-3-1.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040127808,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-sequence-02-overworld.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040130108,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-sequence-03-challenger-alert.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow ENCOUNTER; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step wait; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040134874,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-sequence-04-encounter-7.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow ENCOUNTER; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040135624,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-sequence-04-encounter-8.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow ENCOUNTER; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040135824,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-sequence-04-encounter-9.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow ENCOUNTER; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040136024,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-sequence-04-encounter-10.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow ENCOUNTER; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040136224,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-sequence-05-audience.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow AUDIENCE; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step choice; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040137374,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-vs-recruiter-1x.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "state": "Flow VS; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step vs; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040138924,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    }
+  },
+  {
+    "filename": "b2-vs-recruiter-3x.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "state": "Flow VS; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step vs; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040138924,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    }
+  },
+  {
+    "filename": "b2-vs-recruiter-4x.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow VS; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step vs; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040138924,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-vs-largest-fit.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "integerScale": 5,
+    "state": "Flow VS; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step vs; battle hidden; first encounter pending.",
+    "transition": [],
+    "clock": 1791040138924,
+    "physicalPixels": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "filename": "b2-sequence-06-battle-wipe.png",
+    "productionPixelCheck": true,
+    "pixelBlockMismatches": 0,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow VS; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step startBattle; battle hidden; first encounter pending.",
+    "transition": [
+      {
+        "type": "battle-wipe",
+        "frame": "7"
+      }
+    ],
+    "clock": 1791040139224,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  },
+  {
+    "filename": "b2-sequence-07-battle-arrival-unfinished.png",
+    "productionPixelCheck": false,
+    "pixelBlockMismatches": 2160,
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "state": "Flow BATTLE; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step startBattle; battle mounted; first encounter pending.",
+    "transition": [],
+    "clock": 1791040139924,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    }
+  }
+]

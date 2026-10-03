@@ -1,0 +1,114 @@
+[
+  {
+    "filename": "b2-vs-engineer-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "audience": "ENGINEER",
+    "colors": [
+      "#2D7D6F",
+      "#73BBAE"
+    ]
+  },
+  {
+    "filename": "b2-vs-engineer-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "audience": "ENGINEER",
+    "colors": [
+      "#2D7D6F",
+      "#73BBAE"
+    ]
+  },
+  {
+    "filename": "b2-vs-engineer-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "audience": "ENGINEER",
+    "colors": [
+      "#2D7D6F",
+      "#73BBAE"
+    ]
+  },
+  {
+    "filename": "b2-vs-engineer-largest-fit.png",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "integerScale": 5,
+    "audience": "ENGINEER",
+    "colors": [
+      "#2D7D6F",
+      "#73BBAE"
+    ]
+  },
+  {
+    "filename": "b2-vs-friend-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "audience": "FRIEND",
+    "colors": [
+      "#A8663F",
+      "#D9A06E"
+    ]
+  },
+  {
+    "filename": "b2-vs-friend-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "audience": "FRIEND",
+    "colors": [
+      "#A8663F",
+      "#D9A06E"
+    ]
+  },
+  {
+    "filename": "b2-vs-friend-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "audience": "FRIEND",
+    "colors": [
+      "#A8663F",
+      "#D9A06E"
+    ]
+  },
+  {
+    "filename": "b2-vs-friend-largest-fit.png",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "integerScale": 5,
+    "audience": "FRIEND",
+    "colors": [
+      "#A8663F",
+      "#D9A06E"
+    ]
+  }
+]
