@@ -45,7 +45,13 @@ export function BattleOrchestrator({ initialProject, audience, onExit, skipEntry
   const art=useBattleArt(ctx,uiState.isTransitioning&&uiState.transitionType==='switch-short');
   const [viewReady,setViewReady]=useState(false);
   const [viewError,setViewError]=useState<string|null>(null);
-  useEffect(()=>{if(!bridge)return;return attachBattleView(bridge,error=>setViewError(error.message),()=>setViewReady(true));},[bridge]);
+  const viewMounted=useRef(false);
+  const viewConnection=useRef<{bridge:GameBridge;detach:()=>void}|null>(null);
+  useEffect(()=>{
+    viewMounted.current=true;
+    if(bridge&&viewConnection.current?.bridge!==bridge){viewConnection.current?.detach();viewConnection.current={bridge,detach:attachBattleView(bridge,error=>setViewError(error.message),()=>setViewReady(true))};}
+    return ()=>{viewMounted.current=false;queueMicrotask(()=>{if(!viewMounted.current){viewConnection.current?.detach();viewConnection.current=null;}});};
+  },[bridge]);
   useEffect(()=>{
     if(!bridge||!viewReady||ctx.view==='entry'||ctx.view==='closed')return;
     void bridge.send({type:'setBattleSprites',animationKey:art.complete?'idle':'sendout',visitor:{x:art.visitor.x,y:art.visitor.y,visible:art.visitor.visible},opponent:{x:art.opponent.x,y:art.opponent.y,visible:art.opponent.visible}}).catch(error=>setViewError(error instanceof Error?error.message:String(error)));
@@ -100,13 +106,13 @@ export function BattleOrchestrator({ initialProject, audience, onExit, skipEntry
   });
 
   return (
-    <GameViewport><div className="relative h-full w-full overflow-hidden">
+    <GameViewport><div data-battle-renderer={bridge?'attached':'detached'} data-battle-view-ready={viewReady} className="relative h-full w-full overflow-hidden">
       {sceneHost}
       {viewError&&<div role="alert" className="absolute inset-0 z-50 bg-black"><BitmapText text={`Battle artwork unavailable: ${viewError}`} width={226}/></div>}
       <p role="status" aria-label="Battle state" className="sr-only">Battle view {engine.ctx.view}; project {engine.ctx.projectId}; audience {engine.ctx.audienceId}.</p>
       {engine.ctx.view === 'entry' && !skipEntryVs && <VsScreen audienceId={audience} />}
 
-      {['root', 'sendout', 'topics', 'answer', 'switching', 'reaction', 'notice', 'exiting'].includes(engine.ctx.view) && (
+      {['root', 'sendout', 'topics', 'answer', 'party', 'switching', 'reaction', 'notice', 'exiting'].includes(engine.ctx.view) && (
         <BattleScreen
           ctx={engine.ctx}
           art={art}

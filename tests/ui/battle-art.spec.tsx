@@ -1,3 +1,9 @@
+import { expandBattlePixels } from '../../src/game/battlePixels';
+import { render } from '@testing-library/react';
+import { PartyScreen } from '../../src/ui/battle/PartyScreen';
+import { getParty } from '../../src/content/party';
+import { getProject } from '../../src/content/registry';
+import { AUDIENCE_ENGINEER,AUDIENCE_FRIEND } from '../../src/content/audiences';
 import { describe,it,expect } from 'vitest';
 import fs from 'node:fs';
 import art from '../../assets-src/battle/art.json';
@@ -25,6 +31,27 @@ describe('B3 authored battle view',()=>{
    expect(project.visual.plateName!.length).toBeLessThanOrEqual(23);expect(project.visual.shortName!.length).toBeLessThanOrEqual(11);expect(project.visual.tagline!.length).toBeLessThanOrEqual(37);
    expect(art[`project-${project.slug}` as keyof typeof art]).toMatchObject({width:64,height:64});expect(art[`thumb-${project.slug}` as keyof typeof art]).toMatchObject({width:16,height:16});
    expect(fs.existsSync(`public${project.visual.logo.src}`)).toBe(true);expect(fs.existsSync(`public${project.visual.thumb.src}`)).toBe(true);
+  }
+ });
+ it('replicates native RGBA cells without resampling at fractional CSS origins',()=>{
+  const source=battleRaster('background',1);
+  for(const dpr of [1,2,3])for(const n of [1,3,4,8]){
+   const image=expandBattlePixels(source.data,n,dpr-1,dpr-1,dpr);expect(image.width%dpr).toBe(0);expect(image.height%dpr).toBe(0);let errors=0;
+   for(let y=0;y<160;y++)for(let x=0;x<240;x++)for(let dy=0;dy<n;dy++)for(let dx=0;dx<n;dx++){
+    const a=(y*240+x)*4,b=((y*n+dy+dpr-1)*image.width+x*n+dx+dpr-1)*4;
+    for(let c=0;c<4;c++)if(source.data[a+c]!==image.data[b+c])errors++;
+   }
+   expect(errors).toBe(0);
+  }
+ });
+ it('fits complete type labels and wide short names without truncation or changing the font',()=>{
+  for(const audience of [AUDIENCE_ENGINEER,AUDIENCE_FRIEND]){
+   const projects=getParty(audience).map(id=>{const project=getProject(id)!;return {id,name:project.name,type:project.type,visual:project.visual};});
+   const view=render(<PartyScreen activeProjectId={projects.at(-1)!.id} projects={projects} onSelect={()=>{}} onCancel={()=>{}}/>);
+   try{
+    if(audience===AUDIENCE_ENGINEER){const label=view.getByRole('button',{name:'PortScanner'}).querySelector('[data-bitmap-text="NETWORKING"]');expect(label).not.toBeNull();expect(label?.getAttribute('data-native-width')).toBe('60');}
+    else{const label=view.getByRole('button',{name:'ChatRoomApp'}).querySelector('[data-bitmap-text="CHATROOMAPP"]');expect(label).not.toBeNull();expect(label?.getAttribute('data-native-width')).toBe('70');}
+   }finally{view.unmount();}
   }
  });
  it('samples the locked arrival, withdrawal, reveal and plate positions at whole native pixels',()=>{

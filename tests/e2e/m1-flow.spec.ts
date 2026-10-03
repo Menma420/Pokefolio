@@ -75,18 +75,19 @@ async function advanceDialogue(page: Page, text: string) {
     if (await reveal.isVisible()) await reveal.click();
     await expect(dialogue(page)).toHaveText(part);
     fs.mkdirSync('artifacts/phase-a/flow',{recursive:true});
-    await page.screenshot({path:`artifacts/phase-a/flow/${text.slice(0,32).replace(/[^a-zA-Z0-9]/g,'-')}.png`});
+    if(process.env.POKEFOLIO_FLOW_SCREENSHOTS!=='0')await page.screenshot({path:`artifacts/phase-a/flow/${text.slice(0,32).replace(/[^a-zA-Z0-9]/g,'-')}.png`});
     await page.getByRole('button', { name: 'Continue dialogue' }).click();
   }
 }
 async function readBattleDialogue(page: Page, text: string) {
+  if(Object.values(Audiences).some(a=>Object.values(a.reactions).flat().includes(text)))text=`"${text}"`;
   for (const part of paginateDialogue(text, 226)) {
     await expect(page.getByRole('button', {name: /dialogue/})).toBeVisible();
     const reveal = page.getByRole('button', { name: 'Reveal dialogue' });
     if (await reveal.isVisible()) await reveal.click();
     await expect(dialogue(page)).toHaveText(part);
     fs.mkdirSync('artifacts/phase-a/flow',{recursive:true});
-    await page.screenshot({path:`artifacts/phase-a/flow/${text.slice(0,32).replace(/[^a-zA-Z0-9]/g,'-')}.png`});
+    if(process.env.POKEFOLIO_FLOW_SCREENSHOTS!=='0')await page.screenshot({path:`artifacts/phase-a/flow/${text.slice(0,32).replace(/[^a-zA-Z0-9]/g,'-')}.png`});
     await page.getByRole('button', { name: 'Continue dialogue' }).click();
   }
 }
@@ -130,7 +131,7 @@ async function enterFirstBattle(page: Page, audienceId: AudienceId) {
   const firstProject = getParty(audienceId)[0]!;
   await expect(page.getByRole('main', { name: 'Interview challenge' })).toBeVisible();
   await expect(page.locator('[data-bitmap-text]').filter({hasText:Audiences[audienceId]!.announcement})).toBeVisible();
-  fs.mkdirSync('artifacts/phase-a/flow',{recursive:true});await page.screenshot({path:`artifacts/phase-a/flow/vs-${audienceId}.png`});
+  fs.mkdirSync('artifacts/phase-a/flow',{recursive:true});if(process.env.POKEFOLIO_FLOW_SCREENSHOTS!=='0')await page.screenshot({path:`artifacts/phase-a/flow/vs-${audienceId}.png`});
   await expect(gameState(page)).toContainText('Flow BATTLE');
   await expect(page.getByRole('main', { name: 'Interview battle' })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Current project' })).toContainText(getProject(firstProject)!.name);
@@ -142,7 +143,7 @@ async function exitBattleThroughCommand(page: Page) {
   const selected=await exit.locator('[data-cursor]').count();
   await exit.click();if(!selected)await exit.click();
   await expect(dialogue(page)).toHaveText('Battle over!');
-  await page.screenshot({path:'artifacts/phase-a/flow/battle-over.png'});
+  if(process.env.POKEFOLIO_FLOW_SCREENSHOTS!=='0')await page.screenshot({path:'artifacts/phase-a/flow/battle-over.png'});
   await expect(page.getByRole('main', {name:'Interview battle'})).toHaveCount(0);
   await expect(gameState(page)).toContainText('Flow OVERWORLD');
 }
@@ -194,8 +195,10 @@ test('M1 golden path: intro, automatic LOS, authored interview, exact return, re
   await expect(page.getByRole('group', { name: 'Interview topics' }).getByRole('button', { name: depthThree.label })).toBeVisible();
   await page.keyboard.press('Enter');
   for (const text of depthThree.answer.pages) await readBattleDialogue(page, text);
-  const portrait = page.getByRole('img', { name: `${Audiences[AUDIENCE_RECRUITER]!.challengerTitle} portrait` });
-  if (await portrait.isVisible()) {
+  const reactionText=Audiences[AUDIENCE_RECRUITER]!.reactions['answer-return'][0]!;
+  if (await page.getByRole('button',{name:/dialogue/}).count()) {
+    const reveal=page.getByRole('button',{name:'Reveal dialogue'});if(await reveal.isVisible())await reveal.click();
+    await expect(dialogue(page)).toHaveText(`"${reactionText}"`);
     await readBattleDialogue(page, Audiences[AUDIENCE_RECRUITER]!.reactions['answer-return'][0]!);
   }
   await expect(page.getByRole('group', { name: 'Interview topics' })).toBeVisible();
@@ -229,7 +232,7 @@ test('M1 golden path: intro, automatic LOS, authored interview, exact return, re
 
   await page.evaluate(() => window.history.back());
   await expect(dialogue(page)).toHaveText('Battle over!');
-  await page.screenshot({path:'artifacts/phase-a/flow/battle-over.png'});
+  if(process.env.POKEFOLIO_FLOW_SCREENSHOTS!=='0')await page.screenshot({path:'artifacts/phase-a/flow/battle-over.png'});
   await expect(page.getByRole('main', {name:'Interview battle'})).toHaveCount(0);
   await expect(state).toContainText('Flow OVERWORLD');
   await expect.poll(() => displayedAnchor(page)).toEqual(repeatAnchor);
@@ -329,7 +332,7 @@ test('walking onto the main doorway triggers transition and interior without Ent
     expect(inputs.every((key) => key.startsWith('Arrow'))).toBe(true);
     const evidence = 'artifacts/phase-a/visual-review';
     fs.mkdirSync(evidence, { recursive: true });
-    await page.screenshot({ path: `${evidence}/walk-on-door-transition.png` });
+    if(process.env.POKEFOLIO_FLOW_SCREENSHOTS!=='0')await page.screenshot({ path: `${evidence}/walk-on-door-transition.png` });
     fs.writeFileSync(`${evidence}/capture.json`, JSON.stringify({
       filename: 'walk-on-door-transition.png', viewport: page.viewportSize(),
       dpr: await page.evaluate(() => window.devicePixelRatio),
@@ -342,7 +345,7 @@ test('walking onto the main doorway triggers transition and interior without Ent
   await expect(gameState(page)).toContainText('Map m1-interior-test');
   await expect(gameState(page)).toContainText('player tile 7,7');
   await expect(transition).toHaveCount(0);
-  await page.screenshot({ path: 'artifacts/phase-a/visual-review/interior-arrival.png' });
+  if(process.env.POKEFOLIO_FLOW_SCREENSHOTS!=='0')await page.screenshot({ path: 'artifacts/phase-a/visual-review/interior-arrival.png' });
   await page.keyboard.press('Backspace');
   await expect(gameState(page)).toContainText('Map m1-town');
   await expect(gameState(page)).toContainText('player tile 21,5');

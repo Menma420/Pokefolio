@@ -1,0 +1,13 @@
+# Original Pokefolio battle artwork (B3)
+
+Run `python3 assets-src/battle/build.py` to reproduce all 35 lossless assets, the manifest, the palette sheet and React's RLE masks. The authoring source has no external image, sprite, logo or font inputs. Original integer-pixel shapes depict a pond-edge clearing, two turf platforms, a visitor seen from behind and Uttkarsh's send-out stance. Restrained flat palette ramps provide depth without gradients or alpha blending.
+
+Each of the twelve projects has an original 64×64 emblem: clinic insignia, capability compass, meal bowl, portfolio field journal, document/question seal, weather sensor, network probe, distributed nodes, rising stair, ranking trophy, voice headset and chat bubbles. These are tangible original RPG emblems, not creatures, borrowed logos or web cards. Matching 16×16 Party thumbnails are deterministically derived by palette-preserving 4×4 cell reduction. Six 16×8 authored type pictograms are distinct from the unchanged UI bitmap font.
+
+Phaser owns the dedicated background, two platforms and two human sprites. React owns project emblems, type badges, plates, Party thumbnails, prose and menus, through the existing physical-pixel Raster. The original canonical font, UI palette and window/cursor geometry remain unchanged. Only IDs, integer coordinates, visibility and animation keys cross GameBridge; command acknowledgements retain its Clock watchdog.
+
+The native composition is 240×160. Sprite art boxes are 64×64. The opponent's platform is at 136,60 (96×24), the visitor's platform at 8,88 (104×24), the visitor at 24,48 and Uttkarsh at 160,8. Uttkarsh leaves during send-out; the active project then occupies React's 160,12 slot. There is no permanent third combatant. `battleArtFrame` samples discrete arrival/send-out and withdrawal/switch frames on the shared Clock without changing battle reducer state or transition durations.
+
+Review evidence stays in the existing `artifacts/phase-b/` folder with `b3-` filenames. B1/B2 artwork and accepted evidence are preserved.
+
+The battle-only physical surface reads Phaser's native 240×160 RGBA output after render and repeats cells into n×n device pixels. Whole-CSS anchoring plus transparent device-pixel prefixes prevents DPR 3 compositor blending. It redraws when sprite placement or viewport geometry changes. The existing world renderer and Phase A UI Raster are not modified. Moving React plates pass the existing PixelContext motionFrame so each raster reanchors after a Clock step. Scene attachment survives Strict Mode replay; Party overlays retain the mounted battle UI and its command-cursor memory.

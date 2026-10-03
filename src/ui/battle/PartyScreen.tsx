@@ -37,15 +37,15 @@ export function PartyScreen({activeProjectId,projects,onSelect,onCancel}:PartySc
     <Window fill={active?'blue':'cream'} style={{width:'100%',height:'100%'}}>
       <Cursor dark={active} style={{position:'absolute',left:'calc(7*var(--u))',top:'calc(14*var(--u))',visibility:index===selectedIndex?'visible':'hidden'}}/>
       {project.visual&&<BattleArtwork name={`thumb-${project.visual.artKey}`} x={15} y={10}/>}
-      <BitmapText text={project.visual?.shortName??project.name.toUpperCase()} width={66} maxLines={1} color={index===pressed?palette.link:undefined} style={{position:'absolute',left:'calc(35*var(--u))',top:'calc(7*var(--u))'}}/>
-      {project.type&&<><BattleArtwork name={`type-${project.type}`} x={35} y={21}/><BitmapText text={project.type.replaceAll('_','')} width={54} maxLines={1} style={{position:'absolute',left:'calc(54*var(--u))',top:'calc(21*var(--u))'}}/></>}
-      {active&&<div aria-label="In play" style={{position:'absolute',left:'calc(100*var(--u))',top:'calc(4*var(--u))',width:'calc(8*var(--u))',height:'calc(8*var(--u))',background:palette.inner}}/>}
+      <div style={{position:'absolute',left:'calc(35*var(--u))',top:'calc(7*var(--u))'}}><BitmapText text={project.visual?.shortName??project.name.toUpperCase()} width={70} maxLines={1} color={index===pressed?palette.link:undefined}/></div>
+      {project.type&&<><BattleArtwork name={`type-${project.type}`} x={32} y={21}/><div style={{position:'absolute',left:'calc(49*var(--u))',top:'calc(21*var(--u))'}}><BitmapText text={project.type.replaceAll('_','')} width={60} maxLines={1}/></div></>}
+      {active&&<div aria-label="In play" style={{position:'absolute',left:'calc(15*var(--u))',top:'calc(4*var(--u))',width:'calc(8*var(--u))',height:'calc(8*var(--u))',background:palette.inner}}/>}
     </Window>
    </button>;
   })}
-  <Window className="absolute" style={{left:0,top:'calc(120*var(--u))',width:'calc(240*var(--u))',height:'calc(40*var(--u))'}}>
+  <Window className="absolute" style={{position:'absolute',left:0,top:'calc(120*var(--u))',width:'calc(240*var(--u))',height:'calc(40*var(--u))'}}>
     <BitmapText text={moved?`TYPE: ${selected?.type?.replaceAll('_',' ')??'PROJECT'}${activeSelected?'  ACTIVE':''}`:activeSelected?'Choose a project.  ACTIVE':'Choose a project.'} width={226} maxLines={1}/>
-    {moved&&<BitmapText text={selected?.visual?.tagline??''} width={226} maxLines={1} style={{position:'absolute',left:'calc(7*var(--u))',top:'calc(23*var(--u))'}}/>}
+    {moved&&<div style={{position:'absolute',left:'calc(7*var(--u))',top:'calc(23*var(--u))'}}><BitmapText text={selected?.visual?.tagline??''} width={226} maxLines={1}/></div>}
   </Window>
   <button type="button" aria-label="BACK" onClick={()=>{audioService.play('ui.cancel');onCancel();}} className="sr-only">BACK</button>
  </main></GameViewport>;

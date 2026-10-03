@@ -1,7 +1,9 @@
 import Phaser from 'phaser';
+import { mountBattleRaster } from './BattleRaster';
 import type { GameBridge, IdentifiedGameCommand } from '../runtime/gameBridge/types';
 /** Dedicated original battle view. No prose, menus, reducer or WorldSim state here. */
 export class BattleScene extends Phaser.Scene {
+  private raster:ReturnType<typeof mountBattleRaster>|undefined;
   private visitor!: Phaser.GameObjects.Image;
   private opponent!: Phaser.GameObjects.Image;
   constructor(private readonly bridge: GameBridge, private readonly standalone=false) { super({key:'PokefolioBattle',active:standalone}); }
@@ -20,12 +22,14 @@ export class BattleScene extends Phaser.Scene {
     this.add.image(8,88,'battle-visitor-platform').setOrigin(0);
     this.visitor=this.add.image(24,48,'battle-visitor-back').setOrigin(0).setVisible(false);
     this.opponent=this.add.image(160,8,'battle-uttkarsh-front').setOrigin(0).setVisible(false);
+    this.raster=mountBattleRaster(this.game);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.raster?.destroy();this.raster=undefined;});
     this.game.canvas.dataset.battleArt='original-pokefolio';this.game.canvas.dataset.battleScene='ready';
     if(this.standalone){const remove=this.bridge.onCommand(command=>this.execute(command));this.events.once(Phaser.Scenes.Events.SHUTDOWN,remove);}
     this.events.emit('battle-created');this.bridge.emit({type:'battleReady'});
   }
   execute(command:IdentifiedGameCommand):unknown {
     if(command.type==='setBattleSprites'){
+      this.raster?.dirty();
       this.visitor.setPosition(command.visitor.x,command.visitor.y).setVisible(command.visitor.visible);
       this.opponent.setPosition(command.opponent.x,command.opponent.y).setVisible(command.opponent.visible);
       this.game.canvas.dataset.battleVisitor=`${command.visitor.x},${command.visitor.y},${command.visitor.visible}`;

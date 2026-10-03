@@ -91,3 +91,13 @@ it('remembers the root command cursor across topic surfaces',()=>{
  view.rerender(<BattleScreen {...props}/>);expect(view.getByRole('button',{name:'LINK'}).querySelector('[data-cursor]')).toBeTruthy();view.unmount();
 });
 import {globalInputRouter} from '../../src/core/input';
+
+it('quotes a battle reaction without a portrait while retaining the authored service text',async()=>{
+ globalDialogueService.cancelAll();const clock=new FakeClock();const completion=globalDialogueService.request('Interesting scope.');
+ const view=render(<ClockContext.Provider value={clock}><BattleScreen ctx={context()} visibleTopics={[]} availableCommands={['DETAILS','LINK','PARTY','EXIT']} pageText="" summary="" linkAvailable dispatch={vi.fn()}/></ClockContext.Provider>);
+ try{
+  act(()=>clock.tick(1500));expect(view.getByRole('status').textContent).toBe('"Interesting scope."');expect(globalDialogueService.getActive()?.text).toBe('Interesting scope.');
+  expect(view.queryByRole('img',{name:'Recruiter portrait'})).toBeNull();fireEvent.click(view.getByRole('button',{name:'Continue dialogue'}));await completion;
+ }finally{view.unmount();globalDialogueService.cancelAll();}
+});
+import {globalDialogueService} from '../../src/runtime/services/DialogueService';

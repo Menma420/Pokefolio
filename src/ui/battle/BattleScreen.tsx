@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback,useContext } from 'react';
 import { BattleContext, BattleEvent } from '../../core/battle/types';
 import { CompiledNode, NodeId } from '../../domain/types';
 import { globalInputRouter, InputAction } from '../../core/input';
@@ -13,6 +13,7 @@ import { BitmapText } from '../kit/BitmapText';
 import { useConfirmation } from '../kit/useConfirmation';
 import { audioService } from '../../runtime/AudioService';
 import { palette } from '../kit/palette';
+import { PixelContext } from '../kit/PixelContext';
 import { BattleArtwork } from './BattleArtwork';
 import type { BattleArtPresentation } from './useBattleArt';
 import { UI_STRINGS } from '../../content/ui-strings';
@@ -29,6 +30,7 @@ export interface BattleScreenProps {
 }
 
 export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageText, linkAvailable, dispatch }: BattleScreenProps) {
+  const pixels=useContext(PixelContext);
   const {pressed,confirm}=useConfirmation();
   const [notice,setNotice]=useState<string|null>(null);
   const menuKey=ctx.view==='root'?'commands-root':ctx.view==='answer'?'commands-answer':`topics-${ctx.projectId}-${ctx.focusId??'root'}`;
@@ -73,15 +75,16 @@ export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageTe
     activate(index);
   };
 
-  const displayedText = presenting ? art.message==='withdraw'?`Uttkarsh withdrew ${previousProject?.visual.plateName??previousProject?.name??ctx.projectId}.`:art.message==='sendout'?UI_STRINGS.sendOut(project?.visual.plateName??project?.name??ctx.projectId):'' : notice ?? reactionText ?? (ctx.view === 'sendout'
+  const reactionDisplay=reactionText&&Object.values(audience?.reactions??{}).flat().includes(reactionText)?`"${reactionText}"`:reactionText;
+  const displayedText = presenting ? art.message==='withdraw'?`Uttkarsh withdrew ${previousProject?.visual.plateName??previousProject?.name??ctx.projectId}.`:art.message==='sendout'?UI_STRINGS.sendOut(project?.visual.plateName??project?.name??ctx.projectId):'' : notice ?? reactionDisplay ?? (ctx.view === 'sendout'
     ? UI_STRINGS.sendOut(project?.name ?? ctx.projectId)
     : ctx.view === 'answer' && ctx.answerPhase==='reading' ? pageText : '');
   const showDialogue = Boolean(displayedText);
   const showCommandGrid = inCommandMenu&&!presenting;
 
   return (
-    <GameViewport>
-      <main data-battle-beat={art?.beat??'idle'} data-battle-frame={art?.frame??0} aria-label="Interview battle" className="absolute inset-0 overflow-hidden text-white">
+    <GameViewport><PixelContext.Provider value={{...pixels,motionFrame:art?.frame??0}}>
+      <main hidden={ctx.view==='party'} data-battle-beat={art?.beat??'idle'} data-battle-frame={art?.frame??0} aria-label="Interview battle" className="absolute inset-0 overflow-hidden text-white">
         <span className="sr-only" role="img" aria-label="Visitor trainer">The visitor is the player-side character.</span>
         {art?.opponent.visible&&<span className="sr-only" role="img" aria-label="Uttkarsh trainer">Uttkarsh sends the active project from the opponent side.</span>}
         <section aria-label="Current project" style={{position:'absolute',left:`calc(${8-plateOffset*40}*var(--u))`,top:'calc(8*var(--u))',width:'calc(152*var(--u))',height:'calc(40*var(--u))',zIndex:10}}>
@@ -89,10 +92,10 @@ export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageTe
             <span className="sr-only">{project?.name??ctx.projectId}</span>
             <BitmapText text={plateProject?.visual.plateName??plateProject?.name.toUpperCase()??ctx.projectId} width={138} maxLines={1}/>
             <BattleArtwork name={`type-${plateProject?.type??'BACKEND'}`} x={7} y={19}/>
-            <BitmapText text={plateProject?.type.replaceAll('_',' ')??'PROJECT'} width={116} maxLines={1} style={{position:'absolute',left:'calc(27*var(--u))',top:'calc(19*var(--u))'}}/>
+            <div style={{position:'absolute',left:'calc(27*var(--u))',top:'calc(19*var(--u))'}}><BitmapText text={plateProject?.type.replaceAll('_',' ')??'PROJECT'} width={116} maxLines={1}/></div>
           </Window>
         </section>
-        <Window fill="blue" className="absolute z-10" style={{left:`calc(${128+plateOffset*28}*var(--u))`,top:'calc(84*var(--u))',width:'calc(104*var(--u))',height:'calc(24*var(--u))'}}><BitmapText text={audience?.challengerTitle.toUpperCase()??'VISITOR'} width={90} maxLines={1}/></Window>
+        <Window fill="blue" className="absolute z-10" style={{position:'absolute',left:`calc(${128+plateOffset*28}*var(--u))`,top:'calc(84*var(--u))',width:'calc(104*var(--u))',height:'calc(24*var(--u))'}}><BitmapText text={audience?.challengerTitle.toUpperCase()??'VISITOR'} width={90} maxLines={1}/></Window>
         {(art?.logo!=='hidden'||art?.oldLogo)&&<div data-project-slot data-project-phase={art?.oldLogo?'withdraw':art?.logo??'full'} role="img" aria-label={`${project?.name??ctx.projectId} battle emblem`} style={{position:'absolute',left:'calc(160*var(--u))',top:'calc(12*var(--u))',width:'calc(64*var(--u))',height:'calc(64*var(--u))',overflow:'hidden',zIndex:5}}>
           {art?.oldLogo?<BattleArtwork name={`project-${previousProject?.visual.artKey}`} y={art.withdrawY}/>:art?.logo==='flash'?<div className="absolute inset-0" style={{background:palette.onDark}}/>:<BattleArtwork name={`project-${project?.visual.artKey}`} silhouette={art?.logo==='silhouette'}/>}
         </div>}
@@ -105,7 +108,7 @@ export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageTe
           </div>
         )}
 
-        {showCommandGrid && <Window className="absolute z-20" style={{left:0,top:'calc(112*var(--u))',width:'calc(112*var(--u))',height:'calc(48*var(--u))'}}><BitmapText text="WHAT DO YOU WANT TO KNOW?" width={98}/></Window>}
+        {showCommandGrid && <Window className="absolute z-20" style={{position:'absolute',left:0,top:'calc(112*var(--u))',width:'calc(112*var(--u))',height:'calc(48*var(--u))'}}><BitmapText text="WHAT DO YOU WANT TO KNOW?" width={98}/></Window>}
         {showCommandGrid && (
           <div className="absolute top-[calc(112*var(--u))] left-[calc(112*var(--u))] z-20 w-[calc(128*var(--u))]">
             <Window style={{height:'calc(48*var(--u))'}}>
@@ -140,6 +143,6 @@ export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageTe
         )}
       </main>
 
-    </GameViewport>
+    </PixelContext.Provider></GameViewport>
   );
 }

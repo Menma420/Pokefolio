@@ -14,3 +14,7 @@ The town tiles and character sprites in `public/assets/world/` are original Poke
 ## B2 — Original Pokefolio opening artwork
 
 The title wordmark, stepped sky, town silhouette, VS lettering and four portraits are original integer-pixel artwork authored in `assets-src/opening/build.py`. Production uses the lossless authored RLE masks in `assets-src/opening/art.json`; original PNG previews are in `public/assets/opening/`. No Nintendo/Game Freak assets or other third-party visual material are inputs. Existing canonical UI font and palette are unchanged.
+
+## B3 — Original Pokefolio battle artwork
+
+All 35 battle assets, including backgrounds, platforms, human sprites, project emblems, thumbnails and type pictograms, are authored locally in `assets-src/battle/build.py`, with no third-party visual inputs. The reproducible PNG/RLE masks and palette record belong to this project. The Pokémon Elo Rating project uses an original ranking trophy emblem, with no Pokémon character, ball, logo or copied game asset.

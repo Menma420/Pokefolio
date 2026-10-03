@@ -15,6 +15,7 @@ declare global {
 }
 
 async function readDialogue(page:Page,text:string,touch=false) {
+ if(Object.values(Audiences).some(a=>Object.values(a.reactions).flat().includes(text)))text=`"${text}"`;
  for(const part of paginateDialogue(text,226)) {
   await expect(page.getByRole('button',{name:/dialogue/})).toBeVisible();
   if(await page.getByRole('button',{name:'Reveal dialogue'}).isVisible()) {
