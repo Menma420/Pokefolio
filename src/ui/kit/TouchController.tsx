@@ -1,76 +1,81 @@
 'use client';
-import { useState, PointerEvent } from 'react';
-import { InputAction, globalInputRouter } from '../../core/input';
-
-interface DPadButtonProps {
-  action: InputAction;
-  className?: string;
-  label?: string;
+import { useContext,useEffect,useState,PointerEvent,useMemo,useSyncExternalStore } from 'react';
+import { createPortal } from 'react-dom';
+import { useStore } from 'zustand';
+import { InputAction,globalInputRouter } from '../../core/input';
+import { TouchLayout } from './GameViewport';
+import { PixelContext } from './PixelContext';
+import { Raster } from './Raster';
+import { palette } from './palette';
+import { rasterText,rgb } from './bitmap';
+import { unlockAudio } from '../../runtime/AudioUnlocker';
+import { uiStore } from '../../runtime/stores';
+type Mode='title'|'world'|'dialogue'|'battle'|'party';
+function buttonArt(action:InputAction,active:boolean,dimmed:boolean,m:number) {
+ const native=action.length>1?14:action==='X'||action==='Y'?16:20;
+ const data=new Uint8ClampedArray(native*native*m*m*4);
+ const color=rgb(active?palette.header:palette.inner),border=rgb(palette.outer);
+ const directional=action.length>1;
+ const disc=[8,12,14,16,18,18,20,20,20,20,20,20,20,20,18,18,16,14,12,8];
+ const round=action==='A'||action==='B';
+ const inside=(x:number,y:number)=>y>=0&&y<20&&x>=(20-disc[y]!)/2&&x<(20+disc[y]!)/2;
+ for(let y=0;y<native;y++)for(let x=0;x<native;x++) {
+  if(directional)continue;
+  const edge=Math.min(x,y,native-1-x,native-1-y);
+  if(round&&!inside(x,y))continue;
+  if(!round&&!directional&&edge<2&&((x<4||x>=native-4)&&(y<4||y>=native-4)))continue;
+  const rim=round?[[2,0],[-2,0],[0,2],[0,-2]].some(([dx,dy])=>!inside(x+dx!,y+dy!)):edge<2;
+  const ink=rim?border:dimmed?rgb(palette.disabled):color;
+  for(let dy=0;dy<m;dy++)for(let dx=0;dx<m;dx++)data.set([...ink,255],((y*m+dy)*native*m+x*m+dx)*4);
+ }
+ const label=({UP:'▲',DOWN:'▼',LEFT:'◂',RIGHT:'▸',A:'A',B:'B',X:'X',Y:'Y'})[action];
+ const glyph=rasterText(label,8,8,m,palette.outer);
+ const ox=(Math.floor((native-8)/2)+(action==='LEFT'?3:action==='RIGHT'?-3:0))*m,oy=(Math.floor((native-8)/2)+(action==='UP'?3:action==='DOWN'?-3:0))*m;
+ for(let y=0;y<glyph.height;y++)for(let x=0;x<glyph.width;x++) {
+  const source=(y*glyph.width+x)*4;if(glyph.data[source+3])data.set(glyph.data.subarray(source,source+4),((y+oy)*native*m+x+ox)*4);
+ }
+ return {width:native*m,height:native*m,data};
 }
-
-function TouchButton({ action, className = '', label = '' }: DPadButtonProps) {
-  const [active, setActive] = useState(false);
-
-  const handlePointerDown = (e: PointerEvent) => {
-    e.preventDefault();
-    setActive(true);
-    globalInputRouter.handlePress(action);
-  };
-
-  const handlePointerUp = (e: PointerEvent) => {
-    e.preventDefault();
-    setActive(false);
-    globalInputRouter.handleRelease(action);
-  };
-  
-  const handlePointerLeave = (e: PointerEvent) => {
-    e.preventDefault();
-    if(active) {
-      setActive(false);
-      globalInputRouter.handleRelease(action);
-    }
-  };
-
-  return (
-    <button
-      className={`absolute flex items-center justify-center transition-opacity duration-75 select-none touch-none ${active ? 'opacity-90 bg-white/30' : 'opacity-40 bg-white/20'} ${className}`}
-      style={{
-        width: 'calc(36 * var(--u))',
-        height: 'calc(36 * var(--u))',
-        borderRadius: 'calc(36 * var(--u))'
-      }}
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
-      onPointerLeave={handlePointerLeave}
-      aria-label={action === 'A' ? 'A confirm' : action === 'B' ? 'B back' : action === 'UP' ? 'Move up' : action === 'DOWN' ? 'Move down' : action === 'LEFT' ? 'Move left' : action === 'RIGHT' ? 'Move right' : action}
-    >
-      <span className="text-white text-[calc(10*var(--u))] font-mono font-bold leading-none pointer-events-none">{label}</span>
-    </button>
-  );
+function crossArt(m:number) {
+ const width=40*m,data=new Uint8ClampedArray(width*width*4);
+ for(let y=0;y<40;y++)for(let x=0;x<40;x++) {
+  if(!(x>=14&&x<26||y>=14&&y<26))continue;
+  const border=x===0||y===0||x===39||y===39||((x===14||x===25)&&!(y>14&&y<25))||((y===14||y===25)&&!(x>14&&x<25));
+  const color=rgb(border?palette.outer:palette.inner);
+  for(let dy=0;dy<m;dy++)for(let dx=0;dx<m;dx++)data.set([...color,255],((y*m+dy)*width+x*m+dx)*4);
+ }
+ return {width,height:width,data};
 }
-
-export function TouchController() {
-  // Mobile only display, sits above game layer unconditionally injecting signals natively without leaking states reliably
-  return (
-    <div className="absolute inset-0 z-50 flex pointer-events-none flex-row items-end justify-between p-[calc(8*var(--u))] touch-none md:hidden">
-      
-      {/* Left D-PAD */}
-      <div className="relative pointer-events-auto" style={{ width: 'calc(108 * var(--u))', height: 'calc(108 * var(--u))' }}>
-        <TouchButton action="UP" className="left-[calc(36*var(--u))] top-0" label="▲" />
-        <TouchButton action="DOWN" className="left-[calc(36*var(--u))] bottom-0" label="▼" />
-        <TouchButton action="LEFT" className="left-0 top-[calc(36*var(--u))]" label="◀" />
-        <TouchButton action="RIGHT" className="right-0 top-[calc(36*var(--u))]" label="▶" />
-      </div>
-
-      {/* Right Buttons group */}
-      <div className="relative pointer-events-auto" style={{ width: 'calc(108 * var(--u))', height: 'calc(76 * var(--u))' }}>
-        <TouchButton action="X" className="left-0 top-0 opacity-20" label="X" /> {/* Smaller footprint visually contextually */}
-        <TouchButton action="Y" className="right-[calc(36*var(--u))] top-0 opacity-20" label="Y" />
-        <TouchButton action="B" className="left-[calc(16*var(--u))] bottom-0" label="B" />
-        <TouchButton action="A" className="right-0 bottom-[calc(8*var(--u))]" label="A" />
-      </div>
-
-    </div>
-  );
+function TouchButton({action,label,x,y,size=60,dimmed=false,locked=false}:{action:InputAction;label:string;x:number;y:number;size?:number;dimmed?:boolean;locked?:boolean}) {
+ const [active,setActive]=useState(false);
+ const {dpr}=useContext(PixelContext);
+ const {n:m}=useContext(PixelContext);
+ const down=(event:PointerEvent<HTMLButtonElement>)=>{event.preventDefault();if(locked||dimmed)return;void unlockAudio();event.currentTarget.setPointerCapture?.(event.pointerId);setActive(true);globalInputRouter.handlePress(action);};
+ const up=()=>{setActive(false);globalInputRouter.handleRelease(action);};
+ useEffect(()=>()=>globalInputRouter.handleRelease(action),[action]);
+ useEffect(()=>{if(locked||dimmed)globalInputRouter.handleRelease(action);},[action,locked,dimmed]);
+ const image=useMemo(()=>buttonArt(action,active,dimmed,m),[action,active,dimmed,m]);
+ const artSize=image.width/dpr;
+ return <button aria-label={label} aria-disabled={locked||dimmed} data-action={action} onPointerDown={down} onPointerUp={up} onPointerCancel={up} onLostPointerCapture={up} style={{position:'absolute',left:x,top:y,width:size,height:size,padding:0,touchAction:'none',opacity:active?1:0.5,background:'transparent',border:0}}>
+  <Raster image={image} style={{position:'absolute',left:(size-artSize)/2,top:(size-artSize)/2+(active?m/dpr:0),}}/>
+ </button>;
+}
+export function TouchController({mode='world',artScale=3}:{mode?:Mode;artScale?:3|4}) {
+ const mounted=useSyncExternalStore(()=>()=>{},()=>true,()=>false);
+ const touch=useContext(TouchLayout);const locked=useStore(uiStore,s=>s.isTransitioning);
+ const [dpr,setDpr]=useState(1);
+ useEffect(()=>{const update=()=>setDpr(window.devicePixelRatio||1);update();window.addEventListener('resize',update);return ()=>window.removeEventListener('resize',update);},[]);
+ if(!mounted||!touch||typeof document==='undefined')return null;
+ const topOnly=mode==='title';const dimmed=mode==='battle'||mode==='dialogue';
+ const pad=artScale===3?160:216,hit=16*artScale,ab=20*artScale,bankHeight=artScale===3?172:232,mid=(pad-hit)/2;
+ return createPortal(<PixelContext.Provider value={{n:Math.round(artScale*dpr),dpr}}><div aria-label="Touch controller" className="touch-controller" data-mode={mode} style={{position:'fixed',inset:0,zIndex:50,pointerEvents:'none','--ui-inner':palette.inner,'--pad-half':`${pad/2}px`,'--bank-half':`${bankHeight/2}px`} as React.CSSProperties}>
+  {!topOnly&&<div className="touch-pad" style={{position:'absolute',left:'calc(16px + var(--safe-left, env(safe-area-inset-left, 0px)))',bottom:'calc(16px + var(--safe-bottom, env(safe-area-inset-bottom, 0px)))',width:pad,height:pad,pointerEvents:'auto'}}>
+<Raster image={crossArt(Math.round(artScale*dpr))} style={{position:'absolute',left:(pad-40*artScale)/2,top:(pad-40*artScale)/2,opacity:0.5}}/>
+   <TouchButton action="UP" label="Move up" x={mid} y={0} size={hit} locked={locked}/><TouchButton action="LEFT" label="Move left" x={0} y={mid} size={hit} locked={locked}/><TouchButton action="RIGHT" label="Move right" x={pad-hit} y={mid} size={hit} locked={locked}/><TouchButton action="DOWN" label="Move down" x={mid} y={pad-hit} size={hit} locked={locked}/>
+  </div>}
+  <div className="touch-buttons" style={{position:'absolute',right:'calc(16px + var(--safe-right, env(safe-area-inset-right, 0px)))',bottom:'calc(16px + var(--safe-bottom, env(safe-area-inset-bottom, 0px)))',width:pad,height:bankHeight,pointerEvents:'auto'}}>
+   {!topOnly&&<><TouchButton action="X" label="Menu (X)" x={0} y={0} size={hit} dimmed={dimmed} locked={locked}/><TouchButton action="Y" label="Bag (Y)" x={pad-hit} y={0} size={hit} dimmed={dimmed} locked={locked}/><TouchButton action="B" label="B back" x={0} y={bankHeight-ab} size={ab} locked={locked}/></>}
+   <TouchButton action="A" label="A confirm" x={28*artScale} y={mid} size={ab} locked={locked}/>
+  </div>
+ </div></PixelContext.Provider>,document.body);
 }

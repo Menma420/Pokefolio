@@ -32,6 +32,7 @@ export class BattleScene extends Phaser.Scene {
       this.game.canvas.dataset.battleOpponent=`${command.opponent.x},${command.opponent.y},${command.opponent.visible}`;
       return {animationKey:command.animationKey};
     }
+    if(command.type==='sleepWorldScene'||command.type==='wakeWorldScene')return {standalone:true};
     if(command.type==='loadBattleScene')return {sceneId:'PokefolioBattle'};
     if(command.type==='unloadBattleScene'){this.game.canvas.dataset.battleScene='unloaded';return {sceneId:'PokefolioBattle'};}
     throw new Error(`Unsupported battle view command: ${command.type}`);

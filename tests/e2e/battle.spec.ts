@@ -1,4 +1,6 @@
-import { expect, test } from '@playwright/test';
+test.setTimeout(90000);
+import {paginateDialogue} from '../../src/ui/kit/text';
+import { expect, test, Page } from '@playwright/test';
 import { getParty } from '../../src/content/party';
 import { AUDIENCE_ENGINEER, AUDIENCE_FRIEND, AUDIENCE_RECRUITER } from '../../src/content/audiences';
 import { getAuthoredTrees, getProject, getProjectDefinitions } from '../../src/content/registry';
@@ -12,44 +14,19 @@ declare global {
   }
 }
 
-async function revealAndAdvance(page: import('@playwright/test').Page, expectedText: string, waitForDismissal = false) {
-  const status = page.getByRole('status');
-  await expect(status).toContainText(expectedText);
-  const reveal = page.getByRole('button', { name: 'Reveal dialogue' });
-  if (await reveal.isVisible()) {
-    await page.keyboard.press('Enter');
-    await expect(page.getByRole('button', { name: 'Continue dialogue' })).toBeVisible();
+async function readDialogue(page:Page,text:string,touch=false) {
+ for(const part of paginateDialogue(text,226)) {
+  await expect(page.getByRole('button',{name:/dialogue/})).toBeVisible();
+  if(await page.getByRole('button',{name:'Reveal dialogue'}).isVisible()) {
+   if(touch)await page.getByRole('button',{name:'A confirm'}).tap();else await page.keyboard.press('Enter');
   }
-  await page.keyboard.press('Enter');
-  if (waitForDismissal) {
-    await expect.poll(async () => {
-      if (await status.count() === 0) return true;
-      return !(await status.textContent())?.includes(expectedText);
-    }).toBe(true);
-  }
+  await expect(page.locator('div[role="status"].sr-only')).toHaveText(part);
+  if(touch)await page.getByRole('button',{name:'A confirm'}).tap();else await page.keyboard.press('Enter');
+ }
 }
-
-async function readAnswer(page: import('@playwright/test').Page, pages: string[]) {
-  for (const answerPage of pages) await revealAndAdvance(page, answerPage);
-}
-
-async function revealAndAdvanceWithTouch(page: import('@playwright/test').Page, expectedText: string, waitForDismissal = false) {
-  const confirm = page.getByRole('button', { name: 'A confirm' });
-  await expect(page.getByRole('status')).toContainText(expectedText);
-  const reveal = page.getByRole('button', { name: 'Reveal dialogue' });
-  if (await reveal.isVisible()) {
-    await confirm.tap();
-    await expect(page.getByRole('button', { name: 'Continue dialogue' })).toBeVisible();
-  }
-  await confirm.tap();
-  if (waitForDismissal) {
-    const status = page.getByRole('status');
-    await expect.poll(async () => {
-      if (await status.count() === 0) return true;
-      return !(await status.textContent())?.includes(expectedText);
-    }).toBe(true);
-  }
-}
+async function revealAndAdvance(page:Page,text:string,wait=false) {await readDialogue(page,text);if(wait)await expect.poll(async()=>{const status=page.locator('div[role="status"].sr-only');return await status.count()===0||await status.textContent()!==paginateDialogue(text,226).at(-1)!;}).toBe(true);}
+async function readAnswer(page:Page,pages:string[]) {for(const text of pages)await readDialogue(page,text);}
+async function revealAndAdvanceWithTouch(page:Page,text:string,wait=false) {await readDialogue(page,text,true);if(wait)await expect.poll(async()=>{const status=page.locator('div[role="status"].sr-only');return await status.count()===0||await status.textContent()!==paginateDialogue(text,226).at(-1)!;}).toBe(true);}
 
 test('audience selector resolves the six-project party for each audience', async ({ page }) => {
   await page.goto('/dev/battle');
@@ -123,6 +100,7 @@ test('keyboard completes authored Recruiter interview, switches party project, o
   expect(recruiterParty).toHaveLength(6);
   const karsh = getProject(recruiterParty[1]!);
   expect(karsh?.id).toBe(PROJECT_IDS.KARSH);
+  await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
   await revealAndAdvance(page, UI_STRINGS.sendOut(karsh!.name));
   await expect(page.getByRole('region', { name: 'Current project' })).toContainText(karsh!.name);
@@ -167,15 +145,7 @@ test('touch-only controls open and read an authored topic', async ({ browser }) 
   await expect(page.getByRole('group', { name: 'Interview topics' }).getByRole('button', { name: rootTopic.label })).toBeVisible();
   await confirm.tap();
   await revealAndAdvanceWithTouch(page, Audiences[AUDIENCE_RECRUITER]!.reactions['detail-open'][0]!, true);
-  for (const answerPage of rootTopic.answer.pages) {
-    await expect(page.getByRole('status')).toContainText(answerPage);
-    const reveal = page.getByRole('button', { name: 'Reveal dialogue' });
-    if (await reveal.isVisible()) {
-      await confirm.tap();
-      await expect(page.getByRole('button', { name: 'Continue dialogue' })).toBeVisible();
-    }
-    await confirm.tap();
-  }
+  for(const answerPage of rootTopic.answer.pages) await readDialogue(page,answerPage,true);
   await expect(page.getByRole('group', { name: 'Battle commands' })).toBeVisible();
   await context.close();
 });

@@ -1,14 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useCallback } from 'react';
 import { BattleOrchestrator } from '../../../ui/battle/BattleOrchestrator';
 import { ProjectId, AudienceId } from '../../../domain/types';
 import { Audiences, AUDIENCE_RECRUITER } from '../../../content/audiences';
 import { getParty } from '../../../content/party';
 import { getProject } from '../../../content/registry';
+import { unlockAudio } from '../../../runtime/AudioUnlocker';
+import { BattleRendererHost } from '../../BattleRendererHost';
+import { createGameBridge } from '../../../runtime/gameBridge';
 import { globalInputRouter, KeyboardAdapter } from '../../../core/input';
 
 export default function DevBattleArena() {
+  const [bridge]=useState(()=>createGameBridge());
+  const [rendererReady,setRendererReady]=useState(false);
+  const onRendererReady=useCallback(()=>setRendererReady(true),[]);
   const [active, setActive] = useState(false);
   const [audience, setAudience] = useState<AudienceId>(AUDIENCE_RECRUITER);
   const party = getParty(audience);
@@ -35,7 +41,7 @@ export default function DevBattleArena() {
   if (active) {
     return (
       <div className="h-screen w-screen">
-        <BattleOrchestrator initialProject={project} audience={audience} onExit={() => setActive(false)} />
+        <BattleOrchestrator initialProject={project} audience={audience} onExit={() => {setActive(false);setRendererReady(false);}} bridge={rendererReady?bridge:undefined} sceneHost={<BattleRendererHost bridge={bridge} onReady={onRendererReady}/>} />
       </div>
     );
   }
@@ -58,7 +64,7 @@ export default function DevBattleArena() {
           ))}
         </select>
 
-        <button type="button" onClick={() => setActive(true)} className="mt-4 bg-blue-700 px-4 py-3 font-bold text-white hover:bg-blue-800">
+        <button type="button" onClick={() => {unlockAudio();setActive(true);}} className="mt-4 bg-blue-700 px-4 py-3 font-bold text-white hover:bg-blue-800">
           Start battle
         </button>
       </div>

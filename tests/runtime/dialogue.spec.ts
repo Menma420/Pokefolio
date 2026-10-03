@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { DialogueService } from '../../src/runtime/services/DialogueService';
 
 describe('DialogueService', () => {
@@ -31,4 +31,10 @@ describe('DialogueService', () => {
 
     expect(service.getActive()).toBeNull();
   });
+});
+it('serializes reducer/timeline presentations with queued requests and releases their ownership safely',async()=>{
+ const service=new DialogueService(),subscriber=vi.fn();service.subscribe(subscriber);
+ const presentation=service.present('An authored answer');const next=vi.fn();const queued=service.request('A scripted reaction').then(next);
+ expect(service.getActive()).toBeNull();expect(next).not.toHaveBeenCalled();presentation.release();await presentation.done;
+ expect(service.getActive()?.text).toBe('A scripted reaction');service.completeActive();await queued;expect(next).toHaveBeenCalledOnce();presentation.release();expect(service.getActive()).toBeNull();
 });

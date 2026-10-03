@@ -1,0 +1,177 @@
+{
+  "background": {
+    "src": "/assets/battle/background.08e56444dbe2.png",
+    "width": 240,
+    "height": 160
+  },
+  "opponent-platform": {
+    "src": "/assets/battle/opponent-platform.dbe56f14ec81.png",
+    "width": 96,
+    "height": 24
+  },
+  "visitor-platform": {
+    "src": "/assets/battle/visitor-platform.95920fe8f4c4.png",
+    "width": 104,
+    "height": 24
+  },
+  "visitor-back": {
+    "src": "/assets/battle/visitor-back.a3c1d0cd7628.png",
+    "width": 64,
+    "height": 64
+  },
+  "uttkarsh-front": {
+    "src": "/assets/battle/uttkarsh-front.44467f18e66f.png",
+    "width": 64,
+    "height": 64
+  },
+  "project-acko-clinic": {
+    "src": "/assets/battle/project-acko-clinic.1e3d01a5a7c5.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-acko-clinic": {
+    "src": "/assets/battle/thumb-acko-clinic.4bd9022ad744.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-karsh": {
+    "src": "/assets/battle/project-karsh.ab08d575dd90.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-karsh": {
+    "src": "/assets/battle/thumb-karsh.cae45a0b846e.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-nomnom-planner": {
+    "src": "/assets/battle/project-nomnom-planner.a97ffea2ec8a.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-nomnom-planner": {
+    "src": "/assets/battle/thumb-nomnom-planner.75da207884ea.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-pokefolio": {
+    "src": "/assets/battle/project-pokefolio.871c61324e56.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-pokefolio": {
+    "src": "/assets/battle/thumb-pokefolio.fdccd91f6ba0.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-pdf-qa": {
+    "src": "/assets/battle/project-pdf-qa.5294eef40dab.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-pdf-qa": {
+    "src": "/assets/battle/thumb-pdf-qa.c931c7478007.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-weatherpi": {
+    "src": "/assets/battle/project-weatherpi.cef6e09af91c.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-weatherpi": {
+    "src": "/assets/battle/thumb-weatherpi.cbcdcc17adf5.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-portscanner": {
+    "src": "/assets/battle/project-portscanner.ffb71639e5fa.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-portscanner": {
+    "src": "/assets/battle/thumb-portscanner.9eb1dea386a3.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-parallel-distributed-computing": {
+    "src": "/assets/battle/project-parallel-distributed-computing.42abba7d3f8e.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-parallel-distributed-computing": {
+    "src": "/assets/battle/thumb-parallel-distributed-computing.dfe613e46bc9.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-arise": {
+    "src": "/assets/battle/project-arise.af7ae4c9f0c1.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-arise": {
+    "src": "/assets/battle/thumb-arise.7b8bd988e08b.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-pokemon-elo-rating": {
+    "src": "/assets/battle/project-pokemon-elo-rating.51579df94035.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-pokemon-elo-rating": {
+    "src": "/assets/battle/thumb-pokemon-elo-rating.377040db0c6b.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-vanix": {
+    "src": "/assets/battle/project-vanix.5108cf4f74d6.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-vanix": {
+    "src": "/assets/battle/thumb-vanix.f4917eb035c1.png",
+    "width": 16,
+    "height": 16
+  },
+  "project-chatroomapp": {
+    "src": "/assets/battle/project-chatroomapp.c6d14b8c414a.png",
+    "width": 64,
+    "height": 64
+  },
+  "thumb-chatroomapp": {
+    "src": "/assets/battle/thumb-chatroomapp.f7a1074e970b.png",
+    "width": 16,
+    "height": 16
+  },
+  "type-BACKEND": {
+    "src": "/assets/battle/type-BACKEND.b0a0ae7d34c4.png",
+    "width": 16,
+    "height": 8
+  },
+  "type-FULL_STACK": {
+    "src": "/assets/battle/type-FULL_STACK.ea115fef8be9.png",
+    "width": 16,
+    "height": 8
+  },
+  "type-AI": {
+    "src": "/assets/battle/type-AI.679969a312b7.png",
+    "width": 16,
+    "height": 8
+  },
+  "type-IOT": {
+    "src": "/assets/battle/type-IOT.7d2dbcdca869.png",
+    "width": 16,
+    "height": 8
+  },
+  "type-NETWORKING": {
+    "src": "/assets/battle/type-NETWORKING.75217024ac8e.png",
+    "width": 16,
+    "height": 8
+  },
+  "type-BLOCKCHAIN": {
+    "src": "/assets/battle/type-BLOCKCHAIN.d531cbca543a.png",
+    "width": 16,
+    "height": 8
+  }
+}

@@ -1,36 +1,44 @@
 'use client';
-
+import { useContext, useMemo } from 'react';
+import { PixelContext } from '../kit/PixelContext';
+import { Raster } from '../kit/Raster';
+import { rgb } from '../kit/bitmap';
 import { AudienceId } from '../../domain/types';
 import { Audiences } from '../../content/audiences';
-import { GameViewport, Window } from '../../ui/kit';
-import { useStore } from 'zustand';
-import { settingsStore, SettingsState } from '../../runtime/stores';
-
-export interface VsScreenProps {
-  audienceId: AudienceId;
-}
-
+import { GameViewport } from '../kit';
+import { BitmapText } from '../kit/BitmapText';
+import { DialogueBox } from '../kit/DialogueBox';
+import { palette, vsPalette } from '../kit/palette';
+import { PixelArtwork, type OpeningArt } from '../opening/PixelArtwork';
+import { useArtFrame } from '../opening/useArtFrame';
+import { isReducedMotion } from '../../runtime/motion';
+export interface VsScreenProps { audienceId: AudienceId }
 export function VsScreen({ audienceId }: VsScreenProps) {
+  const { n } = useContext(PixelContext);
   const audience = Audiences[audienceId];
-  const reducedMotion = useStore(settingsStore, (state: SettingsState) => state.reducedMotion);
-  return (
-    <GameViewport>
-      <main aria-label="Interview challenge" className="absolute inset-0 overflow-hidden bg-slate-950">
-        <div className={`absolute inset-x-0 top-0 flex h-1/2 items-center justify-end border-b-2 border-black bg-red-800 pr-[calc(24*var(--u))] ${reducedMotion ? '' : 'animate-pulse'}`}>
-          <span className="font-mono text-[calc(11*var(--u))] font-bold text-white">{audience?.challengerTitle ?? 'Challenger'}</span>
-        </div>
-        <div className={`absolute inset-x-0 bottom-0 flex h-1/2 items-center justify-start bg-blue-800 pl-[calc(24*var(--u))] ${reducedMotion ? '' : 'animate-pulse'}`}>
-          <span className="font-mono text-[calc(11*var(--u))] font-bold text-white">YOU</span>
-        </div>
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-black px-[calc(8*var(--u))] py-[calc(4*var(--u))] font-mono text-[calc(18*var(--u))] font-black italic text-yellow-300">
-          VS
-        </div>
-        <div className="absolute bottom-[calc(4*var(--u))] left-1/2 w-[calc(210*var(--u))] -translate-x-1/2">
-          <Window>
-            <p className="text-center text-[calc(6*var(--u))] leading-[calc(8*var(--u))]">{audience?.announcement ?? 'The interview begins!'}</p>
-          </Window>
-        </div>
-      </main>
-    </GameViewport>
-  );
+  const colors = vsPalette[audienceId as keyof typeof vsPalette] ?? vsPalette.RECRUITER;
+  const frame = useArtFrame(true, 90);
+  const reduced = isReducedMotion();
+  const slide = reduced ? 0 : Math.max(0, 24 - frame) * 8;
+  const stripes = reduced ? 0 : Math.max(0, Math.min(20, frame - 8)) * 2;
+  const titleOffset = reduced ? 0 : Math.max(0, 4 - Math.floor((frame - 44) / 2)) * 32;
+  const shake = !reduced && frame >= 30 && frame < 34 ? frame % 2 ? 1 : -1 : 0;
+  const background = useMemo(() => {
+    const width = 240*n, height=160*n, data=new Uint8ClampedArray(width*height*4);
+    const inks=colors.map(color=>[...rgb(color),255]);
+    for(let band=0;band<20;band++){const row=new Uint8ClampedArray(width*4);
+      for(let x=0;x<240;x++){const index=((x-band*8-stripes)%32+32)%32<16?0:1;for(let dx=0;dx<n;dx++)row.set(inks[index]!, (x*n+dx)*4);}
+      for(let y=band*8*n;y<(band+1)*8*n;y++)data.set(row,y*width*4);
+    }
+    return {width,height,data};
+  },[colors,n,stripes]);
+  const portrait = (audience?.portraitKey ?? 'portrait-recruiter') as OpeningArt;
+  return <GameViewport><main aria-label="Interview challenge" data-vs-frame={frame} data-vs-colors={colors.join(',')} className="absolute inset-0 overflow-hidden" style={{background:colors[0]}}>
+    <Raster image={background} style={{position:'absolute',left:0,top:0}} />
+    <PixelArtwork name="portrait-visitor" x={16-slide} y={40} label="Visitor portrait" />
+    <PixelArtwork name={portrait} x={160+slide} y={8} label="Uttkarsh challenger artwork" />
+    {(reduced || frame >= 30) && <PixelArtwork name="vs-lettering" x={92+shake} y={40} label="VS" />}
+    {(reduced || frame >= 44) && <div data-vs-title style={{position:'absolute',left:`calc(${104+titleOffset}*var(--u))`,top:'calc(80*var(--u))',width:'calc(128*var(--u))',height:'calc(16*var(--u))',padding:'calc(4*var(--u))'}}><PixelArtwork name="vs-title-bar" /><BitmapText text={`THE ${audience?.challengerTitle.toUpperCase() ?? 'VISITOR'}`} color={palette.onDark} shadow={palette.outer} style={{position:'relative'}} /></div>}
+    {(reduced || frame >= 50) && <DialogueBox variant="field" text={audience?.announcement ?? 'The interview begins!'} speed={reduced ? 'instant' : 'fast'} disableInputContext awaitInput={false} onComplete={()=>{}} />}
+  </main></GameViewport>;
 }

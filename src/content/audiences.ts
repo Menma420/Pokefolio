@@ -9,7 +9,7 @@ export const Audiences: Record<string, AudienceDef> = {
     id: AUDIENCE_RECRUITER,
     choiceLabel: "I'm hiring",
     challengerTitle: "Recruiter",
-    announcement: "Recruiter wants to battle!",
+    announcement: "You were challenged by the Recruiter!",
     portraitKey: "portrait-recruiter",
     greetings: { repeat: ["Let's talk business."] },
     reactions: {
@@ -24,7 +24,7 @@ export const Audiences: Record<string, AudienceDef> = {
     id: AUDIENCE_ENGINEER,
     choiceLabel: "I'm an engineer",
     challengerTitle: "Engineer",
-    announcement: "Engineer challenged you!",
+    announcement: "You were challenged by the Engineer!",
     portraitKey: "portrait-engineer",
     greetings: { repeat: ["Show me the architecture."] },
     reactions: {
@@ -38,8 +38,8 @@ export const Audiences: Record<string, AudienceDef> = {
   [AUDIENCE_FRIEND]: {
     id: AUDIENCE_FRIEND,
     choiceLabel: "I'm just visiting",
-    challengerTitle: "Friend",
-    announcement: "Friend wants to play!",
+    challengerTitle: "Visitor",
+    announcement: "You were challenged by the Visitor!",
     portraitKey: "portrait-friend",
     greetings: { repeat: ["Hey again!"] },
     reactions: {

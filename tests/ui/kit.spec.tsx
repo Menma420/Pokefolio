@@ -15,20 +15,20 @@ describe('DialogueBox UI Kit Tests', () => {
     // Initial state correctly holds opacity 0 elements safely
     const srElement = container.querySelector('.sr-only');
     expect(srElement).toBeTruthy();
-    expect(srElement!.textContent).toBe('Hello');
+    expect(srElement!.textContent).toBe('');
 
     // Typed element starts practically empty mapping delays functionally beautifully tracking natively correctly effortlessly cleanly
-    const typedElement = container.querySelector('[aria-hidden="true"]');
+    const typedElement = container.querySelector('[data-typed]');
     expect(typedElement!.textContent).toBe('');
 
     // Assuming normal speed (30ms per char) ideally logically smoothly naturally executing cleanly naturally neatly
-    act(() => { clock.tick(30); }); // H
+    act(() => { clock.tick(50); }); // H
     expect(typedElement!.textContent).toBe('H');
 
-    act(() => { clock.tick(30); }); // e
+    act(() => { clock.tick(50); }); // e
     expect(typedElement!.textContent).toBe('He');
 
-    act(() => { clock.tick(100); }); // llo
+    act(() => { clock.tick(150); }); // llo
     expect(typedElement!.textContent).toBe('Hello');
   });
 });

@@ -1,4 +1,5 @@
 import { ProjectDef, ProjectId } from '../../domain/types';
+import battleAssets from '../../../assets-src/battle/manifest.json';
 import { PROJECT_TYPES } from '../../domain/project-types';
 
 export const PROJECT_IDS = {
@@ -38,6 +39,21 @@ const definitions: Array<{
   { id: 'CHATROOM_APP', slug: 'chatroomapp', name: 'ChatRoomApp', type: PROJECT_TYPES.FULL_STACK, summary: 'A chat application project.', url: 'https://github.com/Menma420/ChatRoomApp' },
 ];
 
+const visualLabels: Record<string, {plateName:string;shortName:string;tagline:string}> = {
+ ACKO_CLINIC:{plateName:'ACKO CLINIC',shortName:'ACKO CLINIC',tagline:'Clinic journeys and backend services.'},
+ KARSH:{plateName:'KARSH',shortName:'KARSH',tagline:'Track capability and personal growth.'},
+ NOMNOM:{plateName:'NOMNOM PLANNER',shortName:'NOMNOM',tagline:'Personalized meal planning.'},
+ POKEFOLIO:{plateName:'POKEFOLIO',shortName:'POKEFOLIO',tagline:'A playable portfolio and interview.'},
+ PDF_QA:{plateName:'PDF-QA',shortName:'PDF-QA',tagline:'Ask questions about PDF documents.'},
+ WEATHER_PI:{plateName:'WEATHERPI',shortName:'WEATHERPI',tagline:'Collect and explore sensor readings.'},
+ PORT_SCANNER:{plateName:'PORTSCANNER',shortName:'PORTSCANNER',tagline:'Concurrent TCP discovery from a CLI.'},
+ PARALLEL_DISTRIBUTED_COMPUTING:{plateName:'PARALLEL COMPUTING',shortName:'PARALLEL',tagline:'Parallel and distributed coursework.'},
+ ARISE:{plateName:'ARISE',shortName:'ARISE',tagline:'A system for personal productivity.'},
+ POKEMON_ELO_RATING:{plateName:'POKEMON ELO RATING',shortName:'POKEMON ELO',tagline:'Matchup ranking with the Elo system.'},
+ VANIX:{plateName:'VANIX',shortName:'VANIX',tagline:'Explore real-time voice rooms.'},
+ CHATROOM_APP:{plateName:'CHATROOMAPP',shortName:'CHATROOMAPP',tagline:'A real-time chat application.'},
+};
+
 export const PROJECTS: ProjectDef[] = definitions.map((definition) => ({
   id: PROJECT_IDS[definition.id],
   slug: definition.slug,
@@ -52,8 +68,10 @@ export const PROJECTS: ProjectDef[] = definitions.map((definition) => ({
   impact: [],
   links: { primary: { label: 'GitHub repository', url: definition.url }, others: [] },
   visual: {
-    logo: { src: `/game/projects/${definition.slug}/logo.png`, alt: `${definition.name} logo` },
-    thumb: { src: `/game/projects/${definition.slug}/thumb.png`, alt: `${definition.name} icon` },
+    ...visualLabels[definition.id],
+    artKey: definition.slug,
+    logo: { src: (battleAssets as Record<string,{src:string}>)[`project-${definition.slug}`]!.src, alt: `${definition.name} logo` },
+    thumb: { src: (battleAssets as Record<string,{src:string}>)[`thumb-${definition.slug}`]!.src, alt: `${definition.name} icon` },
     alt: definition.name,
   },
 }));

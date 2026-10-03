@@ -1,0 +1,241 @@
+{
+  "background": [
+    "#496A57",
+    "#527D88",
+    "#779C70",
+    "#849B74",
+    "#91AE94",
+    "#91B6AE",
+    "#A7B782",
+    "#A9BC82",
+    "#A9C2AC",
+    "#B8C9B1",
+    "#BEA579",
+    "#EFE0AC"
+  ],
+  "opponent-platform": [
+    "#283D38",
+    "#496A57",
+    "#779C70",
+    "#A9BC82",
+    "#BEA579",
+    "#EFE0AC",
+    "#F9EBC4"
+  ],
+  "visitor-platform": [
+    "#283D38",
+    "#496A57",
+    "#779C70",
+    "#A9BC82",
+    "#BEA579",
+    "#EFE0AC",
+    "#F9EBC4"
+  ],
+  "visitor-back": [
+    "#283D38",
+    "#353D41",
+    "#775B4F",
+    "#946E55",
+    "#C6A476",
+    "#D4A97C",
+    "#EFE0AC"
+  ],
+  "uttkarsh-front": [
+    "#283D38",
+    "#333A43",
+    "#427F8D",
+    "#555971",
+    "#8ABBA9",
+    "#B77E58",
+    "#D7AA79",
+    "#EFE0AC"
+  ],
+  "project-acko-clinic": [
+    "#283D38",
+    "#527D88",
+    "#A4D2BE",
+    "#BEA579",
+    "#EFE0AC"
+  ],
+  "thumb-acko-clinic": [
+    "#283D38",
+    "#527D88",
+    "#A4D2BE",
+    "#BEA579",
+    "#EFE0AC"
+  ],
+  "project-karsh": [
+    "#283D38",
+    "#795D8E",
+    "#BC9FCD",
+    "#EFE0AC"
+  ],
+  "thumb-karsh": [
+    "#283D38",
+    "#795D8E",
+    "#BC9FCD",
+    "#EFE0AC"
+  ],
+  "project-nomnom-planner": [
+    "#283D38",
+    "#9A704E",
+    "#BEA579",
+    "#DFC493",
+    "#EFE0AC"
+  ],
+  "thumb-nomnom-planner": [
+    "#283D38",
+    "#9A704E",
+    "#BEA579",
+    "#DFC493",
+    "#EFE0AC"
+  ],
+  "project-pokefolio": [
+    "#283D38",
+    "#49775F",
+    "#ABD39A",
+    "#EFE0AC"
+  ],
+  "thumb-pokefolio": [
+    "#283D38",
+    "#49775F",
+    "#EFE0AC"
+  ],
+  "project-pdf-qa": [
+    "#283D38",
+    "#656C9D",
+    "#ADBAD7",
+    "#BEA579",
+    "#EFE0AC"
+  ],
+  "thumb-pdf-qa": [
+    "#283D38",
+    "#ADBAD7",
+    "#BEA579",
+    "#EFE0AC"
+  ],
+  "project-weatherpi": [
+    "#283D38",
+    "#527D88",
+    "#A3CDDB"
+  ],
+  "thumb-weatherpi": [
+    "#283D38",
+    "#527D88",
+    "#A3CDDB"
+  ],
+  "project-portscanner": [
+    "#283D38",
+    "#596B7C",
+    "#ABC3D1",
+    "#BEA579",
+    "#EFE0AC"
+  ],
+  "thumb-portscanner": [
+    "#283D38",
+    "#596B7C",
+    "#ABC3D1",
+    "#EFE0AC"
+  ],
+  "project-parallel-distributed-computing": [
+    "#283D38",
+    "#61788B",
+    "#B7CBD6",
+    "#BEA579",
+    "#EFE0AC"
+  ],
+  "thumb-parallel-distributed-computing": [
+    "#283D38",
+    "#61788B",
+    "#B7CBD6",
+    "#BEA579",
+    "#EFE0AC"
+  ],
+  "project-arise": [
+    "#283D38",
+    "#7A648F",
+    "#B5A2CF",
+    "#EFE0AC"
+  ],
+  "thumb-arise": [
+    "#283D38",
+    "#7A648F",
+    "#B5A2CF",
+    "#EFE0AC"
+  ],
+  "project-pokemon-elo-rating": [
+    "#283D38",
+    "#947347",
+    "#BEA579",
+    "#DFC184",
+    "#EFE0AC"
+  ],
+  "thumb-pokemon-elo-rating": [
+    "#283D38",
+    "#947347",
+    "#BEA579",
+    "#DFC184"
+  ],
+  "project-vanix": [
+    "#283D38",
+    "#75648B",
+    "#BCA5C8",
+    "#BEA579",
+    "#EFE0AC"
+  ],
+  "thumb-vanix": [
+    "#283D38",
+    "#75648B",
+    "#BCA5C8",
+    "#BEA579",
+    "#EFE0AC"
+  ],
+  "project-chatroomapp": [
+    "#283D38",
+    "#567F7C",
+    "#ABCEC1",
+    "#EFE0AC"
+  ],
+  "thumb-chatroomapp": [
+    "#283D38",
+    "#567F7C",
+    "#ABCEC1",
+    "#EFE0AC"
+  ],
+  "type-BACKEND": [
+    "#283D38",
+    "#496A57",
+    "#A9BC82",
+    "#EFE0AC"
+  ],
+  "type-FULL_STACK": [
+    "#283D38",
+    "#496A57",
+    "#A9BC82",
+    "#EFE0AC"
+  ],
+  "type-AI": [
+    "#283D38",
+    "#496A57",
+    "#A9BC82",
+    "#EFE0AC"
+  ],
+  "type-IOT": [
+    "#283D38",
+    "#496A57",
+    "#A9BC82",
+    "#EFE0AC"
+  ],
+  "type-NETWORKING": [
+    "#283D38",
+    "#496A57",
+    "#A9BC82",
+    "#EFE0AC"
+  ],
+  "type-BLOCKCHAIN": [
+    "#283D38",
+    "#496A57",
+    "#A9BC82",
+    "#EFE0AC"
+  ]
+}

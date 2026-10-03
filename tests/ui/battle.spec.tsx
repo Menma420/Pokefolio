@@ -1,5 +1,7 @@
+import { FakeClock } from '../../src/core/clock';
+import { ClockContext } from '../../src/ui/kit/PixelContext';
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { BattleContext } from '../../src/core/battle/types';
 import { getAvailableCommands } from '../../src/core/battle/selectors';
 import { ProjectId } from '../../src/domain/types';
@@ -36,31 +38,40 @@ describe('Phase 4 battle UI', () => {
   it('renders root commands and disables an unavailable link', () => {
     render(<BattleScreen ctx={context()} visibleTopics={[]} availableCommands={['DETAILS', 'LINK', 'PARTY', 'EXIT']} pageText="" summary="" linkAvailable={false} dispatch={vi.fn()} />);
     const commands = screen.getByRole('group', { name: 'Battle commands' });
-    expect(within(commands).getByRole('button', { name: 'LINK' }).hasAttribute('disabled')).toBe(true);
+    expect(within(commands).getByRole('button', { name: 'LINK' }).getAttribute('aria-disabled')).toBe('true');
     expect(within(commands).getByRole('button', { name: 'DETAILS' }).hasAttribute('disabled')).toBe(false);
     expect(screen.getByRole('region', { name: 'Current project' }).textContent).toContain('Acko Clinic');
   });
 
   it('dispatches LINK from the root command button', () => {
-    const dispatch = vi.fn();
-    render(<BattleScreen ctx={context()} visibleTopics={[]} availableCommands={['DETAILS', 'LINK', 'PARTY', 'EXIT']} pageText="" summary="" linkAvailable dispatch={dispatch} />);
+    const dispatch = vi.fn(); const clock=new FakeClock();
+    render(<ClockContext.Provider value={clock}><BattleScreen ctx={context()} visibleTopics={[]} availableCommands={['DETAILS', 'LINK', 'PARTY', 'EXIT']} pageText="" summary="" linkAvailable dispatch={dispatch} /></ClockContext.Provider>);
     fireEvent.click(screen.getByRole('button', { name: 'LINK' }));
+    expect(dispatch).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'LINK' }));
+    act(()=>clock.tick(100));
     expect(dispatch).toHaveBeenCalledWith({ type: 'LINK' });
   });
 
   it('shows the selected audience role in the VS presentation', () => {
-    render(<VsScreen audienceId={AUDIENCE_RECRUITER} />);
-    expect(screen.getByText('Recruiter')).toBeTruthy();
-    expect(screen.getByText('Recruiter wants to battle!')).toBeTruthy();
-    expect(screen.getByText('VS')).toBeTruthy();
+    const clock=new FakeClock();
+    render(<ClockContext.Provider value={clock}><VsScreen audienceId={AUDIENCE_RECRUITER} /></ClockContext.Provider>);
+    act(()=>clock.tick(1000));
+    expect(screen.getByRole('img', {name:'Uttkarsh challenger artwork'})).toBeTruthy();
+    expect(screen.getByText('THE RECRUITER')).toBeTruthy();
+    act(()=>clock.tick(1000));
+    expect(screen.getByRole('status').textContent).toBe('You were challenged by the Recruiter!');
+    expect(screen.getByRole('img', {name:'VS'})).toBeTruthy();
   });
 
   it('renders audience Party names in a 2x3 grid and lets a project be selected', () => {
-    const onSelect = vi.fn();
+    const onSelect = vi.fn(); const clock=new FakeClock();
     const party = getParty(AUDIENCE_RECRUITER).map((id) => ({ id, name: getProject(id)!.name }));
-    render(<PartyScreen activeProjectId={party[0]!.id} projects={party} onSelect={onSelect} onCancel={vi.fn()} />);
+    render(<ClockContext.Provider value={clock}><PartyScreen activeProjectId={party[0]!.id} projects={party} onSelect={onSelect} onCancel={vi.fn()} /></ClockContext.Provider>);
     expect(screen.getByRole('main', { name: 'Choose a project' }).querySelectorAll('button[aria-pressed]')).toHaveLength(6);
     fireEvent.click(screen.getByRole('button', { name: /Karsh/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Karsh/ }));
+    act(()=>clock.tick(100));
     expect(onSelect).toHaveBeenCalledWith(party[1]!.id);
   });
 
@@ -71,3 +82,12 @@ describe('Phase 4 battle UI', () => {
     settingsStore.getState().update({ reducedMotion: false });
   });
 });
+
+it('remembers the root command cursor across topic surfaces',()=>{
+ const props={ctx:context(),visibleTopics:[],availableCommands:['DETAILS','LINK','PARTY','EXIT'],pageText:'',summary:'',linkAvailable:true,dispatch:vi.fn()};
+ const view=render(<BattleScreen {...props}/>);act(()=>{globalInputRouter.handlePress('RIGHT');globalInputRouter.handleRelease('RIGHT');});
+ expect(view.getByRole('button',{name:'LINK'}).querySelector('[data-cursor]')).toBeTruthy();
+ view.rerender(<BattleScreen {...props} ctx={context({view:'topics'})} availableCommands={[]}/>);
+ view.rerender(<BattleScreen {...props}/>);expect(view.getByRole('button',{name:'LINK'}).querySelector('[data-cursor]')).toBeTruthy();view.unmount();
+});
+import {globalInputRouter} from '../../src/core/input';

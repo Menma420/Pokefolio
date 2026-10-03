@@ -76,6 +76,10 @@ export interface ProjectDef {
     others: LinkDef[];
   };
   visual: {
+    plateName?: string;
+    shortName?: string;
+    tagline?: string;
+    artKey?: string;
     logo: AssetRef;
     thumb: AssetRef;
     alt: string;

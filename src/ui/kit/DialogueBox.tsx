@@ -1,80 +1,72 @@
 'use client';
-
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import { useStore } from 'zustand';
-import { Clock, RealClock, ScheduledTask } from '../../core/clock';
+import { Clock, FRAME_MS, ScheduledTask } from '../../core/clock';
 import { globalInputRouter } from '../../core/input';
-import { SettingsState, settingsStore } from '../../runtime/stores';
+import { settingsStore } from '../../runtime/stores';
 import { Cursor } from './Cursor';
 import { Window } from './Window';
-
-interface DialogueBoxProps {
-  text: string;
-  onComplete: () => void;
-  clock?: Clock;
-  disableInputContext?: boolean;
+import { paginateDialogue } from './text';
+import { ClockContext } from './PixelContext';
+import { BitmapText } from './BitmapText';
+import {globalDialogueService} from '../../runtime/services/DialogueService';
+import { audioService } from '../../runtime/AudioService';
+interface DialogueBoxProps { text:string; onComplete:()=>void; clock?:Clock; disableInputContext?:boolean; variant?:'field'|'battle'; dismissible?:boolean; speed?:'slow'|'normal'|'fast'|'instant'; awaitInput?:boolean }
+export function DialogueBox(props:DialogueBoxProps) {
+ // Remount presentation on prose changes; old scheduled tasks are cancelled on unmount.
+ return <DialoguePage key={props.text} {...props}/>;
 }
-
-const defaultClock = new RealClock();
-
-export function DialogueBox({ text, onComplete, clock = defaultClock, disableInputContext = false }: DialogueBoxProps) {
-  const [typedLength, setTypedLength] = useState(0);
-  const [done, setDone] = useState(text.length === 0);
-  const textSpeed = useStore(settingsStore, (state: SettingsState) => state.textSpeed);
-  const typedLengthRef = useRef(0);
-  const taskRef = useRef<ScheduledTask | null>(null);
-
-  const advance = useCallback(() => {
-    if (!done) {
-      taskRef.current?.cancel();
-      typedLengthRef.current = text.length;
-      setTypedLength(text.length);
-      setDone(true);
-    } else {
-      onComplete();
-    }
-  }, [done, onComplete, text.length]);
-
-  useEffect(() => {
-    typedLengthRef.current = 0;
-    if (!text) return;
-
-    const delay = textSpeed === 'fast' ? 15 : textSpeed === 'normal' ? 30 : 60;
-    const typeNext = () => {
-      typedLengthRef.current += 1;
-      setTypedLength(typedLengthRef.current);
-      if (typedLengthRef.current < text.length) {
-        taskRef.current = clock.schedule(typeNext, delay);
-      } else {
-        setDone(true);
-      }
-    };
-    taskRef.current = clock.schedule(typeNext, delay);
-    return () => taskRef.current?.cancel();
-  }, [clock, text, textSpeed]);
-
-  useEffect(() => {
-    if (!text || disableInputContext) return;
-    globalInputRouter.register('dialogue-box', 'DIALOGUE', (action) => {
-      if (action === 'A' || action === 'B') advance();
-    });
-    return () => globalInputRouter.unregister('dialogue-box');
-  }, [advance, disableInputContext, text]);
-
-  return (
-    <div className="absolute bottom-0 left-0 z-30 w-full p-[calc(4*var(--u))]">
-      <Window style={{ minHeight: 'calc(48 * var(--u))', position: 'relative', paddingRight: 'calc(18 * var(--u))' }}>
-        <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">{text}</div>
-        <div aria-hidden="true" className="whitespace-pre-wrap break-words">{text.slice(0, typedLength)}</div>
-        <button
-          type="button"
-          aria-label={done ? 'Continue dialogue' : 'Reveal dialogue'}
-          onClick={advance}
-          className="absolute bottom-[calc(2*var(--u))] right-[calc(2*var(--u))] flex h-[calc(14*var(--u))] w-[calc(14*var(--u))] items-center justify-center text-white"
-        >
-          {done && <span className="animate-bounce"><Cursor className="rotate-90" /></span>}
-        </button>
-      </Window>
-    </div>
-  );
+function DialoguePage({text,onComplete,clock: injectedClock,disableInputContext=false,variant='field',dismissible=false,speed,awaitInput=true}:DialogueBoxProps) {
+ const sharedClock=useContext(ClockContext);
+ const clock=injectedClock??sharedClock;
+ const settings=useStore(settingsStore);
+ const pages=paginateDialogue(text,variant==='field'?210:226,variant==='field'?8:0);
+ const [page,setPage]=useState(0); const [length,setLength]=useState(0); const [bob,setBob]=useState(0);
+ const releasePresentation=useRef<(()=>void)|null>(null);
+ useEffect(()=>{if(globalDialogueService.getActive()?.text===text)return;const owner=globalDialogueService.present(text);releasePresentation.current=owner.release;return ()=>{owner.release();if(releasePresentation.current===owner.release)releasePresentation.current=null;};},[text]);
+ const complete=()=>{releasePresentation.current?.();onComplete();};
+ const typingTask=useRef<ScheduledTask|null>(null);
+ const current=pages[page]??'';
+ const delay=({slow:6,normal:3,fast:1,instant:0}[speed??settings.textSpeed])*FRAME_MS;
+ const visibleLength=delay===0?current.length:length;
+ const done=visibleLength>=current.length;
+ useEffect(()=>{
+  let count=0; let printable=0; let task:ScheduledTask;
+  const step=()=>{
+   while(count<current.length && /\s/.test(current[count]!)) count++;
+   if(count>=current.length){setLength(count);return;}
+   count=Math.min(current.length,count+1); setLength(count);
+   if(++printable%2===0) audioService.play('text.tick');
+   if(count<current.length) { task=clock.schedule(step,delay); typingTask.current=task; }
+  };
+  if(delay===0)return;
+  task=clock.schedule(step,delay); typingTask.current=task;
+  return ()=>task.cancel();
+ },[clock,current,delay]);
+ useEffect(()=>{
+  if(!done || settings.reducedMotion) return;
+  const task=clock.schedule(()=>setBob(value=>1-value),16*FRAME_MS);
+  return ()=>task.cancel();
+ },[bob,clock,done,settings.reducedMotion]);
+ const advance=()=>{
+  audioService.play('ui.confirm');
+  if(!done) { typingTask.current?.cancel(); setLength(current.length); }
+  else if(page+1<pages.length) {audioService.play('page');setPage(page+1);setLength(0);setBob(0);}
+  else complete();
+ };
+ useEffect(()=>{
+  if(disableInputContext||!awaitInput) return;
+  globalInputRouter.register('dialogue-box','DIALOGUE',action=>{
+   if(action==='A') advance();
+   if(action==='B' && dismissible) { audioService.play('ui.cancel'); complete(); }
+  });
+  return ()=>globalInputRouter.unregister('dialogue-box');
+ });
+ return <Window className="absolute z-30" style={{left:`calc(${variant==='field'?8:0}*var(--u))`,top:'calc(112*var(--u))',width:`calc(${variant==='field'?224:240}*var(--u))`,height:`calc(${variant==='field'?40:48}*var(--u))`}}>
+  <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">{done?current:''}</div>
+  <div data-typed aria-hidden="true" className="whitespace-pre"><BitmapText text={current.slice(0,visibleLength)} semantic={false}/></div>
+  {awaitInput&&<button type="button" aria-label={done?'Continue dialogue':'Reveal dialogue'} onClick={advance} style={{position:'absolute',left:`calc(${variant==='field'?209:225}*var(--u))`,top:`calc(${variant==='field'?25:33}*var(--u))`,width:'calc(8*var(--u))',height:'calc(8*var(--u))'}}>
+   {done && <Cursor direction="down" style={{position:'absolute',left:0,top:`calc(${settings.reducedMotion?0:bob}*var(--u))`}}/>}
+  </button>}
+ </Window>;
 }

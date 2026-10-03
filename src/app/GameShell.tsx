@@ -3,7 +3,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useStore } from 'zustand';
 import { globalInputRouter, KeyboardAdapter } from '../core/input';
-import { createGameBridge } from '../runtime/gameBridge';
+import { type GameBridge,createGameBridge } from '../runtime/gameBridge';
 import { GameExperienceState, GameOrchestrator } from '../runtime/Orchestrator';
 import { uiStore, UiState } from '../runtime/stores';
 import { GameViewport, DialogueBox, TouchController, TransitionLayer, Window } from '../ui/kit';
@@ -21,6 +21,7 @@ import { PixelArtwork } from '../ui/opening/PixelArtwork';
 
 export function GameShell() {
   const clock=useContext(ClockContext);
+  const [gameBridge,setGameBridge]=useState<GameBridge|undefined>(undefined);
   const hostRef = useRef<HTMLDivElement>(null);
   const orchestratorRef = useRef<GameOrchestrator | null>(null);
   const [orchestrator, setOrchestrator] = useState<GameOrchestrator | null>(null);
@@ -34,6 +35,7 @@ export function GameShell() {
     const runtime = new GameOrchestrator(bridge, globalInputRouter, clock);
     orchestratorRef.current = runtime;
     const removeState = runtime.subscribe((next) => {
+      setGameBridge(bridge);
       setState(next);
       setOrchestrator(runtime);
     });
@@ -76,7 +78,7 @@ export function GameShell() {
 
   return (
     <GameViewport>
-      <div role="img" aria-label="Overworld scene" className="absolute left-0 top-0 h-[calc(160*var(--u))] w-[calc(240*var(--u))]" style={{ imageRendering: 'pixelated' }}>
+      <div role="img" aria-label={mode==='BATTLE'?'Battle landscape':'Overworld scene'} className="absolute left-0 top-0 h-[calc(160*var(--u))] w-[calc(240*var(--u))]" style={{ imageRendering: 'pixelated' }}>
         <div ref={hostRef} className="h-full w-full" />
       </div>
 
@@ -105,6 +107,7 @@ export function GameShell() {
           audience={audience}
           onExit={handleBattleExit}
           skipEntryVs
+          bridge={gameBridge}
           enableHistorySentinel
         />
       )}
