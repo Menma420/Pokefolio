@@ -24,10 +24,10 @@ module.exports = {
     },
     {
       name: 'game-layer-isolation',
-      comment: 'game MUST NOT import from React or content layer',
+      comment: 'game may import core/domain and GameBridge types only; it MUST NOT import UI, content, app, or other runtime implementations',
       severity: 'error',
       from: { path: '^src/game' },
-      to: { path: '(^src/(content|ui|app)|react)' }
+      to: { path: '(^src/(content|ui|app)|^src/runtime/(?!gameBridge(?:/|$))|react)' }
     },
     {
       name: 'ui-layer-isolation',

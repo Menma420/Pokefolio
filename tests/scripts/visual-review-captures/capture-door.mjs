@@ -1,0 +1,21 @@
+import { chromium, expect } from '@playwright/test';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const dir=fileURLToPath(new URL('../../../artifacts/phase-a/visual-review/', import.meta.url));const records=JSON.parse(fs.readFileSync(path.join(dir,'captures.json'))).filter(r=>!r.filename.startsWith('19-')&&!r.filename.startsWith('20-')&&!r.filename.startsWith('21-'));
+let browser;
+async function capture(page,name,note=''){
+ const frame=page.getByRole('region',{name:'Game frame',exact:true});
+ const mobile=await page.evaluate(()=>matchMedia('(pointer: coarse)').matches);if(!mobile){const v=page.viewportSize();const d=await page.evaluate(()=>devicePixelRatio);await expect(frame).toHaveAttribute('data-scale',String(Math.floor(Math.min(v.width*d/240,v.height*d/160))));}const scale=Number(await frame.getAttribute('data-scale'));const box=await frame.boundingBox();
+ const dpr=await page.evaluate(()=>devicePixelRatio);const viewport=page.viewportSize();
+ const transition=await page.locator('[data-transition]').evaluateAll(es=>es.map(e=>({type:e.dataset.transition,frame:e.dataset.frame})));
+ await page.screenshot({path:path.join(dir,name+'.png'),animations:'allow'});
+ records.push({filename:name+'.png',viewport,dpr,scale,frame:box,transition,note});fs.writeFileSync(path.join(dir,'captures.json'),JSON.stringify(records,null,2));console.log('CAPTURE',name,viewport,dpr,scale);
+}
+async function newPage(viewport={width:960,height:640},extra={}){const context=await browser.newContext({viewport,deviceScaleFactor:1,...extra});return context.newPage();}
+const status=p=>p.getByRole('status',{name:'Game state',exact:true});
+async function advance(p){const r=p.getByRole('button',{name:'Reveal dialogue',exact:true});if(await r.isVisible())await r.click();const c=p.getByRole('button',{name:'Continue dialogue',exact:true});await expect(c).toBeVisible();await c.click();await p.waitForTimeout(60);}
+async function start(p,intro=false){await p.goto('http://127.0.0.1:3100/');await expect(p.getByRole('button',{name:'PRESS START'})).toBeEnabled();await p.getByRole('button',{name:'PRESS START'}).click();await expect(p.getByRole('button',{name:/dialogue/})).toBeVisible();if(intro){const r=p.getByRole('button',{name:'Reveal dialogue'});if(await r.isVisible())await r.click();await capture(p,'02-intro-narration','Current narration presentation.');}
+ for(let i=0;i<30;i++){if((await status(p).innerText()).includes('Flow OVERWORLD'))break;if(await p.getByRole('button',{name:/dialogue/}).count())await advance(p);else await p.waitForTimeout(150);}await expect(status(p)).toContainText('Flow OVERWORLD');}
+async function step(p,key,x,y){await p.keyboard.down(key);await expect(status(p)).toContainText(`movement ${x},${y}`);await p.keyboard.up(key);await expect(status(p)).toContainText(`player tile ${x},${y}`);}
+(async()=>{browser=await chromium.launch({headless:true});const p=await newPage();await start(p);await step(p,'ArrowUp',7,4);for(let x=8;x<=21;x++)await step(p,'ArrowRight',x,4);await step(p,'ArrowDown',21,5);await p.keyboard.down('ArrowRight');await p.waitForTimeout(35);await p.keyboard.up('ArrowRight');await capture(p,'19-doorway-before','Interaction-triggered door entry; subsequent animation automatic. Unfinished building/player art.');const cdp=await p.context().newCDPSession(p);await p.keyboard.press('Enter');await p.waitForFunction(()=>Number(document.querySelector('[data-transition="door"]')?.getAttribute('data-frame')??-1)>=3);await cdp.send('Emulation.setVirtualTimePolicy',{policy:'pause'});await capture(p,'20-doorway-transition','Actual door fade, browser virtual time paused solely to photograph the rendered frame. Interaction-triggered entry; unfinished world art.');await cdp.send('Emulation.setVirtualTimePolicy',{policy:'advance'});await expect(status(p)).toContainText('Map m1-interior-test');await expect(p.locator('[data-transition="door"]')).toHaveCount(0);await capture(p,'21-doorway-after','Actual interior arrival; unfinished interior/player art.');await browser.close();})().catch(async e=>{console.error(e);if(browser)await browser.close();process.exitCode=1;});

@@ -1,0 +1,625 @@
+{
+  "tiles": {
+    "image": "/assets/world/town-tiles.65e430cea1e0.png",
+    "atlas": "/assets/world/town-tiles.56366a147817.json"
+  },
+  "characters": {
+    "image": "/assets/world/town-characters.fe5359e920eb.png",
+    "atlas": "/assets/world/town-characters.0519964f3032.json"
+  },
+  "tileSize": 16,
+  "artBox": {
+    "width": 16,
+    "height": 32
+  },
+  "footprint": {
+    "width": 16,
+    "height": 16
+  },
+  "tileIds": {
+    "grass-0": 1,
+    "grass-1": 2,
+    "grass-2": 3,
+    "grass-3": 4,
+    "path-0": 5,
+    "path-1": 6,
+    "path-2": 7,
+    "path-3": 8,
+    "path-4": 9,
+    "path-5": 10,
+    "path-6": 11,
+    "path-7": 12,
+    "path-8": 13,
+    "path-9": 14,
+    "path-10": 15,
+    "path-11": 16,
+    "path-12": 17,
+    "path-13": 18,
+    "path-14": 19,
+    "path-15": 20,
+    "water-0": 21,
+    "water-1": 22,
+    "water-2": 23,
+    "water-3": 24,
+    "water-4": 25,
+    "water-5": 26,
+    "water-6": 27,
+    "water-7": 28,
+    "water-8": 29,
+    "water-9": 30,
+    "water-10": 31,
+    "water-11": 32,
+    "water-12": 33,
+    "water-13": 34,
+    "water-14": 35,
+    "water-15": 36,
+    "boundary": 37,
+    "flowers": 38,
+    "tuft": 39,
+    "pebbles": 40,
+    "tall-grass": 41,
+    "fence": 42,
+    "sign": 43,
+    "tree-0-0": 44,
+    "tree-1-0": 45,
+    "tree-0-1": 46,
+    "tree-1-1": 47,
+    "tree-0-2": 48,
+    "tree-1-2": 49,
+    "grand-0-0": 50,
+    "grand-1-0": 51,
+    "grand-2-0": 52,
+    "grand-3-0": 53,
+    "grand-0-1": 54,
+    "grand-1-1": 55,
+    "grand-2-1": 56,
+    "grand-3-1": 57,
+    "grand-0-2": 58,
+    "grand-1-2": 59,
+    "grand-2-2": 60,
+    "grand-3-2": 61,
+    "grand-0-3": 62,
+    "grand-1-3": 63,
+    "grand-2-3": 64,
+    "grand-3-3": 65,
+    "roof-left-0": 66,
+    "roof-left-1": 67,
+    "roof-middle-0": 68,
+    "roof-middle-1": 69,
+    "roof-right-0": 70,
+    "roof-right-1": 71,
+    "wall": 72,
+    "window": 73,
+    "door": 74,
+    "door-upper": 75,
+    "door-lower": 76,
+    "wall-left": 77,
+    "wall-right": 78,
+    "porch": 79,
+    "floor": 80,
+    "interior-wall": 81
+  },
+  "palettes": {
+    "tiles": {
+      "grass-0": [
+        "#66965E",
+        "#88B875",
+        "#A4CE89"
+      ],
+      "grass-1": [
+        "#66965E",
+        "#88B875",
+        "#A4CE89"
+      ],
+      "grass-2": [
+        "#66965E",
+        "#88B875",
+        "#A4CE89"
+      ],
+      "grass-3": [
+        "#66965E",
+        "#88B875",
+        "#A4CE89"
+      ],
+      "path-0": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-1": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-2": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-3": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-4": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-5": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-6": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-7": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-8": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-9": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-10": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-11": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-12": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-13": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-14": [
+        "#66965E",
+        "#88B875",
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "path-15": [
+        "#C3AD7D",
+        "#DEC998"
+      ],
+      "water-0": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-1": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-2": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-3": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-4": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-5": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-6": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-7": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-8": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-9": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-10": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-11": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-12": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-13": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-14": [
+        "#283D38",
+        "#417D91",
+        "#5CA5AE",
+        "#88B875",
+        "#A5D3CB"
+      ],
+      "water-15": [
+        "#417D91",
+        "#5CA5AE",
+        "#A5D3CB"
+      ],
+      "boundary": [
+        "#283D38",
+        "#748672",
+        "#88B875",
+        "#9CAA95",
+        "#C9D1B5"
+      ],
+      "flowers": [
+        "#365C48",
+        "#4B805C",
+        "#A4CE89",
+        "#D7A0A0",
+        "#F1D5B5"
+      ],
+      "tuft": [
+        "#365C48",
+        "#4B805C",
+        "#A4CE89"
+      ],
+      "pebbles": [
+        "#283D38",
+        "#748672",
+        "#9CAA95",
+        "#C9D1B5"
+      ],
+      "tall-grass": [
+        "#365C48",
+        "#4B805C",
+        "#A4CE89"
+      ],
+      "fence": [
+        "#283D38",
+        "#614C3F",
+        "#98694E",
+        "#C79D6A"
+      ],
+      "sign": [
+        "#283D38",
+        "#614C3F",
+        "#98694E",
+        "#C79D6A"
+      ],
+      "tree-0-0": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "tree-1-0": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "tree-0-1": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "tree-1-1": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "tree-0-2": [
+        "#283D38",
+        "#365C48",
+        "#4B805C"
+      ],
+      "tree-1-2": [
+        "#283D38",
+        "#365C48",
+        "#4B805C"
+      ],
+      "grand-0-0": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-1-0": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-2-0": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-3-0": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-0-1": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-1-1": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-2-1": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-3-1": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-0-2": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-1-2": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-2-2": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-3-2": [
+        "#283D38",
+        "#365C48",
+        "#4B805C",
+        "#80AA6A"
+      ],
+      "grand-0-3": [],
+      "grand-1-3": [
+        "#283D38",
+        "#365C48",
+        "#4B805C"
+      ],
+      "grand-2-3": [
+        "#283D38",
+        "#365C48",
+        "#4B805C"
+      ],
+      "grand-3-3": [],
+      "roof-left-0": [
+        "#283D38",
+        "#794D49",
+        "#A76755",
+        "#CE9772"
+      ],
+      "roof-left-1": [
+        "#283D38",
+        "#794D49",
+        "#A76755",
+        "#CE9772"
+      ],
+      "roof-middle-0": [
+        "#283D38",
+        "#794D49",
+        "#A76755",
+        "#CE9772"
+      ],
+      "roof-middle-1": [
+        "#283D38",
+        "#794D49",
+        "#A76755",
+        "#CE9772"
+      ],
+      "roof-right-0": [
+        "#283D38",
+        "#794D49",
+        "#A76755",
+        "#CE9772"
+      ],
+      "roof-right-1": [
+        "#283D38",
+        "#794D49",
+        "#A76755",
+        "#CE9772"
+      ],
+      "wall": [
+        "#283D38",
+        "#BEAF8A",
+        "#E3D5AF",
+        "#F3E7C6"
+      ],
+      "window": [
+        "#283D38",
+        "#5CA5AE",
+        "#BEAF8A",
+        "#E3D5AF",
+        "#F3E7C6"
+      ],
+      "door": [
+        "#283D38",
+        "#BEAF8A",
+        "#E3D5AF",
+        "#F3E7C6"
+      ],
+      "door-upper": [
+        "#283D38",
+        "#BEAF8A",
+        "#E3D5AF",
+        "#F3E7C6"
+      ],
+      "door-lower": [
+        "#283D38",
+        "#BEAF8A",
+        "#E3D5AF",
+        "#F3E7C6"
+      ],
+      "wall-left": [
+        "#283D38",
+        "#BEAF8A",
+        "#E3D5AF",
+        "#F3E7C6"
+      ],
+      "wall-right": [
+        "#283D38",
+        "#BEAF8A",
+        "#E3D5AF",
+        "#F3E7C6"
+      ],
+      "porch": [
+        "#283D38",
+        "#614C3F",
+        "#98694E",
+        "#C79D6A"
+      ],
+      "floor": [
+        "#BEAF8A",
+        "#E3D5AF",
+        "#F3E7C6"
+      ],
+      "interior-wall": [
+        "#283D38",
+        "#614C3F",
+        "#BEAF8A",
+        "#C79D6A"
+      ]
+    },
+    "characters": {
+      "player": {
+        "outline": "#283D38",
+        "skin": "#D7AA79",
+        "skinShade": "#B77E58",
+        "cloth": "#427F8D",
+        "light": "#8ABBA9",
+        "pants": "#555971",
+        "accent": "#E8D5A7"
+      },
+      "npc-guide": {
+        "outline": "#333A43",
+        "skin": "#D5A77F",
+        "skinShade": "#AE775B",
+        "cloth": "#9C694E",
+        "light": "#D4AC79",
+        "pants": "#687A75",
+        "accent": "#E7D7AA"
+      },
+      "npc-neighbor": {
+        "outline": "#403846",
+        "skin": "#D6A780",
+        "skinShade": "#B17B65",
+        "cloth": "#967D9D",
+        "light": "#C7A8B5",
+        "pants": "#637783",
+        "accent": "#E7DCC0"
+      },
+      "challenger": {
+        "outline": "#343C43",
+        "skin": "#CCA075",
+        "skinShade": "#AB765B",
+        "cloth": "#8A555C",
+        "light": "#BD8490",
+        "pants": "#535E70",
+        "accent": "#E0CEAA"
+      }
+    }
+  },
+  "originality": "Authored from integer pixel shapes in assets-src/world/build.py. No external artwork, tracing, extraction, fonts or logos."
+}

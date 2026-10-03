@@ -9,6 +9,7 @@
     "lint": "eslint . && depcruise src",
     "typecheck": "tsc --noEmit",
     "check:deps": "depcruise src",
+    "compile:maps": "tsx scripts/compile-maps.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
@@ -17,6 +18,7 @@
   "dependencies": {
     "@axe-core/react": "^4.13.0",
     "next": "16.3.8",
+    "phaser": "4.2.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "zod": "^4.6.5",
