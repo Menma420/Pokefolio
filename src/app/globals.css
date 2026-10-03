@@ -1,26 +1,13 @@
 @import "tailwindcss";
+@font-face { font-family: Pokefolio; src: url('/assets/ui/pokefolio.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:block; }
+@theme inline { --font-mono: Pokefolio; --font-sans: Pokefolio; }
+body { margin:0; background:#000; }
+.game-surface { font-family:Pokefolio; font-size:calc(8*var(--u)); line-height:calc(16*var(--u)); -webkit-font-smoothing:none; font-synthesis:none; text-rendering:geometricPrecision; }
+.game-surface :is(p,span,button,h1,h2,strong,div) { font-family:Pokefolio; font-size:calc(8*var(--u)); font-weight:400; letter-spacing:0; }
+.pixel-window { position:relative; isolation:isolate; box-sizing:border-box; min-width:calc(24*var(--u)); min-height:calc(24*var(--u)); padding:calc(7*var(--u)); border:0; border-radius:0; color:var(--window-text); font-size:calc(8*var(--u)); line-height:calc(16*var(--u)); }
+.pixel-header { height:calc(16*var(--u)); background:var(--ui-header); color:var(--ui-onDark); }
+.game-surface canvas:not([data-bitmap]) { width:calc(240*var(--u)) !important; height:calc(160*var(--u)) !important; image-rendering:pixelated; }
+.game-surface button { border-radius:0; }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+.touch-controller button:focus-visible { outline:2px solid var(--ui-inner); outline-offset:2px; }
+@media (orientation:landscape) { .touch-pad { top:calc(50% - var(--pad-half)); bottom:auto !important; } .touch-buttons { top:calc(50% - var(--bank-half)); bottom:auto !important; } }

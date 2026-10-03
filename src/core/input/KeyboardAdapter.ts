@@ -23,7 +23,7 @@ export class KeyboardAdapter {
     
     this.boundDown = (e: KeyboardEvent) => {
       const action = this.keyMap[e.key];
-      if (action) {
+      if (action && !e.repeat) {
         if (this.router.isGameFocused) {
           e.preventDefault();
         }
@@ -47,5 +47,6 @@ export class KeyboardAdapter {
   public unmount() {
     window.removeEventListener('keydown', this.boundDown, { capture: true });
     window.removeEventListener('keyup', this.boundUp, { capture: true });
+    this.router.clearHeld();
   }
 }

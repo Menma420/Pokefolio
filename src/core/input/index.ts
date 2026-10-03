@@ -1,3 +1,4 @@
+import { Clock, ScheduledTask, gameClock } from '../clock';
 export type InputAction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT' | 'A' | 'B' | 'X' | 'Y';
 export type InputContext = 'WORLD' | 'DIALOGUE' | 'MENU' | 'BATTLE' | 'MODAL';
 
@@ -20,6 +21,21 @@ interface ContextHandler {
 
 export class InputRouter {
   private handlers: ContextHandler[] = [];
+  private repeatTask: ScheduledTask | null = null;
+  private recentDirections: InputAction[] = [];
+  constructor(private readonly clock: Clock = gameClock) {}
+  /** Navigation repeat is generated here, never by browser key-repeat. */
+  private startRepeat(action: InputAction, delay = 250) {
+    this.repeatTask?.cancel();
+    this.repeatTask = this.clock.schedule(() => {
+      if (!this.held.has(action)) return;
+      const active = this.getActiveHandler();
+      if (active?.context === 'MENU' || active?.context === 'BATTLE') active.onPress?.(action);
+      this.startRepeat(action, 100);
+    }, delay);
+  }
+  getHeldDirection(): InputAction | undefined { return this.recentDirections.at(-1); }
+
   
   // Track continuous inputs holding properties correctly natively preventing duplicate fires 
   private held: Set<InputAction> = new Set();
@@ -48,6 +64,10 @@ export class InputRouter {
     if (this.held.has(action)) return true; // suppress repeats identically mapping strict logic natively 
 
     this.held.add(action);
+    if (['UP','DOWN','LEFT','RIGHT'].includes(action)) {
+      this.recentDirections.push(action);
+      this.startRepeat(action);
+    }
 
     const active = this.getActiveHandler();
     if (!active) return false;
@@ -68,6 +88,12 @@ export class InputRouter {
   public handleRelease(action: InputAction) {
     if (!this.held.has(action)) return;
     this.held.delete(action);
+    this.recentDirections = this.recentDirections.filter(value => value !== action);
+    if (['UP','DOWN','LEFT','RIGHT'].includes(action)) {
+      this.repeatTask?.cancel();
+      const latest = this.getHeldDirection();
+      if (latest) this.startRepeat(latest);
+    }
 
     const active = this.getActiveHandler();
     if (active && active.onRelease) {
@@ -77,6 +103,8 @@ export class InputRouter {
 
   public clearHeld() {
     this.held.clear();
+    this.recentDirections = [];
+    this.repeatTask?.cancel();
   }
 
   public isHeld(action: InputAction) {

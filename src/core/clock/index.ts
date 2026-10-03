@@ -57,3 +57,7 @@ export class FakeClock implements Clock {
     this._now = target;
   }
 }
+
+/** One production time source; tests can inject FakeClock at each boundary. */
+export const gameClock: Clock = new RealClock();
+export const FRAME_MS = 1000 / 60;

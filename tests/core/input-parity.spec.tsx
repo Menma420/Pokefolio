@@ -1,3 +1,4 @@
+import { TouchLayout } from '../../src/ui/kit/GameViewport';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
@@ -10,7 +11,7 @@ describe('Input adapter parity', () => {
     const kb = new KeyboardAdapter(globalInputRouter);
     kb.mount();
 
-    render(<TouchController />);
+    render(<TouchLayout.Provider value={true}><TouchController /></TouchLayout.Provider>);
     const dpadUp = screen.getByRole('button', { name: 'Move up' });
     const btnA = screen.getByRole('button', { name: 'A confirm' });
 
