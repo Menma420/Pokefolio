@@ -70,6 +70,7 @@ export const BAG:BagCategory[] = [
 ];
 export function getPortfolioProject(slug:string){return PORTFOLIO_PROJECTS.find(project=>project.slug===slug);}
 export function getProjectWriteup(id:ProjectId){return source.filter(tree=>tree.projectId===id).flatMap(tree=>flattened(tree.topics).map(node=>({question:node.label,text:node.answer.pages.join(' ')}))).filter((entry,i,entries)=>entries.findIndex(other=>other.text===entry.text)===i);}
+export function getProjectTrees(id:ProjectId){return source.filter(tree=>tree.projectId===id).map(tree=>({audienceId:tree.audienceId,topics:flattened(tree.topics).map(node=>({question:node.label,text:node.answer.pages.join(' ')}))}));}
 export function getProjectTech(id:ProjectId){return PORTFOLIO_PROJECTS.find(project=>project.id===id)?.technologies.length?PORTFOLIO_PROJECTS.find(project=>project.id===id)!.technologies.map(name=>({name})):SKILLS.filter(skill=>skill.projects.includes(id));}
 /** Shared portfolio view-model selectors. No audience, Party or runtime state. */
 export const getPortfolioProjects = () => PORTFOLIO_PROJECTS;
