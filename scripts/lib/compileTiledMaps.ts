@@ -97,6 +97,8 @@ export function compileTiledMaps(sources: Array<{ id: string; input: unknown }>)
       width: tiled.width,
       height: tiled.height,
       tileSize: 16 as const,
+      cameraMode: tiled.properties?.find(property => property.name === 'cameraMode')?.value,
+      landmarks: routeValue(tiled.properties?.find(property => property.name === 'landmarks')?.value),
       layers: {
         ground: findLayer(tiled.layers ?? [], 'ground', cellCount),
         decor: findLayer(tiled.layers ?? [], 'decor', cellCount),

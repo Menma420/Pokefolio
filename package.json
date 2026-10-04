@@ -10,6 +10,8 @@
     "typecheck": "tsc --noEmit",
     "check:deps": "depcruise src",
     "compile:maps": "tsx scripts/compile-maps.ts",
+    "author:world": "python3 assets-src/maps/finalize-world.py && pnpm compile:maps",
+    "validate:world": "tsx scripts/validate-world.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",

@@ -57,6 +57,12 @@ export const MapDataSchema = z.object({
   width: z.number().int().positive(),
   height: z.number().int().positive(),
   tileSize: z.literal(16),
+  cameraMode: z.enum(['rooms', 'follow']).optional(),
+  landmarks: z.array(z.object({
+    id: z.string().min(1), kind: z.enum(['town', 'home', 'building', 'water', 'grass', 'forest', 'grand-tree', 'sign', 'secret']),
+    x: z.number().int().nonnegative(), y: z.number().int().nonnegative(),
+    width: z.number().int().positive(), height: z.number().int().positive(),
+  })).optional(),
   layers: z.object({
     ground: z.array(z.number().int().nonnegative()),
     decor: z.array(z.number().int().nonnegative()),

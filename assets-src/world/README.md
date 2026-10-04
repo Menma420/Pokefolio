@@ -16,3 +16,9 @@ Character sheets contain four original designs (`player`, `npc-guide`, `npc-neig
 Tile palettes use at most four colours plus outline; character palettes use at most six plus outline. Palette ramps belong to artwork and do not modify Phase A's canonical UI palette. Canopies and roofs occupy the existing above layer; facades, trunks and ground details sit beneath Y-sorted characters. House visuals use the existing home/door coordinates, and no new buildings, doors, interiors or navigation routes are introduced.
 
 The first B1 review uses `artifacts/phase-b/` exclusively. Rendered evidence and the remaining-art scope are indexed in its report. Art here is submitted for visual review; automated pixel/atlas checks do not declare visual approval.
+
+## P9 map finalization
+
+The approved atlases and character artwork remain unchanged. Production now uses the 36×22 contiguous map authored by `assets-src/maps/finalize-world.py`, with three paired 15×10 interiors and the second ordinary NPC instantiated. Its two area IDs are location metadata; the production camera follows WorldSim movement across them. `test-town` remains the original compact development fixture.
+
+Run `pnpm author:world` to rebuild the final Tiled sources and compiled maps, and `pnpm validate:world` to check placements. The B1 art builder skips sources marked `p9AuthoredMap`, so regenerating artwork cannot overwrite the finalized layout. P9 screenshots and the real-time boundary walkthrough live only in `artifacts/phase-9/`.

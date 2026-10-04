@@ -5,12 +5,12 @@ import { MapRenderer } from './MapRenderer';
 import { WORLD_TEXTURES } from './worldArt';
 import { BattleScene } from './BattleScene';
 import { mountWorldRaster } from './WorldRaster';
+import { followWorldCamera } from '../core/world/camera';
 
 export class WorldScene extends Phaser.Scene {
   private readonly bridge: GameBridge;
   private tileRenderer!: MapRenderer;
   private snapshotValue: WorldSnapshot | null = null;
-  private cameraRoomId: string | null = null;
   private exclaimEntityId: string | null = null;
   private exclaimTick = -1;
   private removeCommandListener: (() => void) | null = null;
@@ -108,6 +108,7 @@ export class WorldScene extends Phaser.Scene {
     }
     if (this.exclaimEntityId && snapshot.tick > this.exclaimTick) this.exclaimEntityId = null;
     this.tileRenderer.drawEntities(snapshot, this.exclaimEntityId);
+    if (snapshot.map.cameraMode === 'follow') this.followPlayer();
 
     const current = [snapshot.state.player, ...snapshot.state.npcs];
     for (const entity of current) {
@@ -123,9 +124,23 @@ export class WorldScene extends Phaser.Scene {
     if (!this.snapshotValue) return;
     const room = this.snapshotValue.map.rooms.find((candidate) => candidate.id === roomId);
     if (!room) throw new Error(`Unknown camera room ${roomId}`);
-    this.cameraRoomId = roomId;
-    this.cameras.main.setScroll(room.x * 16, room.y * 16);
+    if (this.snapshotValue.map.cameraMode === 'follow') this.followPlayer();
+    else this.cameras.main.setScroll(room.x * 16, room.y * 16);
+    if (this.snapshotValue.map.cameraMode !== 'follow') Object.assign(this.game.canvas.dataset, { cameraMode: 'rooms', cameraX: String(room.x * 16), cameraY: String(room.y * 16), mapWidth: String(this.snapshotValue.map.width), mapHeight: String(this.snapshotValue.map.height) });
     this.physicalRaster?.dirty();
     this.game.canvas.dataset.cameraRoom = roomId;
+  }
+
+  private followPlayer() {
+    if (!this.snapshotValue) return;
+    const { map, state } = this.snapshotValue;
+    const scroll = followWorldCamera(map, state.player);
+    this.cameras.main.roundPixels = true;
+    this.cameras.main.setScroll(scroll.x, scroll.y);
+    Object.assign(this.game.canvas.dataset, {
+      cameraX: String(scroll.x), cameraY: String(scroll.y),
+      mapWidth: String(map.width), mapHeight: String(map.height),
+      cameraMode: 'follow', cameraRoom: state.cameraRoomId,
+    });
   }
 }

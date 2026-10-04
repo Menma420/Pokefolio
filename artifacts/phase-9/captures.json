@@ -1,0 +1,242 @@
+[
+  {
+    "filename": "town-center-1x.png",
+    "viewportCSS": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "native": "240x160",
+    "camera": {
+      "x": "0",
+      "y": "8"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "town-center-3x.png",
+    "viewportCSS": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "native": "240x160",
+    "camera": {
+      "x": "0",
+      "y": "8"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "town-center-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "0",
+      "y": "8"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "boundary-before-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "112",
+      "y": "0"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 14,4; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "boundary-15-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "128",
+      "y": "0"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 15,4; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "boundary-16-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "144",
+      "y": "0"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 16,4; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "largest-fit-desktop-5x.png",
+    "viewportCSS": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "integerScale": 5,
+    "native": "240x160",
+    "camera": {
+      "x": "144",
+      "y": "0"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 16,4; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "grand-tree-green-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "0",
+      "y": "192"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 7,18; facing left; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "pond-workshop-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "80",
+      "y": "168"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 12,15; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "forest-grass-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "336",
+      "y": "88"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 30,10; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "cottage-neighbor-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "320",
+      "y": "192"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 27,18; facing left; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "camera-edge-0-0-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "0",
+      "y": "0"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 2,1; facing left; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "camera-edge-336-0-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "336",
+      "y": "0"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 32,1; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "camera-edge-336-192-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "336",
+      "y": "192"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 32,20; facing down; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "camera-edge-0-192-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "0",
+      "y": "192"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 2,17; facing left; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  }
+]

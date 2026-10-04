@@ -9,6 +9,15 @@ function source(id: string) {
 function pair() { return [{ id: 'interior-test', input: source('interior-test') }, { id: 'test-town', input: source('test-town') }]; }
 
 describe('Tiled map compiler', () => {
+  it('keeps every finalized Tiled source consistent with its checked-in runtime map', () => {
+    const ids = ['test-town', 'interior-test', 'm1-town', 'm1-interior-test', 'm1-workshop', 'm1-cottage'];
+    const compiled = compileTiledMaps(ids.map(id => ({ id, input: source(id) })));
+    for (const map of compiled) {
+      const runtime = JSON.parse(readFileSync(resolve(process.cwd(), `src/content/maps/${map.id}.json`), 'utf8'));
+      expect(JSON.parse(JSON.stringify(map))).toEqual(runtime);
+    }
+  });
+
   it('normalizes both valid Tiled maps into room-aware MapData', () => {
     const maps = compileTiledMaps(pair());
     expect(maps.map((map) => map.id)).toEqual(['interior-test', 'test-town']);

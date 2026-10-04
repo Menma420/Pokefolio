@@ -189,6 +189,7 @@ print('Authored',len(tiles),'tiles and',len(sprites),'character frames; original
 # Repaint visual layers of authored Tiled sources ONLY. Retain all collisions, objects/routes/rooms.
 def paint_map(name):
  p=ROOT/'assets-src/maps'/f'{name}.tmj';m=json.loads(p.read_text());w=m['width'];h=m['height'];layers={l['name']:l for l in m['layers'] if l['type']=='tilelayer'};
+ if any(prop['name']=='p9AuthoredMap' and prop['value'] for prop in m.get('properties',[])):return
  for key in ['decor','above']:
   if key not in layers:
    layer={'type':'tilelayer','name':key,'width':w,'height':h,'data':[0]*(w*h),'opacity':1,'visible':True,'x':0,'y':0};m['layers'].append(layer);layers[key]=layer

@@ -1,0 +1,2 @@
+$ tsx scripts/validate-content.ts
+Validated 18 authored project/audience trees.

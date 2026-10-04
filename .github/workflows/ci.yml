@@ -33,5 +33,8 @@ jobs:
     - name: Unit and State Tests
       run: pnpm run test
 
+    - name: World Placement Validation
+      run: pnpm run validate:world
+
     - name: Build Next.js
       run: pnpm run build

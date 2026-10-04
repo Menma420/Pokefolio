@@ -20,9 +20,11 @@ async function readDialogue(page:Page,text:string,touch=false) {
   await expect(page.getByRole('button',{name:/dialogue/})).toBeVisible();
   if(await page.getByRole('button',{name:'Reveal dialogue'}).isVisible()) {
    if(touch)await page.getByRole('button',{name:'A confirm'}).tap();else await page.keyboard.press('Enter');
+   if(touch)await page.clock.runFor(50);
   }
   await expect(page.locator('div[role="status"].sr-only')).toHaveText(part);
   if(touch)await page.getByRole('button',{name:'A confirm'}).tap();else await page.keyboard.press('Enter');
+  if(touch)await page.clock.runFor(50);
  }
 }
 async function revealAndAdvance(page:Page,text:string,wait=false) {await readDialogue(page,text);if(wait)await expect.poll(async()=>{const status=page.locator('div[role="status"].sr-only');return await status.count()===0||await status.textContent()!==paginateDialogue(text,226).at(-1)!;}).toBe(true);}
@@ -132,8 +134,17 @@ test('keyboard completes authored Recruiter interview, switches party project, o
 test('touch-only controls open and read an authored topic', async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 640, height: 360 }, hasTouch: true });
   const page = await context.newPage();
+  // Freeze the existing Clock so a finished typewriter cannot turn a reveal tap
+  // into an advance between the visibility check and touch dispatch.
+  await page.clock.install();
   await page.goto('/dev/battle');
+  await page.clock.pauseAt(await page.evaluate(() => Date.now() + 100));
   await page.getByRole('button', { name: 'Start battle' }).tap();
+  for (let i = 0; i < 240; i++) {
+    await page.clock.runFor(25);
+    const battle = page.getByRole('main', { name: 'Interview battle' });
+    if (await battle.count() && Number(await battle.getAttribute('data-battle-frame')) >= 56) break;
+  }
 
   const ackoTree = getAuthoredTrees().find((tree) => tree.projectId === PROJECT_IDS.ACKO_CLINIC && tree.audienceId === AUDIENCE_RECRUITER)!;
   const rootTopic = ackoTree.topics[0]!;
@@ -143,8 +154,10 @@ test('touch-only controls open and read an authored topic', async ({ browser }) 
   await revealAndAdvanceWithTouch(page, UI_STRINGS.sendOut(getProject(PROJECT_IDS.ACKO_CLINIC)!.name));
   await revealAndAdvanceWithTouch(page, Audiences[AUDIENCE_RECRUITER]!.reactions['project-entry'][0]!, true);
   await confirm.tap();
+  for (let i = 0; i < 4; i++) await page.clock.runFor(50);
   await expect(page.getByRole('group', { name: 'Interview topics' }).getByRole('button', { name: rootTopic.label })).toBeVisible();
   await confirm.tap();
+  for (let i = 0; i < 4; i++) await page.clock.runFor(50);
   await revealAndAdvanceWithTouch(page, Audiences[AUDIENCE_RECRUITER]!.reactions['detail-open'][0]!, true);
   for(const answerPage of rootTopic.answer.pages) await readDialogue(page,answerPage,true);
   await expect(page.getByRole('group', { name: 'Battle commands' })).toBeVisible();

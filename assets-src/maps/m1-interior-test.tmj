@@ -265,7 +265,7 @@
         0,
         0,
         0,
-        0,
+        1,
         0,
         0,
         0,
@@ -337,97 +337,6 @@
       "y": 0
     },
     {
-      "id": 3,
-      "name": "objects",
-      "type": "objectgroup",
-      "objects": [
-        {
-          "id": "interior-spawn",
-          "name": "interior-spawn",
-          "class": "spawn",
-          "x": 112,
-          "y": 112,
-          "width": 16,
-          "height": 16,
-          "rotation": 0,
-          "visible": true,
-          "properties": [
-            {
-              "name": "facing",
-              "type": "string",
-              "value": "up"
-            }
-          ]
-        },
-        {
-          "id": "interior-exit",
-          "name": "interior-exit",
-          "class": "door",
-          "x": 112,
-          "y": 128,
-          "width": 16,
-          "height": 16,
-          "rotation": 0,
-          "visible": true,
-          "properties": [
-            {
-              "name": "targetMapId",
-              "type": "string",
-              "value": "m1-town"
-            },
-            {
-              "name": "targetDoorId",
-              "type": "string",
-              "value": "home-front"
-            },
-            {
-              "name": "arrivalX",
-              "type": "int",
-              "value": 21
-            },
-            {
-              "name": "arrivalY",
-              "type": "int",
-              "value": 5
-            },
-            {
-              "name": "arrivalFacing",
-              "type": "string",
-              "value": "left"
-            },
-            {
-              "name": "exitTile",
-              "type": "bool",
-              "value": true
-            },
-            {
-              "name": "exitTileX",
-              "type": "int",
-              "value": 7
-            },
-            {
-              "name": "exitTileY",
-              "type": "int",
-              "value": 7
-            }
-          ]
-        },
-        {
-          "id": "interior-room",
-          "name": "interior-room",
-          "class": "room",
-          "x": 0,
-          "y": 0,
-          "width": 240,
-          "height": 160,
-          "rotation": 0,
-          "visible": true,
-          "properties": []
-        }
-      ],
-      "visible": true
-    },
-    {
       "type": "tilelayer",
       "name": "decor",
       "width": 15,
@@ -496,6 +405,7 @@
         0,
         0,
         0,
+        38,
         0,
         0,
         0,
@@ -517,8 +427,7 @@
         0,
         0,
         0,
-        0,
-        0,
+        43,
         0,
         0,
         0,
@@ -750,6 +659,84 @@
       "visible": true,
       "x": 0,
       "y": 0
+    },
+    {
+      "type": "objectgroup",
+      "name": "objects",
+      "objects": [
+        {
+          "id": 1,
+          "name": "interior-spawn",
+          "class": "spawn",
+          "x": 112,
+          "y": 112,
+          "properties": [
+            {
+              "name": "facing",
+              "value": "up"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "interior-exit",
+          "class": "door",
+          "x": 112,
+          "y": 128,
+          "properties": [
+            {
+              "name": "targetMapId",
+              "value": "m1-town"
+            },
+            {
+              "name": "targetDoorId",
+              "value": "home-front"
+            },
+            {
+              "name": "arrivalX",
+              "value": 21
+            },
+            {
+              "name": "arrivalY",
+              "value": 5
+            },
+            {
+              "name": "arrivalFacing",
+              "value": "left"
+            },
+            {
+              "name": "exitTile",
+              "value": true
+            },
+            {
+              "name": "exitTileX",
+              "value": 7
+            },
+            {
+              "name": "exitTileY",
+              "value": 7
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "home-shelf",
+          "class": "object",
+          "x": 160,
+          "y": 80,
+          "properties": []
+        },
+        {
+          "id": 4,
+          "name": "interior-room",
+          "class": "room",
+          "x": 0,
+          "y": 0,
+          "properties": [],
+          "width": 240,
+          "height": 160
+        }
+      ]
     }
   ],
   "tilesets": [
@@ -763,6 +750,12 @@
       "image": "../../public/assets/world/town-tiles.65e430cea1e0.png",
       "imagewidth": 256,
       "imageheight": 96
+    }
+  ],
+  "properties": [
+    {
+      "name": "p9AuthoredMap",
+      "value": true
     }
   ]
 }

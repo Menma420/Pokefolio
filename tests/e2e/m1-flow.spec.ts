@@ -331,8 +331,10 @@ test('walking onto the main doorway triggers transition and interior without Ent
   });
   // Stay above the challenger lane; reach the door using movement only.
   await walkOneTile(page, 'ArrowUp', '7,5', '7,4');
-  for (let x = 7; x < 21; x += 1) await walkOneTile(page, 'ArrowRight', `${x},4`, `${x + 1},4`);
-  await walkOneTile(page, 'ArrowDown', '21,4', '21,5');
+  for (let x = 7; x < 19; x += 1) await walkOneTile(page, 'ArrowRight', `${x},4`, `${x + 1},4`);
+  await walkOneTile(page, 'ArrowDown', '19,4', '19,5');
+  await walkOneTile(page, 'ArrowRight', '19,5', '20,5');
+  await walkOneTile(page, 'ArrowRight', '20,5', '21,5');
   const cdp = await page.context().newCDPSession(page);
   await page.keyboard.down('ArrowRight');
   await expect(gameState(page)).toContainText('movement 22,5');

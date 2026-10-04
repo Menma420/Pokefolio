@@ -74,8 +74,8 @@ test('original world atlases load, show native silhouettes, and render at intege
   await page.setViewportSize({ width: 240, height: 160 }); await capture('overworld-home-challenger-1x.png', 1);
   await page.setViewportSize({ width: 1440, height: 900 }); await capture('overworld-largest-fit-desktop.png', 5);
   await page.setViewportSize({ width: 960, height: 640 });
-  await walk(page, 'ArrowRight', '20,4'); await walk(page, 'ArrowRight', '21,4');
-  await walk(page, 'ArrowDown', '21,5');
+  await walk(page, 'ArrowDown', '19,5');
+  await walk(page, 'ArrowRight', '20,5'); await walk(page, 'ArrowRight', '21,5');
   await page.keyboard.down('ArrowRight');
   await expect(gameState(page)).toContainText('movement 22,5');
   await page.keyboard.up('ArrowRight');

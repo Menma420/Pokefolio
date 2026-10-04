@@ -1,0 +1,98 @@
+[
+  {
+    "filename": "ordinary-npc-dialogue-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "16",
+      "y": "8"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 8,5; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "home-interior-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "0",
+      "y": "0"
+    },
+    "state": "Flow INTERIOR; runtime ready; Map m1-interior-test; room interior-room; player tile 7,7; facing up; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "workshop-interior-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "0",
+      "y": "0"
+    },
+    "state": "Flow INTERIOR; runtime ready; Map m1-workshop; room interior-room; player tile 7,7; facing up; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "cottage-interior-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "0",
+      "y": "0"
+    },
+    "state": "Flow INTERIOR; runtime ready; Map m1-cottage; room interior-room; player tile 7,7; facing up; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "tree-secret-dialogue-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "0",
+      "y": "192"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 7,18; facing left; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "forest-discovery-4x.png",
+    "viewportCSS": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "native": "240x160",
+    "camera": {
+      "x": "336",
+      "y": "24"
+    },
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 33,6; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "pixelBlockMismatches": 0
+  }
+]

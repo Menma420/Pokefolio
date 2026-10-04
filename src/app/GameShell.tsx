@@ -97,6 +97,7 @@ export function GameShell() {
       {mode === 'INTRO' && state?.dialogue && <div className="absolute inset-0 z-20"><PixelArtwork name="intro-background" /><DialogueBox text={state.dialogue} speed="normal" onComplete={() => orchestrator?.completeDialogue()} /></div>}
 
       {(mode === 'ENCOUNTER' || mode === 'AUDIENCE') && state?.dialogue && <DialogueBox text={state.dialogue} onComplete={() => orchestrator?.completeDialogue()} />}
+      {(mode === 'OVERWORLD' || mode === 'INTERIOR') && state?.dialogue && <DialogueBox text={state.dialogue} dismissible onComplete={() => orchestrator?.completeDialogue()} />}
 
       {mode === 'AUDIENCE' && state?.audiencePrompt && (
         <>
@@ -122,7 +123,7 @@ export function GameShell() {
         />
       )}
 
-      {state?.hint && mode === 'OVERWORLD' && (
+      {state?.hint && mode === 'OVERWORLD' && !state.dialogue && (
         <div role="status" aria-live="polite" className="absolute left-[calc(4*var(--u))] top-[calc(4*var(--u))] z-30">
           <Window><BitmapText text={state.hint} width={210}/></Window>
         </div>
@@ -132,7 +133,7 @@ export function GameShell() {
         Flow {mode}; runtime {orchestrator ? 'ready' : 'loading'}; {state?.location ? `Map ${state.location.mapId}; room ${state.location.roomId}; player tile ${state.location.tile.x},${state.location.tile.y}; facing ${state.location.facing}` : 'World starting'}; movement {state?.movementTarget ? `${state.movementTarget.x},${state.movementTarget.y}` : 'idle'}; encounter step {state?.encounterStep ?? 'idle'}; battle {state?.battleVisible ? 'mounted' : 'hidden'}; first encounter {state?.firstEncounterDone ? 'complete' : 'pending'}.
       </p>
       {orchestrator&&<PlayerMenu available={menuAvailable} pause={pauseMenu} resume={resumeMenu} onExit={exitPortfolio} onSpeakingChange={setPortfolioSpeaking}/>}
-      {mode!=='BATTLE' && <TouchController mode={portfolioSpeaking?'dialogue':mode==='TITLE'?'title':['INTRO','ENCOUNTER','AUDIENCE','VS'].includes(mode)?'dialogue':'world'}/>}
+      {mode!=='BATTLE' && <TouchController mode={portfolioSpeaking||!!state?.dialogue?'dialogue':mode==='TITLE'?'title':['INTRO','ENCOUNTER','AUDIENCE','VS'].includes(mode)?'dialogue':'world'}/>}
       {!state?.battleVisible&&<TransitionLayer active={transition} type={transitionType ?? undefined} />}
     </GameViewport>
   );

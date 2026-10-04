@@ -63,15 +63,12 @@ describe('original production world artwork', () => {
     expect([...seen].sort()).toEqual(['player-right-0', 'player-right-1', 'player-right-2']);
   });
 
-  it('retains the accepted main-town collision and doorway definition while repainting visual layers', () => {
+  it('retains approved B1 art and home doorway while expanding production geometry', () => {
     const map = WORLD_TEST_MAPS.get('m1-town')!;
-    const collision = Array.from({ length: 300 }, (_, index) => {
-      const x = index % 30, y = Math.floor(index / 30);
-      return x === 0 || x === 29 || y === 0 || y === 9 || x === 22 && y === 5 ? 1 : x >= 3 && x <= 5 && y >= 2 && y <= 3 ? 2 : 0;
-    });
-    expect(map.collision).toEqual(collision);
+    expect(map).toMatchObject({ width: 36, height: 22, cameraMode: 'follow' });
+    expect(map.collision).toHaveLength(36 * 22);
     expect(map.objects.find(object => object.type === 'door')).toMatchObject({ id: 'home-front', x: 22, y: 5, targetMapId: 'm1-interior-test', arrival: { x: 7, y: 7, facing: 'up' } });
     expect(map.rooms).toHaveLength(2);
-    expect(map.objects.filter(object => object.type === 'npc')).toHaveLength(2);
+    expect(map.objects.filter(object => object.type === 'npc')).toHaveLength(3);
   });
 });

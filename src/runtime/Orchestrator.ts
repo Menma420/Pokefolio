@@ -7,7 +7,8 @@ import { Direction } from '../domain/map';
 import { AudienceId } from '../domain/types';
 import { Audiences, AUDIENCE_RECRUITER } from '../content/audiences';
 import { ENCOUNTER_AUDIENCE_CHOICES, ENCOUNTER_AUDIENCE_PROMPT, FIRST_ENCOUNTER_DIALOGUE, INTRO_NARRATION } from '../content/narrative';
-import { M1_TOWN_MAP_ID, WORLD_TEST_MAPS } from '../content/maps';
+import { M1_TOWN_MAP_ID, PRODUCTION_INTERIOR_MAP_IDS, WORLD_TEST_MAPS } from '../content/maps';
+import { WORLD_FLAVOR } from '../content/worldFlavor';
 import { progressStore, uiStore } from './stores';
 import { GameBridge } from './gameBridge';
 import { Clock, gameClock, FRAME_MS } from '../core/clock';
@@ -72,6 +73,8 @@ export class GameOrchestrator {
   private encounterActive = false;
   private disposed = false;
   private introActive = false;
+  private flavorActive = false;
+  private flavorVisits = new Set<string>();
   private hints: HintService;
 
   constructor(private readonly bridge: GameBridge, private readonly input: InputRouter, private readonly clock: Clock = gameClock) {
@@ -85,6 +88,7 @@ export class GameOrchestrator {
     this.removers.push(bridge.onSnapshot((snapshot) => this.patch({ movementTarget: snapshot.state.player.movement?.to ?? null })));
     this.removers.push(bridge.onEvent('interactionRequested', (event) => {
       if (event.targetId === 'challenger' && progressStore.getState().firstEncounterDone) this.beginEncounter(true);
+      else if (WORLD_FLAVOR[event.targetId]) void this.presentWorldFlavor(event.targetId);
     }));
     this.removers.push(bridge.onEvent('assetFailed', (event) => {
       this.patch({ error: `${event.key}: ${event.message}` });
@@ -183,7 +187,7 @@ export class GameOrchestrator {
       location: { mapId: event.mapId, roomId: event.roomId, tile: { x: current.player.x, y: current.player.y }, facing: current.player.facing },
     });
     if(firstReady)playTransition('fade-in',()=>{},undefined,this.clock);
-    if (this.flow.state.mode === 'OVERWORLD' && event.mapId === 'm1-interior-test') this.transition({ type: 'ENTER_INTERIOR' });
+    if (this.flow.state.mode === 'OVERWORLD' && PRODUCTION_INTERIOR_MAP_IDS.some(id => id === event.mapId)) this.transition({ type: 'ENTER_INTERIOR' });
     else if (this.flow.state.mode === 'INTERIOR' && event.mapId === M1_TOWN_MAP_ID) this.transition({ type: 'LEAVE_INTERIOR' });
     if (this.flow.state.mode === 'OVERWORLD') this.tryFirstEncounter();
   }
@@ -203,6 +207,34 @@ export class GameOrchestrator {
     if (!challenger) return;
     const distance = Math.abs(challenger.x - state.player.x) + Math.abs(challenger.y - state.player.y);
     if (distance <= 2) this.hints.firstInteract();
+  }
+
+  private async presentWorldFlavor(targetId: string) {
+    if (this.disposed || this.flavorActive || !['OVERWORLD', 'INTERIOR'].includes(this.flow.state.mode)) return;
+    const flavor = WORLD_FLAVOR[targetId];
+    if (!flavor) return;
+    this.flavorActive = true;
+    this.input.clearHeld();
+    const seen = this.flavorVisits.has(targetId) || !!flavor.discovery && progressStore.getState().discoveries.includes(flavor.discovery);
+    this.flavorVisits.add(targetId);
+    if (flavor.discovery) progressStore.getState().discover(flavor.discovery);
+    const remove = globalDialogueService.subscribe(request => { if (!this.disposed) this.patch({ dialogue: request?.text ?? null }); });
+    try {
+      await this.world.pause();
+      if (this.disposed) return;
+      this.dialogueResolve = () => globalDialogueService.completeActive();
+      await globalDialogueService.request(seen && flavor.repeat ? flavor.repeat : flavor.text);
+    } finally {
+      remove();
+      this.dialogueResolve = null;
+      this.flavorActive = false;
+      if (!this.disposed) {
+        this.world.sim.dispatch({ type: 'endInteraction' });
+        this.patch({ dialogue: null });
+        this.input.clearHeld();
+        await this.world.resume();
+      }
+    }
   }
 
   private tryFirstEncounter() {
@@ -386,6 +418,7 @@ export class GameOrchestrator {
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
+    if (this.flavorActive) globalDialogueService.cancelAll();
     this.choiceConfirm?.cancel();this.choiceConfirm=null;
     this.presentationCancel?.();this.presentationResolve?.();cancelTransition();
     this.input.unregister('vs-lock');this.input.unregister('intro-lock');

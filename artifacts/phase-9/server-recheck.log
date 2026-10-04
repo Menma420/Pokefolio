@@ -1,0 +1,22 @@
+[WebServer] $ next start --hostname 127.0.0.1 --port 3100
+
+[WebServer] (node:39332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 9 tests using 1 worker
+
+(node:39368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/9] [chromium] › tests/e2e/remediation.spec.ts:82:5 › original controller art at m=3 and m=4: every pressed state, multi-touch and dialogue gating
+[2/9] [chromium] › tests/e2e/smoke.spec.ts:3:5 › has title and game shell mounts
+[3/9] [chromium] › tests/e2e/text-spike.spec.ts:7:5 › isolated rendering spike: DPR 1–3 × native scales 1–8
+[4/9] [chromium] › tests/e2e/viewport.spec.ts:40:5 › desktop and small/mobile viewports use centered integer 3:2 scaling
+[5/9] [chromium] › tests/e2e/world.spec.ts:12:5 › original overworld matches the fixed 240×160 logical screen at 1x, 2x, and 3x
+[6/9] [chromium] › tests/e2e/world.spec.ts:25:5 › paused test room keeps a fixed pixel-render baseline
+[7/9] [chromium] › tests/e2e/world.spec.ts:33:5 › world room supports walk, NPC Enter interaction, automatic doorway, interior return, and pause/resume
+[8/9] [chromium] › tests/e2e/world.spec.ts:79:5 › touch controls send the same movement and interaction intents to WorldSim
+[9/9] [chromium] › tests/e2e/world.spec.ts:95:5 › non-world routes do not request the dynamically loaded Phaser module
+  9 passed (2.1m)

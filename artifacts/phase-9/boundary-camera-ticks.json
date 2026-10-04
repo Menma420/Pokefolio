@@ -1,0 +1,98 @@
+[
+  {
+    "x": 114,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "x": 116,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "x": 118,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "x": 120,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "x": 122,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "x": 124,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "x": 126,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "x": 128,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "x": 130,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "x": 132,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "x": 134,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "x": 136,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "x": 138,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "x": 140,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "x": 142,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "x": 144,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  }
+]

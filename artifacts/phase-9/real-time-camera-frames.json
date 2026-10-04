@@ -1,0 +1,2263 @@
+[
+  {
+    "time": 2248.2000000011176,
+    "x": 0,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2256.5999999996275,
+    "x": 0,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2268.4000000003725,
+    "x": 0,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2284.9000000003725,
+    "x": 0,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2305.800000000745,
+    "x": 2,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2318.800000000745,
+    "x": 2,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2335.0999999996275,
+    "x": 2,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2375,
+    "x": 4,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2380.4000000003725,
+    "x": 4,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2387.9000000003725,
+    "x": 4,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2406.9000000003725,
+    "x": 6,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2418.5,
+    "x": 6,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2435.5999999996275,
+    "x": 6,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2455.0999999996275,
+    "x": 8,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2468.800000000745,
+    "x": 8,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2485.300000000745,
+    "x": 8,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2505.800000000745,
+    "x": 10,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2518.4000000003725,
+    "x": 10,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2535.300000000745,
+    "x": 10,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2569.800000000745,
+    "x": 12,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2574.2000000011176,
+    "x": 12,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2585.5,
+    "x": 12,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2606.5,
+    "x": 14,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2618.9000000003725,
+    "x": 14,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2636.5999999996275,
+    "x": 14,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2674.5,
+    "x": 16,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2679.9000000003725,
+    "x": 16,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2686.9000000003725,
+    "x": 16,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2710.0999999996275,
+    "x": 18,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2719.9000000003725,
+    "x": 18,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2736.9000000003725,
+    "x": 18,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2753.2000000011176,
+    "x": 18,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2776.800000000745,
+    "x": 20,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2786.300000000745,
+    "x": 20,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2805.800000000745,
+    "x": 20,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2822.0999999996275,
+    "x": 22,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2835.4000000003725,
+    "x": 22,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2851.9000000003725,
+    "x": 22,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2872.5,
+    "x": 24,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2890.4000000003725,
+    "x": 24,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2907,
+    "x": 24,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2930,
+    "x": 26,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2936,
+    "x": 26,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2952.300000000745,
+    "x": 26,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2974,
+    "x": 28,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 2985.5999999996275,
+    "x": 28,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3002.4000000003725,
+    "x": 28,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3021.7000000011176,
+    "x": 30,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3035.2000000011176,
+    "x": 30,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3056.9000000003725,
+    "x": 30,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3091.9000000003725,
+    "x": 32,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3097.800000000745,
+    "x": 32,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3105.800000000745,
+    "x": 32,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3124.9000000003725,
+    "x": 34,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3140,
+    "x": 34,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3151.5999999996275,
+    "x": 34,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3193.0999999996275,
+    "x": 36,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3198.7000000011176,
+    "x": 36,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3203.7000000011176,
+    "x": 36,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3222.0999999996275,
+    "x": 38,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3235.4000000003725,
+    "x": 38,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3251.5999999996275,
+    "x": 38,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3290.7000000011176,
+    "x": 40,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3295.4000000003725,
+    "x": 40,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3303.0999999996275,
+    "x": 40,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3325.0999999996275,
+    "x": 42,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3336,
+    "x": 42,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3352.5999999996275,
+    "x": 42,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3374.9000000003725,
+    "x": 44,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3385.9000000003725,
+    "x": 44,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3402.9000000003725,
+    "x": 44,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3424.800000000745,
+    "x": 46,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3440.5999999996275,
+    "x": 46,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3456.9000000003725,
+    "x": 46,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3480.0999999996275,
+    "x": 48,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3492.4000000003725,
+    "x": 48,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3502,
+    "x": 48,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3518.2000000011176,
+    "x": 48,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3538.800000000745,
+    "x": 50,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3562.4000000003725,
+    "x": 50,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3573.9000000003725,
+    "x": 50,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3592.4000000003725,
+    "x": 52,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3603.800000000745,
+    "x": 52,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3619.0999999996275,
+    "x": 52,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3638.4000000003725,
+    "x": 54,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3651.5999999996275,
+    "x": 54,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3668.800000000745,
+    "x": 54,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3689.5999999996275,
+    "x": 56,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3702,
+    "x": 56,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3718.4000000003725,
+    "x": 56,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3757.300000000745,
+    "x": 58,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3763.4000000003725,
+    "x": 58,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3771.0999999996275,
+    "x": 58,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3790.7000000011176,
+    "x": 60,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3807.2000000011176,
+    "x": 60,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3820,
+    "x": 60,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3843.2000000011176,
+    "x": 62,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3856,
+    "x": 62,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3868.5999999996275,
+    "x": 62,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3888.9000000003725,
+    "x": 64,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3903.300000000745,
+    "x": 64,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3918.7000000011176,
+    "x": 64,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3938.7000000011176,
+    "x": 66,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3953.300000000745,
+    "x": 66,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3968.2000000011176,
+    "x": 66,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 3988.800000000745,
+    "x": 68,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4003.5,
+    "x": 68,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4018.5,
+    "x": 68,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4056.5,
+    "x": 70,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4066.5,
+    "x": 70,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4073.0999999996275,
+    "x": 70,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4089.300000000745,
+    "x": 72,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4104,
+    "x": 72,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4119.5,
+    "x": 72,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4139,
+    "x": 74,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4152.9000000003725,
+    "x": 74,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4168.5999999996275,
+    "x": 74,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4190.4000000003725,
+    "x": 76,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4206.9000000003725,
+    "x": 76,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4223.4000000003725,
+    "x": 76,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4242.700000001118,
+    "x": 78,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4252.200000001118,
+    "x": 78,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4268.9000000003725,
+    "x": 78,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4289.5999999996275,
+    "x": 80,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4302.4000000003725,
+    "x": 80,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4318.700000001118,
+    "x": 80,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4340.800000000745,
+    "x": 82,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4352.0999999996275,
+    "x": 82,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4369,
+    "x": 82,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4391.4000000003725,
+    "x": 84,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4404.5,
+    "x": 84,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4419.0999999996275,
+    "x": 84,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4441.300000000745,
+    "x": 86,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4462.5999999996275,
+    "x": 86,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4474.0999999996275,
+    "x": 86,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4491.300000000745,
+    "x": 88,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4503.800000000745,
+    "x": 88,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4518.700000001118,
+    "x": 88,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4540,
+    "x": 90,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4553.5,
+    "x": 90,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4570.300000000745,
+    "x": 90,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4589.300000000745,
+    "x": 92,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4602.0999999996275,
+    "x": 92,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4618.4000000003725,
+    "x": 92,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4639.0999999996275,
+    "x": 94,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4652.700000001118,
+    "x": 94,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4668.9000000003725,
+    "x": 94,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4689.300000000745,
+    "x": 96,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4702.300000000745,
+    "x": 96,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4718.5,
+    "x": 96,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4735.5999999996275,
+    "x": 96,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4759,
+    "x": 98,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4770,
+    "x": 98,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4786.200000001118,
+    "x": 98,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4808.9000000003725,
+    "x": 100,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4819.300000000745,
+    "x": 100,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4836.300000000745,
+    "x": 100,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4855.4000000003725,
+    "x": 102,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4868.5999999996275,
+    "x": 102,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4885.0999999996275,
+    "x": 102,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4908.5999999996275,
+    "x": 104,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4919.9000000003725,
+    "x": 104,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4936,
+    "x": 104,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4955.4000000003725,
+    "x": 106,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4969.0999999996275,
+    "x": 106,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 4985.300000000745,
+    "x": 106,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5006.5999999996275,
+    "x": 108,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5023.700000001118,
+    "x": 108,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5040.9000000003725,
+    "x": 108,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5064,
+    "x": 110,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5069.4000000003725,
+    "x": 110,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5085.300000000745,
+    "x": 110,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5106.800000000745,
+    "x": 112,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5118.700000001118,
+    "x": 112,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5135.5,
+    "x": 112,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5174.700000001118,
+    "x": 114,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5180.4000000003725,
+    "x": 114,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5188.4000000003725,
+    "x": 114,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5210.300000000745,
+    "x": 116,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5218.300000000745,
+    "x": 116,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5235,
+    "x": 116,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5254.800000000745,
+    "x": 118,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5275,
+    "x": 118,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5290.0999999996275,
+    "x": 118,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5313.300000000745,
+    "x": 120,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5319.0999999996275,
+    "x": 120,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5335.9000000003725,
+    "x": 120,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5371.9000000003725,
+    "x": 122,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5376.0999999996275,
+    "x": 122,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5385.700000001118,
+    "x": 122,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5406.5,
+    "x": 124,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5418.9000000003725,
+    "x": 124,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5435.700000001118,
+    "x": 124,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5456.800000000745,
+    "x": 126,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5469.300000000745,
+    "x": 126,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5484.9000000003725,
+    "x": 126,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5501.5,
+    "x": 126,
+    "y": 0,
+    "room": "west-room",
+    "transition": false
+  },
+  {
+    "time": 5521.700000001118,
+    "x": 128,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5541.700000001118,
+    "x": 128,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5556.800000000745,
+    "x": 128,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5592.9000000003725,
+    "x": 130,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5604.300000000745,
+    "x": 130,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5611.4000000003725,
+    "x": 130,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5624.0999999996275,
+    "x": 132,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5635.4000000003725,
+    "x": 132,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5651.5999999996275,
+    "x": 132,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5671.800000000745,
+    "x": 134,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5685,
+    "x": 134,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5701.9000000003725,
+    "x": 134,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5722,
+    "x": 136,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5740.4000000003725,
+    "x": 136,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5757,
+    "x": 136,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5779.300000000745,
+    "x": 138,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5785.9000000003725,
+    "x": 138,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5802.300000000745,
+    "x": 138,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5822.700000001118,
+    "x": 140,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5835.5,
+    "x": 140,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5852,
+    "x": 140,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5873.9000000003725,
+    "x": 142,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5885.5,
+    "x": 142,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5902.4000000003725,
+    "x": 142,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5924.200000001118,
+    "x": 144,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5935.800000000745,
+    "x": 144,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5952.300000000745,
+    "x": 144,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5974.4000000003725,
+    "x": 146,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 5986.0999999996275,
+    "x": 146,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6002.5,
+    "x": 146,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6024.4000000003725,
+    "x": 148,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6040.5,
+    "x": 148,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6056.9000000003725,
+    "x": 148,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6077,
+    "x": 150,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6085.4000000003725,
+    "x": 150,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6102.300000000745,
+    "x": 150,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6123.5999999996275,
+    "x": 150,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6150.5999999996275,
+    "x": 152,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6154,
+    "x": 152,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6169.5999999996275,
+    "x": 152,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6190.9000000003725,
+    "x": 154,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6202.4000000003725,
+    "x": 154,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6218.5999999996275,
+    "x": 154,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6242.300000000745,
+    "x": 156,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6251.5999999996275,
+    "x": 156,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6268.800000000745,
+    "x": 156,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6288.4000000003725,
+    "x": 158,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6302.800000000745,
+    "x": 158,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6318.300000000745,
+    "x": 158,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6339.4000000003725,
+    "x": 160,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6351.800000000745,
+    "x": 160,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6368.5,
+    "x": 160,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6388.5,
+    "x": 162,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6405.5999999996275,
+    "x": 162,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6420.0999999996275,
+    "x": 162,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6444.5,
+    "x": 164,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6453.0999999996275,
+    "x": 164,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6471.0999999996275,
+    "x": 164,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6489.5,
+    "x": 166,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6505.0999999996275,
+    "x": 166,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6518.800000000745,
+    "x": 166,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6539.0999999996275,
+    "x": 168,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6556.9000000003725,
+    "x": 168,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6573.5999999996275,
+    "x": 168,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6593.800000000745,
+    "x": 170,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6602.5999999996275,
+    "x": 170,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6618.300000000745,
+    "x": 170,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6634.9000000003725,
+    "x": 170,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6655.4000000003725,
+    "x": 172,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6668.9000000003725,
+    "x": 172,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6685.300000000745,
+    "x": 172,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6705.5,
+    "x": 174,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6723.5999999996275,
+    "x": 174,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6742.300000000745,
+    "x": 174,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6761.5999999996275,
+    "x": 176,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6771.9000000003725,
+    "x": 176,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6785,
+    "x": 176,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6814.0999999996275,
+    "x": 178,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6819.300000000745,
+    "x": 178,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6836.0999999996275,
+    "x": 178,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6854.9000000003725,
+    "x": 180,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6868.700000001118,
+    "x": 180,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6885,
+    "x": 180,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6923.300000000745,
+    "x": 182,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6928.200000001118,
+    "x": 182,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6936.4000000003725,
+    "x": 182,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6957.200000001118,
+    "x": 184,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6968.9000000003725,
+    "x": 184,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 6985.200000001118,
+    "x": 184,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7006.9000000003725,
+    "x": 186,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7018.4000000003725,
+    "x": 186,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7035.300000000745,
+    "x": 186,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7055.4000000003725,
+    "x": 188,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7068.800000000745,
+    "x": 188,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7085.5999999996275,
+    "x": 188,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7109.200000001118,
+    "x": 190,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7123.5999999996275,
+    "x": 190,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7141.5999999996275,
+    "x": 190,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7160.0999999996275,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7169.700000001118,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7185.4000000003725,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7221.800000000745,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7226.4000000003725,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7236.300000000745,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7251.700000001118,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7272,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7285,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7304.4000000003725,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7321.700000001118,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7335.5,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7351.4000000003725,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7390.5,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7396,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7404,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7426.200000001118,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7437.300000000745,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7451.5,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7471.800000000745,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7485.0999999996275,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7502.300000000745,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7540.5999999996275,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7545.300000000745,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7552.700000001118,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7575.300000000745,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7588.300000000745,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  },
+  {
+    "time": 7602,
+    "x": 192,
+    "y": 0,
+    "room": "east-room",
+    "transition": false
+  }
+]

@@ -88,6 +88,7 @@ const ProgressSchema = z.object({
   battlesWon: z.number(),
   introSeen: z.boolean().default(false),
   firstEncounterDone: z.boolean().default(false),
+  discoveries: z.array(z.string()).default([]),
 });
 export type ProgressState = z.infer<typeof ProgressSchema>;
 
@@ -96,6 +97,7 @@ const defaultProgress: ProgressState = {
   battlesWon: 0,
   introSeen: false,
   firstEncounterDone: false,
+  discoveries: [],
 };
 
 const progressStorage = createStorage('uw.progress.v1', ProgressSchema, defaultProgress, 'session');
@@ -105,27 +107,34 @@ export const progressStore = createStore<ProgressState & {
   winBattle: () => void;
   markIntroSeen: () => void;
   markFirstEncounterDone: () => void;
+  discover: (id: string) => void;
 }>()((set) => ({
   ...progressStorage.read(),
+  discover: (id) => set(state => {
+    if (state.discoveries.includes(id)) return state;
+    const next = { ...state, discoveries: [...state.discoveries, id] };
+    progressStorage.write(next);
+    return next;
+  }),
   visitProject: (id) => set((state) => {
     if (state.projectsVisited.includes(id)) return state;
     const next = { ...state, projectsVisited: [...state.projectsVisited, id] };
-    progressStorage.write({ projectsVisited: next.projectsVisited, battlesWon: next.battlesWon, introSeen: next.introSeen, firstEncounterDone: next.firstEncounterDone });
+    progressStorage.write({ projectsVisited: next.projectsVisited, battlesWon: next.battlesWon, introSeen: next.introSeen, firstEncounterDone: next.firstEncounterDone, discoveries: next.discoveries });
     return next;
   }),
   winBattle: () => set((state) => {
     const next = { ...state, battlesWon: state.battlesWon + 1 };
-    progressStorage.write({ projectsVisited: next.projectsVisited, battlesWon: next.battlesWon, introSeen: next.introSeen, firstEncounterDone: next.firstEncounterDone });
+    progressStorage.write({ projectsVisited: next.projectsVisited, battlesWon: next.battlesWon, introSeen: next.introSeen, firstEncounterDone: next.firstEncounterDone, discoveries: next.discoveries });
     return next;
   }),
   markIntroSeen: () => set((state) => {
     const next = { ...state, introSeen: true };
-    progressStorage.write({ projectsVisited: next.projectsVisited, battlesWon: next.battlesWon, introSeen: next.introSeen, firstEncounterDone: next.firstEncounterDone });
+    progressStorage.write({ projectsVisited: next.projectsVisited, battlesWon: next.battlesWon, introSeen: next.introSeen, firstEncounterDone: next.firstEncounterDone, discoveries: next.discoveries });
     return next;
   }),
   markFirstEncounterDone: () => set((state) => {
     const next = { ...state, firstEncounterDone: true };
-    progressStorage.write({ projectsVisited: next.projectsVisited, battlesWon: next.battlesWon, introSeen: next.introSeen, firstEncounterDone: next.firstEncounterDone });
+    progressStorage.write({ projectsVisited: next.projectsVisited, battlesWon: next.battlesWon, introSeen: next.introSeen, firstEncounterDone: next.firstEncounterDone, discoveries: next.discoveries });
     return next;
   }),
 }));
