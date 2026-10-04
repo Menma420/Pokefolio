@@ -1,0 +1,40 @@
+$ next build --webpack
+▲ Next.js 16.3.8 (webpack)
+✓ Running next.config.ts took 59ms
+- Experiments (use with caution):
+  ⨯ useTypeScriptCli
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 9.0s
+  Running TypeScript ...
+  Finished TypeScript in 18.3s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/25) ...
+  Generating static pages using 11 workers (6/25)
+  Generating static pages using 11 workers (12/25)
+  Generating static pages using 11 workers (18/25)
+✓ Generating static pages using 11 workers (25/25) in 1775ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /dev/battle
+├ ○ /dev/kit
+├ ○ /dev/text-spike
+├ ○ /dev/world
+├ ○ /experience
+├ ○ /projects
+├   /projects/[slug]
+│ ├ ● /projects/acko-clinic
+│ ├ ● /projects/karsh
+│ ├ ● /projects/nomnom-planner
+│ └ ● [+9 more paths]
+├ ○ /resume
+└ ○ /skills
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)

@@ -19,5 +19,8 @@ export function mountWorldRaster(game:Phaser.Game):{dirty:()=>void;destroy:()=>v
   const context=canvas.getContext('2d')!;context.imageSmoothingEnabled=false;context.putImageData(new ImageData(image.data,image.width,image.height),0,0);canvas.dataset.scale=String(n);canvas.dataset.ready='true';
  };
  game.events.on(Phaser.Core.Events.POST_RENDER,draw);
- return {dirty:()=>{dirty=true;},destroy:()=>{game.events.off(Phaser.Core.Events.POST_RENDER,draw);logical.style.opacity=previousOpacity;canvas.remove();}};
+ // A menu can pause world rendering. Its frozen image must still follow layout
+ // changes without resuming simulation or waiting for another Phaser frame.
+ const observer=new ResizeObserver(draw);observer.observe(logical);
+ return {dirty:()=>{dirty=true;},destroy:()=>{observer.disconnect();game.events.off(Phaser.Core.Events.POST_RENDER,draw);logical.style.opacity=previousOpacity;canvas.remove();}};
 }

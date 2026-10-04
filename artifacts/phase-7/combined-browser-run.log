@@ -1,0 +1,126 @@
+
+Running 38 tests using 1 worker
+
+(node:139500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/38] [chromium] › tests/e2e/battle-production.spec.ts:35:5 › B3 complete production battle sequence and all native scales
+[2/38] [chromium] › tests/e2e/battle-production.spec.ts:56:5 › B3 Engineer and Visitor Parties retain all six projects and production scene roles
+[3/38] [chromium] › tests/e2e/battle-production.spec.ts:62:5 › B3 physical scene and React layers remain crisp at DPR 2 and 3 with nondivisible scales
+[4/38] [chromium] › tests/e2e/battle-production.spec.ts:66:5 › B3 main-game dedicated scene sleeps the world and EXIT restores the exact anchor
+[5/38] [chromium] › tests/e2e/battle-production.spec.ts:84:5 › B3 every authored project has a production battle emblem and a readable plate
+[6/38] [chromium] › tests/e2e/battle.spec.ts:32:5 › audience selector resolves the six-project party for each audience
+[7/38] [chromium] › tests/e2e/battle.spec.ts:44:5 › keyboard completes authored Recruiter interview, switches party project, opens root LINK, and exits
+[8/38] [chromium] › tests/e2e/battle.spec.ts:132:5 › touch-only controls open and read an authored topic
+[9/38] [chromium] › tests/e2e/battle.spec.ts:154:5 › Battle UI provides audience content for every authored active project
+[10/38] [chromium] › tests/e2e/foundation.spec.ts:4:5 › foundation device-pixel scaling and review captures
+[11/38] [chromium] › tests/e2e/m1-flow.spec.ts:151:5 › M1 golden path: intro, automatic LOS, authored interview, exact return, repeat and refresh
+[12/38] [chromium] › tests/e2e/m1-flow.spec.ts:248:5 › unmount during a running first encounter cleans up to a fresh playable title
+[13/38] [chromium] › tests/e2e/m1-flow.spec.ts:264:5 › route changes abort dialogue, VS, battle wipe, and battle without locking the next world
+[14/38] [chromium] › tests/e2e/m1-flow.spec.ts:309:5 › walking onto the main doorway triggers transition and interior without Enter/A, preserving return point
+[15/38] [chromium] › tests/e2e/opening-production.spec.ts:14:5 › B2 complete opening sequence, native scale evidence and returning-user persistence
+[16/38] [chromium] › tests/e2e/opening-production.spec.ts:41:5 › B2 Engineer and Visitor VS portraits retain locked palettes
+[17/38] [chromium] › tests/e2e/overworld-art.spec.ts:29:5 › original world atlases load, show native silhouettes, and render at integer scales
+[18/38] [chromium] › tests/e2e/portfolio-menus.spec.ts:65:37 › P7 keyboard: every direct path, nested focus, options, links and EXIT
+[chromium] › tests/e2e/portfolio-menus.spec.ts:65:37 › P7 keyboard: every direct path, nested focus, options, links and EXIT
+Raster diagnostic {
+  frame: {
+    x: 0,
+    y: 0,
+    width: 240,
+    height: 160,
+    top: 0,
+    right: 240,
+    bottom: 160,
+    left: 0
+  },
+  canvases: [
+    {
+      style: 'image-rendering: pixelated; display: block; width: 240px; height: 160px; opacity: 0;',
+      width: 240,
+      height: 160,
+      rect: [Object],
+      world: undefined
+    },
+    {
+      style: 'position: absolute; display: block; pointer-events: none; image-rendering: pixelated; visibility: visible; width: 240px; height: 160px; left: 0px; top: 0px;',
+      width: 240,
+      height: 160,
+      rect: [Object],
+      world: 'physical'
+    },
+    {
+      style: 'position: absolute; width: 240px; height: 160px; image-rendering: pixelated; display: block; pointer-events: none; left: calc(0px); top: calc(0px); z-index: -1;',
+      width: 240,
+      height: 160,
+      rect: [Object],
+      world: undefined
+    },
+    {
+      style: 'position: relative; width: 226px; height: 16px; image-rendering: pixelated; display: block; pointer-events: none; left: calc(0px); top: calc(0px);',
+      width: 226,
+      height: 16,
+      rect: [Object],
+      world: undefined
+    },
+    {
+      style: 'position: absolute; width: 48px; height: 8px; image-rendering: pixelated; display: block; pointer-events: none; left: calc(0px); top: calc(0px);',
+      width: 48,
+      height: 8,
+      rect: [Object],
+      world: undefined
+    }
+  ]
+}
+
+  1) [chromium] › tests/e2e/portfolio-menus.spec.ts:65:37 › P7 keyboard: every direct path, nested focus, options, links and EXIT
+
+    Error: p7-keyboard-project-tech-impact-1x.png
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 23874
+
+      42 |   await expect(p.locator('[data-world-raster="physical"]')).toHaveAttribute('data-scale',String(n));
+      43 |   const png=decodePng(await p.screenshot({path:`${output}/${filename}`})),pixels=cropPixels(png,Math.round(rect.x*dpr),Math.round(rect.y*dpr),240*n,160*n);let bad=0;
+    > 44 |   for(let y=0;y<160;y++)for(let x=0;x<240;x++){const a=((y*n)*pixels.width+x*n)*4;for(let dy=0;dy<n;dy++)for(let dx=0;dx<n;dx++){const b=((y*n+dy)*pixels.width+x*n+dx)*4;if([0,1,2,3].some(c=>pixels.data[a+c]!==pixels.data[b+c]))bad++;}}
+         |                                                                                                                                                                                                                                             ^
+      45 |   const colors=histogram(pixels.data,allowed);if(bad)console.log('Raster diagnostic',await p.evaluate(()=>({frame:document.querySelector('[aria-label="Game frame"]')?.getBoundingClientRect().toJSON(),canvases:[...document.querySelectorAll('canvas')].slice(0,5).map(e=>({style:e.style.cssText,width:e.width,height:e.height,rect:e.getBoundingClientRect().toJSON(),world:e.dataset.worldRaster}))})));expect(bad,filename).toBe(0);expect(colors.intermediatePixels,filename).toBe(0);
+      46 |   captures.push({filename,viewportCSS:p.viewportSize(),dpr,integerScale:n,physicalRaster:{width:png.width,height:png.height},native:{width:240,height:160},frameBounds:rect,pixelBlockMismatches:bad,intermediateColors:colors.intermediateColors,state:await portfolio(p).textContent()});
+      47 |   fs.writeFileSync(`${output}/${mode}-captures.json`,JSON.stringify(captures,null,2));
+        at capture (/home/menma/Downloads/Portfolio/tests/e2e/portfolio-menus.spec.ts:44:419)
+        at Object.screen (/home/menma/Downloads/Portfolio/tests/e2e/portfolio-menus.spec.ts:59:101)
+        at /home/menma/Downloads/Portfolio/tests/e2e/portfolio-menus.spec.ts:70:477
+
+    Error Context: test-results/portfolio-menus-P7-keyboar-f3320-ocus-options-links-and-EXIT-chromium/error-context.md
+
+
+(node:143492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[19/38] [chromium] › tests/e2e/portfolio-menus.spec.ts:65:37 › P7 touch: every direct path, nested focus, options, links and EXIT
+[20/38] [chromium] › tests/e2e/portfolio-menus.spec.ts:88:37 › P7 keyboard direct Y opens the actual resume PDF immediately and safely
+[21/38] [chromium] › tests/e2e/portfolio-menus.spec.ts:88:37 › P7 touch direct Y opens the actual resume PDF immediately and safely
+[22/38] [chromium] › tests/e2e/portfolio-menus.spec.ts:95:5 › P7 X/Y are available before tutorial completion and inert throughout the actual P6 encounter, audience, VS and battle
+[23/38] [chromium] › tests/e2e/portfolio-production.spec.ts:23:5 › B4 production menu screens: native, 3x, 4x, catalogue, paging, options and EXIT
+[24/38] [chromium] › tests/e2e/portfolio-production.spec.ts:34:5 › B4 direct Y to Resume, external profiles, unsafe/failed resources and semantic fallbacks
+[25/38] [chromium] › tests/e2e/portfolio-production.spec.ts:40:5 › B4 touch intent parity, external controller clearance and menu pixel raster at DPR 3
+[26/38] [chromium] › tests/e2e/remediation.spec.ts:7:5 › integrated foundation: exact text pixels, palette and native composition across DPR × scale
+[27/38] [chromium] › tests/e2e/remediation.spec.ts:45:5 › touch safe-area, hit targets, spacing, gating and outside-surface placement
+[28/38] [chromium] › tests/e2e/remediation.spec.ts:65:5 › dark cursor, stepped transition captures, reduced motion and accessible text
+[29/38] [chromium] › tests/e2e/remediation.spec.ts:78:5 › AUTO hides controls on fine-pointer laptops until the first touch on the game surface
+[30/38] [chromium] › tests/e2e/remediation.spec.ts:82:5 › original controller art at m=3 and m=4: every pressed state, multi-touch and dialogue gating
+[31/38] [chromium] › tests/e2e/smoke.spec.ts:3:5 › has title and game shell mounts
+[32/38] [chromium] › tests/e2e/text-spike.spec.ts:7:5 › isolated rendering spike: DPR 1–3 × native scales 1–8
+[33/38] [chromium] › tests/e2e/viewport.spec.ts:40:5 › desktop and small/mobile viewports use centered integer 3:2 scaling
+[34/38] [chromium] › tests/e2e/world.spec.ts:12:5 › original overworld matches the fixed 240×160 logical screen at 1x, 2x, and 3x
+[35/38] [chromium] › tests/e2e/world.spec.ts:25:5 › paused test room keeps a fixed pixel-render baseline
+[36/38] [chromium] › tests/e2e/world.spec.ts:33:5 › world room supports walk, NPC Enter interaction, automatic doorway, interior return, and pause/resume
+[37/38] [chromium] › tests/e2e/world.spec.ts:79:5 › touch controls send the same movement and interaction intents to WorldSim
+[38/38] [chromium] › tests/e2e/world.spec.ts:95:5 › non-world routes do not request the dynamically loaded Phaser module
+  1 failed
+    [chromium] › tests/e2e/portfolio-menus.spec.ts:65:37 › P7 keyboard: every direct path, nested focus, options, links and EXIT
+  37 passed (12.1m)

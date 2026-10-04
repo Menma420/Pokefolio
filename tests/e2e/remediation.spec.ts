@@ -1,3 +1,4 @@
+import {AXE_SCRIPT} from '../helpers/axe';
 import {test,expect} from '@playwright/test';
 import fs from 'node:fs';
 import {decodePng,cropPixels,histogram,encodePng} from '../helpers/png';
@@ -67,7 +68,7 @@ test('dark cursor, stepped transition captures, reduced motion and accessible te
  await page.screenshot({path:`${out}/dark-cursor-4x.png`});
  const cursor=await page.locator('[data-window="blue"] [data-cursor]').boundingBox();const pixels=cropPixels(decodePng(await page.screenshot()),Math.round(cursor!.x),Math.round(cursor!.y),32,32);const colors=histogram(pixels.data,Object.values(palette));
  expect(colors.colors[palette.onDark]).toBeGreaterThan(0);expect(colors.colors[palette.outer]).toBeGreaterThan(0);expect(colors.intermediatePixels).toBe(0);
- await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+ await page.addScriptTag({path:AXE_SCRIPT});
  const violations=await page.evaluate(async()=>{const axe=(window as unknown as {axe:{run:()=>Promise<{violations:{id:string;impact:string}[]}>}}).axe;return (await axe.run()).violations.filter(v=>v.impact==='critical'||v.impact==='serious');});expect(violations).toEqual([]);
  for(const [type,frames] of Object.entries({'fade-in':[0,2,4,6,8],'title-start':[3,12,16,20,24,28],'intro-reveal':[0,42,84,126],cut:[0,1],slide:[0,1,2,3,4],'slide-close':[0,2,4],fade:[0,2,4,6,8,12,16],door:[0,3,6,9,12],flash:[0,4,8],'battle-wipe':[0,5,10,14,19,24,40],'switch-short':[0,8,16],'exit-short':[0,8,16]})){
   for(const frame of frames){await page.goto(`/dev/kit?transition=${type}&frame=${frame}`);await expect(page.locator('[data-transition]')).toHaveAttribute('data-frame',String(frame));await expect.poll(()=>page.locator('[data-bitmap]:not([data-ready])').count()).toBe(0);await page.screenshot({path:`${out}/${type}-f${frame}.png`});}

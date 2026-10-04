@@ -1,0 +1,3 @@
+$ depcruise src
+
+✔ no dependency violations found (129 modules, 459 dependencies cruised)

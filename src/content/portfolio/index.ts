@@ -63,11 +63,21 @@ export const PROFILE=VERIFIED_PROFILE;
 export interface BagItem {id:string;name:string;description:string;url?:string;text?:string;art:string}
 export interface BagCategory {name:string;art:string;items:BagItem[]}
 export const BAG:BagCategory[] = [
- {name:'DOCUMENTS',art:'documents',items:[{id:'resume',name:'RESUME',description:'Original professional resume: Uttkarsh Malviya.',url:PROFILE.resume,art:'resume'},{id:'certificates',name:'CERTIFICATES',description:'No certificate destination has been supplied.',art:'certificate'}]},
- {name:'PROFILES',art:'profiles',items:[{id:'github',name:'GITHUB',description:'Uttkarsh\'s project repositories.',url:'https://github.com/Menma420',art:'github'},{id:'linkedin',name:'LINKEDIN',description:'Uttkarsh Malviya: professional profile.',url:PROFILE.linkedin,art:'profile'}]},
+ {name:'DOCUMENTS',art:'documents',items:[{id:'resume',name:'RESUME',description:'Original professional resume: Uttkarsh Malviya.',url:PROFILE.resume,art:'resume'}]},
+ {name:'PROFILES',art:'profiles',items:[{id:'github',name:'GITHUB',description:'Uttkarsh\'s project repositories.',url:PROFILE.github,art:'github'},{id:'linkedin',name:'LINKEDIN',description:'Uttkarsh Malviya: professional profile.',url:PROFILE.linkedin,art:'profile'}]},
  {name:'CONTACT',art:'contact',items:[{id:'email',name:'EMAIL',description:PROFILE.email,url:`mailto:${PROFILE.email}`,art:'email'}]},
  {name:'EXTRAS',art:'extras',items:[{id:'achievements',name:'ACHIEVEMENTS',description:'Verified competition and coding achievements.',text:PROFILE.achievements.join('\n'),art:'extras'}]},
 ];
 export function getPortfolioProject(slug:string){return PORTFOLIO_PROJECTS.find(project=>project.slug===slug);}
 export function getProjectWriteup(id:ProjectId){return source.filter(tree=>tree.projectId===id).flatMap(tree=>flattened(tree.topics).map(node=>({question:node.label,text:node.answer.pages.join(' ')}))).filter((entry,i,entries)=>entries.findIndex(other=>other.text===entry.text)===i);}
 export function getProjectTech(id:ProjectId){return PORTFOLIO_PROJECTS.find(project=>project.id===id)?.technologies.length?PORTFOLIO_PROJECTS.find(project=>project.id===id)!.technologies.map(name=>({name})):SKILLS.filter(skill=>skill.projects.includes(id));}
+/** Shared portfolio view-model selectors. No audience, Party or runtime state. */
+export const getPortfolioProjects = () => PORTFOLIO_PROJECTS;
+export const getSkillCategories = () => SKILL_CATEGORIES;
+export const getSkills = (category = 0) => SKILLS.filter(skill => category === 0 || skill.category === SKILL_CATEGORIES[category]);
+export const getSkill = (category: number, selection: number) => getSkills(category)[selection];
+export const getSkillProjects = (category: number, selection: number) => (getSkill(category, selection)?.projects ?? []).map(id => PORTFOLIO_PROJECTS.find(project => project.id === id)!).filter(Boolean);
+export const getExperiences = () => EXPERIENCE.map(role => ({...role, sections: role.sections.filter(section => section.text.trim())}));
+export const getBagCategories = () => BAG;
+export const getTrainerCard = () => ({...PROFILE, qualification: PROFILE.education.split(' - ')[1]!.toUpperCase()});
+export { PLAYER_MENU, OPTION_LABELS } from './menus';

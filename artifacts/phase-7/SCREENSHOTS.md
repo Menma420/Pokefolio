@@ -1,0 +1,97 @@
+# Phase 7 screenshot checkpoints
+
+Actual Chromium game renders. All 89 captures stay in this single Phase 7 folder. Every recorded capture has zero native pixel-block mismatches and zero intermediate colors.
+
+| Screenshot | Viewport CSS | DPR | Integer scale | Physical screenshot |
+| --- | --- | --- | --- | --- |
+| [p7-keyboard-player-menu-1x.png](p7-keyboard-player-menu-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-player-menu-3x.png](p7-keyboard-player-menu-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-player-menu-4x.png](p7-keyboard-player-menu-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-pokedex-1x.png](p7-keyboard-pokedex-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-pokedex-3x.png](p7-keyboard-pokedex-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-pokedex-4x.png](p7-keyboard-pokedex-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-pokedex-detail-1x.png](p7-keyboard-pokedex-detail-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-pokedex-detail-3x.png](p7-keyboard-pokedex-detail-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-pokedex-detail-4x.png](p7-keyboard-pokedex-detail-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-related-project-1x.png](p7-keyboard-related-project-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-related-project-3x.png](p7-keyboard-related-project-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-related-project-4x.png](p7-keyboard-related-project-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-projects-1x.png](p7-keyboard-projects-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-projects-3x.png](p7-keyboard-projects-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-projects-4x.png](p7-keyboard-projects-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-project-overview-1x.png](p7-keyboard-project-overview-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-project-overview-3x.png](p7-keyboard-project-overview-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-project-overview-4x.png](p7-keyboard-project-overview-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-project-tech-impact-1x.png](p7-keyboard-project-tech-impact-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-project-tech-impact-3x.png](p7-keyboard-project-tech-impact-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-project-tech-impact-4x.png](p7-keyboard-project-tech-impact-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-project-links-1x.png](p7-keyboard-project-links-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-project-links-3x.png](p7-keyboard-project-links-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-project-links-4x.png](p7-keyboard-project-links-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-experience-1x.png](p7-keyboard-experience-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-experience-3x.png](p7-keyboard-experience-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-experience-4x.png](p7-keyboard-experience-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-experience-detail-1x.png](p7-keyboard-experience-detail-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-experience-detail-3x.png](p7-keyboard-experience-detail-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-experience-detail-4x.png](p7-keyboard-experience-detail-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-experience-ownership-1x.png](p7-keyboard-experience-ownership-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-experience-ownership-3x.png](p7-keyboard-experience-ownership-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-experience-ownership-4x.png](p7-keyboard-experience-ownership-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-experience-engineering-1x.png](p7-keyboard-experience-engineering-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-experience-engineering-3x.png](p7-keyboard-experience-engineering-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-experience-engineering-4x.png](p7-keyboard-experience-engineering-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-experience-impact-1x.png](p7-keyboard-experience-impact-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-experience-impact-3x.png](p7-keyboard-experience-impact-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-experience-impact-4x.png](p7-keyboard-experience-impact-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-bag-documents-1x.png](p7-keyboard-bag-documents-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-bag-documents-3x.png](p7-keyboard-bag-documents-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-bag-documents-4x.png](p7-keyboard-bag-documents-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-bag-profiles-1x.png](p7-keyboard-bag-profiles-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-bag-profiles-3x.png](p7-keyboard-bag-profiles-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-bag-profiles-4x.png](p7-keyboard-bag-profiles-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-bag-contact-1x.png](p7-keyboard-bag-contact-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-bag-contact-3x.png](p7-keyboard-bag-contact-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-bag-contact-4x.png](p7-keyboard-bag-contact-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-bag-extras-1x.png](p7-keyboard-bag-extras-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-bag-extras-3x.png](p7-keyboard-bag-extras-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-bag-extras-4x.png](p7-keyboard-bag-extras-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-bag-reading-1x.png](p7-keyboard-bag-reading-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-bag-reading-3x.png](p7-keyboard-bag-reading-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-bag-reading-4x.png](p7-keyboard-bag-reading-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-trainer-card-1x.png](p7-keyboard-trainer-card-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-trainer-card-3x.png](p7-keyboard-trainer-card-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-trainer-card-4x.png](p7-keyboard-trainer-card-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-options-1x.png](p7-keyboard-options-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-options-3x.png](p7-keyboard-options-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-options-4x.png](p7-keyboard-options-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-controls-1x.png](p7-keyboard-controls-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-controls-3x.png](p7-keyboard-controls-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-controls-4x.png](p7-keyboard-controls-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-exit-confirmation-1x.png](p7-keyboard-exit-confirmation-1x.png) | 240 × 160 | 1 | 1× | 240 × 160 |
+| [p7-keyboard-exit-confirmation-3x.png](p7-keyboard-exit-confirmation-3x.png) | 720 × 480 | 1 | 3× | 720 × 480 |
+| [p7-keyboard-exit-confirmation-4x.png](p7-keyboard-exit-confirmation-4x.png) | 960 × 640 | 1 | 4× | 960 × 640 |
+| [p7-keyboard-largest-fit-desktop.png](p7-keyboard-largest-fit-desktop.png) | 1440 × 900 | 1 | 5× | 1440 × 900 |
+| [p7-touch-player-menu.png](p7-touch-player-menu.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-pokedex.png](p7-touch-pokedex.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-pokedex-detail.png](p7-touch-pokedex-detail.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-related-project.png](p7-touch-related-project.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-projects.png](p7-touch-projects.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-project-overview.png](p7-touch-project-overview.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-project-tech-impact.png](p7-touch-project-tech-impact.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-project-links.png](p7-touch-project-links.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-experience.png](p7-touch-experience.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-experience-detail.png](p7-touch-experience-detail.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-experience-ownership.png](p7-touch-experience-ownership.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-experience-engineering.png](p7-touch-experience-engineering.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-experience-impact.png](p7-touch-experience-impact.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-bag-documents.png](p7-touch-bag-documents.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-bag-profiles.png](p7-touch-bag-profiles.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-bag-contact.png](p7-touch-bag-contact.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-bag-extras.png](p7-touch-bag-extras.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-bag-reading.png](p7-touch-bag-reading.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-trainer-card.png](p7-touch-trainer-card.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-options.png](p7-touch-options.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-controls.png](p7-touch-controls.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+| [p7-touch-exit-confirmation.png](p7-touch-exit-confirmation.png) | 390 × 844 | 3 | 4× | 1170 × 2532 |
+
+The keyboard/touch capture manifests include frame bounds and state. Native composition is always 240 × 160. Approved original B1/B4 artwork is reused; no unfinished P7 art placeholders appear. Missing verified project facts remain visibly unavailable. See [REPORT.md](REPORT.md) for content caveats and visual QA.

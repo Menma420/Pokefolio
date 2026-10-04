@@ -2,6 +2,8 @@ import type { TransitionKind, TransitionFrame } from '../TransitionDirector';
 import { createStore } from 'zustand/vanilla';
 import { z } from 'zod';
 import { createStorage } from '../storage';
+import type { PortfolioView } from '../../domain/menu';
+import { pushScreen, popScreen, updateScreen, type ScreenStack } from '../../core/menu';
 
 // --- SETTINGS STORE ---
 const SettingsSchema = z.object({
@@ -130,6 +132,8 @@ export const progressStore = createStore<ProgressState & {
 
 // --- UI STORE (Transient Runtime) ---
 export interface UiState {
+  screenStack: ScreenStack<PortfolioView>;
+  lastMenuCursor: number;
   isTransitioning: boolean;
   transitionType: TransitionKind | null;
   transitionFrame: TransitionFrame | null;
@@ -137,6 +141,8 @@ export interface UiState {
 }
 
 const defaultUiState: UiState = {
+  screenStack: [],
+  lastMenuCursor: 0,
   isTransitioning: false,
   transitionType: null,
   transitionFrame: null,
@@ -145,12 +151,24 @@ const defaultUiState: UiState = {
 
 // Vanilla Zustand for transient UI state ONLY. NO localStorage persistence.
 export const uiStore = createStore<UiState & { 
+  openScreen: (frame: PortfolioView) => void;
+  pushScreen: (frame: PortfolioView) => void;
+  updateScreen: (patch: Partial<PortfolioView>) => void;
+  popScreen: () => void;
+  closeScreens: () => void;
+  rememberMenuCursor: (cursor: number) => void;
   startTransition: (type: UiState['transitionType']) => void; 
   endTransition: () => void;
   setTransitionFrame: (frame: TransitionFrame) => void;
   setVirtualControls: (visible: boolean) => void;
 }>()((set) => ({
   ...defaultUiState,
+  openScreen: (frame) => set({screenStack:[frame]}),
+  pushScreen: (frame) => set(state => ({screenStack:pushScreen(state.screenStack, frame)})),
+  updateScreen: (patch) => set(state => ({screenStack:updateScreen(state.screenStack, patch)})),
+  popScreen: () => set(state => ({screenStack:popScreen(state.screenStack)})),
+  closeScreens: () => set({screenStack:[]}),
+  rememberMenuCursor: (cursor) => set({lastMenuCursor:cursor}),
   startTransition: (type) => set({ isTransitioning: true, transitionType: type, transitionFrame: null }),
   setTransitionFrame: (frame) => set({transitionFrame:frame}),
   endTransition: () => set({ isTransitioning: false, transitionType: null, transitionFrame: null }),

@@ -1,0 +1,574 @@
+[
+  {
+    "filename": "p7-touch-player-menu.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen menu; cursor 0; category 0; page 0; section 0; depth 1. "
+  },
+  {
+    "filename": "p7-touch-pokedex.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen dex; cursor 0; category 0; page 0; section 0; depth 2. "
+  },
+  {
+    "filename": "p7-touch-pokedex-detail.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen dex-detail; cursor 2; category 1; page 0; section 0; depth 3. "
+  },
+  {
+    "filename": "p7-touch-related-project.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen project-detail; cursor 0; category 0; page 0; section 0; depth 4. "
+  },
+  {
+    "filename": "p7-touch-projects.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen projects; cursor 0; category 0; page 0; section 0; depth 2. "
+  },
+  {
+    "filename": "p7-touch-project-overview.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen project-detail; cursor 0; category 0; page 0; section 0; depth 3. "
+  },
+  {
+    "filename": "p7-touch-project-tech-impact.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen project-detail; cursor 0; category 0; page 0; section 1; depth 3. "
+  },
+  {
+    "filename": "p7-touch-project-links.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen project-detail; cursor 0; category 0; page 0; section 2; depth 3. "
+  },
+  {
+    "filename": "p7-touch-experience.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen experience; cursor 0; category 0; page 0; section 0; depth 2. "
+  },
+  {
+    "filename": "p7-touch-experience-detail.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen experience-detail; cursor 1; category 0; page 0; section 0; depth 3. "
+  },
+  {
+    "filename": "p7-touch-experience-ownership.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen experience-detail; cursor 1; category 0; page 0; section 1; depth 3. "
+  },
+  {
+    "filename": "p7-touch-experience-engineering.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen experience-detail; cursor 1; category 0; page 0; section 2; depth 3. "
+  },
+  {
+    "filename": "p7-touch-experience-impact.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen experience-detail; cursor 1; category 0; page 0; section 3; depth 3. "
+  },
+  {
+    "filename": "p7-touch-bag-documents.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen bag; cursor 0; category 0; page 0; section 0; depth 2. "
+  },
+  {
+    "filename": "p7-touch-bag-profiles.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen bag; cursor 0; category 1; page 0; section 0; depth 2. "
+  },
+  {
+    "filename": "p7-touch-bag-contact.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen bag; cursor 0; category 2; page 0; section 0; depth 2. "
+  },
+  {
+    "filename": "p7-touch-bag-extras.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen bag; cursor 0; category 3; page 0; section 0; depth 2. "
+  },
+  {
+    "filename": "p7-touch-bag-reading.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen bag-reading; cursor 0; category 3; page 0; section 0; depth 3. "
+  },
+  {
+    "filename": "p7-touch-trainer-card.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen card; cursor 0; category 0; page 0; section 0; depth 2. "
+  },
+  {
+    "filename": "p7-touch-options.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen options; cursor 0; category 0; page 0; section 0; depth 2. "
+  },
+  {
+    "filename": "p7-touch-controls.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen controls; cursor 0; category 0; page 0; section 0; depth 3. "
+  },
+  {
+    "filename": "p7-touch-exit-confirmation.png",
+    "viewportCSS": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalRaster": {
+      "width": 1170,
+      "height": 2532
+    },
+    "native": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "state": "Screen exit; cursor 1; category 0; page 0; section 0; depth 2. "
+  }
+]

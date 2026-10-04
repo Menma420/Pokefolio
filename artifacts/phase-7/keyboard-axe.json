@@ -1,0 +1,90 @@
+[
+  {
+    "state": "player-menu",
+    "violations": []
+  },
+  {
+    "state": "pokedex",
+    "violations": []
+  },
+  {
+    "state": "pokedex-detail",
+    "violations": []
+  },
+  {
+    "state": "related-project",
+    "violations": []
+  },
+  {
+    "state": "projects",
+    "violations": []
+  },
+  {
+    "state": "project-overview",
+    "violations": []
+  },
+  {
+    "state": "project-tech-impact",
+    "violations": []
+  },
+  {
+    "state": "project-links",
+    "violations": []
+  },
+  {
+    "state": "experience",
+    "violations": []
+  },
+  {
+    "state": "experience-detail",
+    "violations": []
+  },
+  {
+    "state": "experience-ownership",
+    "violations": []
+  },
+  {
+    "state": "experience-engineering",
+    "violations": []
+  },
+  {
+    "state": "experience-impact",
+    "violations": []
+  },
+  {
+    "state": "bag-documents",
+    "violations": []
+  },
+  {
+    "state": "bag-profiles",
+    "violations": []
+  },
+  {
+    "state": "bag-contact",
+    "violations": []
+  },
+  {
+    "state": "bag-extras",
+    "violations": []
+  },
+  {
+    "state": "bag-reading",
+    "violations": []
+  },
+  {
+    "state": "trainer-card",
+    "violations": []
+  },
+  {
+    "state": "options",
+    "violations": []
+  },
+  {
+    "state": "controls",
+    "violations": []
+  },
+  {
+    "state": "exit-confirmation",
+    "violations": []
+  }
+]

@@ -35,13 +35,17 @@ describe('B3 authored battle view',()=>{
  });
  it('replicates native RGBA cells without resampling at fractional CSS origins',()=>{
   const source=battleRaster('background',1);
-  for(const dpr of [1,1.25,1.5,2,2.5,3])for(const n of [1,3,4,8]){
+  for(const dpr of [1,1.25,1.5,2,2.5,3])for(const n of [1,2,3,4,5,6,7,8]){
    const prefix=Math.ceil(dpr)-1,image=expandBattlePixels(source.data,n,prefix,prefix,dpr);expect(Number.isInteger(image.width)).toBe(true);expect(Number.isInteger(image.height)).toBe(true);expect(image.data.length).toBe(image.width*image.height*4);let errors=0;
    for(let y=0;y<160;y++)for(let x=0;x<240;x++)for(let dy=0;dy<n;dy++)for(let dx=0;dx<n;dx++){
     const a=(y*240+x)*4,b=((y*n+dy+prefix)*image.width+x*n+dx+prefix)*4;
     for(let c=0;c<4;c++)if(source.data[a+c]!==image.data[b+c])errors++;
    }
    expect(errors).toBe(0);
+   if(Number.isInteger(dpr)){
+    expect(image.width%dpr).toBe(0);expect(image.height%dpr).toBe(0);
+    for(let y=prefix+160*n;y<image.height;y++)expect(image.data.slice(y*image.width*4,(y+1)*image.width*4).every(value=>value===0)).toBe(true);
+   }
   }
  });
  it('fits complete type labels and wide short names without truncation or changing the font',()=>{

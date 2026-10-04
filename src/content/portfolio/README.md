@@ -16,7 +16,7 @@ by project answers. Project references are shown only when supported; resume-onl
 say 'Verified professional skill set.' rather than inventing a project association. Icons
 use the locked enlarged-category-emblem fallback.
 
-All four Bag categories exist. CERTIFICATES is intentionally unavailable. EXTRAS contains
+All four Bag categories exist. P7 omits CERTIFICATES because none are verified/available. EXTRAS contains
 the three sourced achievements; no invented collectibles or counters. Location is omitted
 from the Trainer Card and fallback pages because the source explicitly forbids inference.
 
@@ -24,3 +24,9 @@ The actual resume is copied unchanged from the supplied `Uttkarsh_Malviya.pdf`:
 SHA-256 `1c2a144d5d245a874879f4423c7ca87831eed7002a3efa8435d8e58b65669f5e`.
 Bag opens that original PDF directly. `/resume` provides server-rendered semantic content,
 a PDF viewing link and a download link; it is not a generated replacement CV.
+
+P7 consumes the shared view-model selectors in `index.ts`. `menus.ts` supplies the locked
+Player Menu definitions. Navigation is a transient ScreenStack in `uiStore`; child screens
+retain their parent's exact selection/category/page/section, and B pops one logical layer.
+RESET TUTORIAL follows Final UI Implementation Plan §31: reset hint flags, preserving
+the existing session progress/intro/first-encounter contract.

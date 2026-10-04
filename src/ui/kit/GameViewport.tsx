@@ -39,12 +39,12 @@ export function GameViewport({ children,controllerScale=3 }: { children: ReactNo
     <div data-safe-area aria-hidden="true" style={{position:'absolute',visibility:'hidden',paddingTop:'var(--safe-top, env(safe-area-inset-top, 0px))',paddingRight:'var(--safe-right, env(safe-area-inset-right, 0px))',paddingBottom:'var(--safe-bottom, env(safe-area-inset-bottom, 0px))',paddingLeft:'var(--safe-left, env(safe-area-inset-left, 0px))'}}/>
     {small ? <p style={{ color: palette.onDark }}>This display is too small. <Link href="/about">About</Link> <Link href="/projects">Projects</Link></p> :
       <InGameViewport.Provider value={true}><TouchLayout.Provider value={touch}><PixelContext.Provider value={{n,dpr,originX:x*dpr,originY:y*dpr}}>
-        <div role="region" aria-label="Game frame" data-scale={n} onPointerDown={event=>{if(event.pointerType==='touch')setTouched(true);}} className="game-surface absolute overflow-hidden" style={{
+        <div role="region" aria-label="Game frame" tabIndex={-1} data-scale={n} onPointerDown={event=>{if(event.pointerType==='touch')setTouched(true);}} className="game-surface absolute overflow-hidden" style={{
           ...Object.fromEntries(Object.entries(palette).map(([key,value]) => [`--ui-${key}`,value])), '--u': `${n/dpr}px`, '--game-scale': n, left:x, top:y, width:240*n/dpr, height:160*n/dpr,
           // Preserve the last physical pixel when CSS layout quantizes n/DPR to 1/64px.
           // The extra clip margin contains transparent raster padding, not native content.
           overflow:'clip', overflowClipMargin:'1px',
-          imageRendering:'pixelated', isolation:'isolate', background:palette.black,
+          imageRendering:'pixelated', isolation:'isolate', background:palette.black, outline:'none',
         } as CSSProperties}>{children}</div>
       </PixelContext.Provider></TouchLayout.Provider></InGameViewport.Provider>}
   </div>;
