@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext, useEffect, useState, CSSPropertie
 import { palette } from './palette';
 import { viewportGeometry } from './viewportGeometry';
 import { PixelContext } from './PixelContext';
+import Link from 'next/link';
 export const GAME_WIDTH = 240;
 export const GAME_HEIGHT = 160;
 export function getIntegerViewportScale(width: number, height: number): number {
@@ -36,10 +37,13 @@ export function GameViewport({ children,controllerScale=3 }: { children: ReactNo
   const {n,dpr,x,y,small,touch} = geometry;
   return <div role="region" aria-label="Game display" className="fixed inset-0 overflow-hidden" style={{ background: palette.black }}>
     <div data-safe-area aria-hidden="true" style={{position:'absolute',visibility:'hidden',paddingTop:'var(--safe-top, env(safe-area-inset-top, 0px))',paddingRight:'var(--safe-right, env(safe-area-inset-right, 0px))',paddingBottom:'var(--safe-bottom, env(safe-area-inset-bottom, 0px))',paddingLeft:'var(--safe-left, env(safe-area-inset-left, 0px))'}}/>
-    {small ? <p style={{ color: palette.onDark }}>This display is too small. <a href="/about">About</a> <a href="/projects">Projects</a></p> :
+    {small ? <p style={{ color: palette.onDark }}>This display is too small. <Link href="/about">About</Link> <Link href="/projects">Projects</Link></p> :
       <InGameViewport.Provider value={true}><TouchLayout.Provider value={touch}><PixelContext.Provider value={{n,dpr,originX:x*dpr,originY:y*dpr}}>
         <div role="region" aria-label="Game frame" data-scale={n} onPointerDown={event=>{if(event.pointerType==='touch')setTouched(true);}} className="game-surface absolute overflow-hidden" style={{
           ...Object.fromEntries(Object.entries(palette).map(([key,value]) => [`--ui-${key}`,value])), '--u': `${n/dpr}px`, '--game-scale': n, left:x, top:y, width:240*n/dpr, height:160*n/dpr,
+          // Preserve the last physical pixel when CSS layout quantizes n/DPR to 1/64px.
+          // The extra clip margin contains transparent raster padding, not native content.
+          overflow:'clip', overflowClipMargin:'1px',
           imageRendering:'pixelated', isolation:'isolate', background:palette.black,
         } as CSSProperties}>{children}</div>
       </PixelContext.Provider></TouchLayout.Provider></InGameViewport.Provider>}

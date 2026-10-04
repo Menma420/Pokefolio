@@ -11,6 +11,7 @@ import { ClockContext } from './PixelContext';
 import { BitmapText } from './BitmapText';
 import {globalDialogueService} from '../../runtime/services/DialogueService';
 import { audioService } from '../../runtime/AudioService';
+import {isReducedMotion} from '../../runtime/motion';
 interface DialogueBoxProps { text:string; onComplete:()=>void; clock?:Clock; disableInputContext?:boolean; variant?:'field'|'battle'; dismissible?:boolean; speed?:'slow'|'normal'|'fast'|'instant'; awaitInput?:boolean }
 export function DialogueBox(props:DialogueBoxProps) {
  // Remount presentation on prose changes; old scheduled tasks are cancelled on unmount.
@@ -20,6 +21,7 @@ function DialoguePage({text,onComplete,clock: injectedClock,disableInputContext=
  const sharedClock=useContext(ClockContext);
  const clock=injectedClock??sharedClock;
  const settings=useStore(settingsStore);
+ const reduced=settings.reducedMotion||settings.animationReduced||isReducedMotion();
  const pages=paginateDialogue(text,variant==='field'?210:226,variant==='field'?8:0);
  const [page,setPage]=useState(0); const [length,setLength]=useState(0); const [bob,setBob]=useState(0);
  const releasePresentation=useRef<(()=>void)|null>(null);
@@ -44,10 +46,10 @@ function DialoguePage({text,onComplete,clock: injectedClock,disableInputContext=
   return ()=>task.cancel();
  },[clock,current,delay]);
  useEffect(()=>{
-  if(!done || settings.reducedMotion) return;
+  if(!done || reduced) return;
   const task=clock.schedule(()=>setBob(value=>1-value),16*FRAME_MS);
   return ()=>task.cancel();
- },[bob,clock,done,settings.reducedMotion]);
+ },[bob,clock,done,reduced]);
  const advance=()=>{
   audioService.play('ui.confirm');
   if(!done) { typingTask.current?.cancel(); setLength(current.length); }
@@ -66,7 +68,7 @@ function DialoguePage({text,onComplete,clock: injectedClock,disableInputContext=
   <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">{done?current:''}</div>
   <div data-typed aria-hidden="true" className="whitespace-pre"><BitmapText text={current.slice(0,visibleLength)} semantic={false}/></div>
   {awaitInput&&<button type="button" aria-label={done?'Continue dialogue':'Reveal dialogue'} onClick={advance} style={{position:'absolute',left:`calc(${variant==='field'?209:225}*var(--u))`,top:`calc(${variant==='field'?25:33}*var(--u))`,width:'calc(8*var(--u))',height:'calc(8*var(--u))'}}>
-   {done && <Cursor direction="down" style={{position:'absolute',left:0,top:`calc(${settings.reducedMotion?0:bob}*var(--u))`}}/>}
+   {done && <Cursor direction="down" style={{position:'absolute',left:0,top:`calc(${reduced?0:bob}*var(--u))`}}/>}
   </button>}
  </Window>;
 }

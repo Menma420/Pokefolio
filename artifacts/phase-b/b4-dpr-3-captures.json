@@ -1,0 +1,24 @@
+[
+  {
+    "filename": "b4-pokedex-dpr-3-4x.png",
+    "viewport": {
+      "width": 320,
+      "height": 214
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 642
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0.328125,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen dex; cursor 0; category 0; page 0; section 0. "
+  }
+]

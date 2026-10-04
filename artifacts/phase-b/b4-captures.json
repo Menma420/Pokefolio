@@ -1,0 +1,1036 @@
+[
+  {
+    "filename": "b4-player-menu-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen menu; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-player-menu-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen menu; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-player-menu-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen menu; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-pokedex-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen dex; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-pokedex-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen dex; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-pokedex-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen dex; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-pokedex-language-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen dex; cursor 0; category 1; page 0; section 0. "
+  },
+  {
+    "filename": "b4-pokedex-detail-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen dex-detail; cursor 2; category 1; page 0; section 0. "
+  },
+  {
+    "filename": "b4-pokedex-detail-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen dex-detail; cursor 2; category 1; page 0; section 0. "
+  },
+  {
+    "filename": "b4-pokedex-detail-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen dex-detail; cursor 2; category 1; page 0; section 0. "
+  },
+  {
+    "filename": "b4-pokedex-related-project-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen project-detail; cursor 0; category 1; page 0; section 0. "
+  },
+  {
+    "filename": "b4-projects-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen projects; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-projects-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen projects; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-projects-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen projects; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-projects-last-row-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen projects; cursor 11; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-project-overview-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen project-detail; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-project-overview-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen project-detail; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-project-overview-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen project-detail; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-project-tech-impact-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen project-detail; cursor 0; category 0; page 0; section 1. "
+  },
+  {
+    "filename": "b4-project-links-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen project-detail; cursor 0; category 0; page 0; section 2. "
+  },
+  {
+    "filename": "b4-experience-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen experience; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-experience-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen experience; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-experience-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen experience; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-experience-ownership-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen experience; cursor 0; category 0; page 0; section 1. "
+  },
+  {
+    "filename": "b4-experience-next-page-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen experience; cursor 0; category 0; page 1; section 1. "
+  },
+  {
+    "filename": "b4-experience-research-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen experience; cursor 1; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-bag-documents-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen bag; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-bag-documents-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen bag; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-bag-documents-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen bag; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-bag-profiles-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen bag; cursor 0; category 1; page 0; section 0. "
+  },
+  {
+    "filename": "b4-bag-contact-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen bag; cursor 0; category 2; page 0; section 0. "
+  },
+  {
+    "filename": "b4-bag-extras-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen bag; cursor 0; category 3; page 0; section 0. "
+  },
+  {
+    "filename": "b4-bag-achievements-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen bag; cursor 0; category 3; page 0; section 0. "
+  },
+  {
+    "filename": "b4-trainer-card-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen card; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-trainer-card-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen card; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-trainer-card-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen card; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-options-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen options; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-options-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen options; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-options-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen options; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-controls-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen controls; cursor 5; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-controls-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen controls; cursor 5; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-controls-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen controls; cursor 5; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-options-reset-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen options; cursor 6; category 0; page 0; section 0. Tips will show again."
+  },
+  {
+    "filename": "b4-exit-confirmation-1x.png",
+    "viewport": {
+      "width": 240,
+      "height": 160
+    },
+    "dpr": 1,
+    "integerScale": 1,
+    "physicalPixels": {
+      "width": 240,
+      "height": 160
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 240,
+      "height": 160
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen exit; cursor 1; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-exit-confirmation-3x.png",
+    "viewport": {
+      "width": 720,
+      "height": 480
+    },
+    "dpr": 1,
+    "integerScale": 3,
+    "physicalPixels": {
+      "width": 720,
+      "height": 480
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 480
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen exit; cursor 1; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-exit-confirmation-4x.png",
+    "viewport": {
+      "width": 960,
+      "height": 640
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 960,
+      "height": 640
+    },
+    "frameBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen exit; cursor 1; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-player-menu-largest-fit.png",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "integerScale": 5,
+    "physicalPixels": {
+      "width": 1440,
+      "height": 900
+    },
+    "frameBounds": {
+      "x": 120,
+      "y": 50,
+      "width": 1200,
+      "height": 800
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen menu; cursor 6; category 0; page 0; section 0. "
+  }
+]

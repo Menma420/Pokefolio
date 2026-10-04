@@ -8,7 +8,7 @@ import { AudienceId } from '../domain/types';
 import { Audiences, AUDIENCE_RECRUITER } from '../content/audiences';
 import { ENCOUNTER_AUDIENCE_CHOICES, ENCOUNTER_AUDIENCE_PROMPT, FIRST_ENCOUNTER_DIALOGUE, INTRO_NARRATION } from '../content/narrative';
 import { M1_TOWN_MAP_ID, WORLD_TEST_MAPS } from '../content/maps';
-import { progressStore, settingsStore, uiStore } from './stores';
+import { progressStore, uiStore } from './stores';
 import { GameBridge } from './gameBridge';
 import { Clock, gameClock, FRAME_MS } from '../core/clock';
 import { WorldSession } from './world/WorldSession';
@@ -18,6 +18,7 @@ import { audioService } from './AudioService';
 import { ScheduledTask } from '../core/clock';
 import { playTransition, cancelTransition } from './TransitionService';
 import { HintService } from './HintService';
+import { isReducedMotion } from './motion';
 
 export interface GameExperienceState {
   flow: FlowState;
@@ -267,7 +268,7 @@ export class GameOrchestrator {
         ...FIRST_ENCOUNTER_DIALOGUE.map((text) => ({ type: 'say' as const, text })),
       ];
     const repeatTail: EncounterStep[] = repeat ? [{ type: 'say', text: FIRST_ENCOUNTER_DIALOGUE[3] }] : [];
-    const reducedMotion = settingsStore.getState().reducedMotion || (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const reducedMotion = isReducedMotion();
     return [
       ...leadIn,
       { type: 'choice', prompt: ENCOUNTER_AUDIENCE_PROMPT, choices: [...ENCOUNTER_AUDIENCE_CHOICES] },

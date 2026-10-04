@@ -21,6 +21,10 @@ interface ContextHandler {
 
 export class InputRouter {
   private handlers: ContextHandler[] = [];
+  private worldShortcuts = new Set<(action: 'X' | 'Y') => boolean>();
+  registerWorldShortcut(handler:(action: 'X' | 'Y')=>boolean):()=>void {
+    this.worldShortcuts.add(handler);return ()=>this.worldShortcuts.delete(handler);
+  }
   private repeatTask: ScheduledTask | null = null;
   private recentDirections: InputAction[] = [];
   constructor(private readonly clock: Clock = gameClock) {}
@@ -76,6 +80,10 @@ export class InputRouter {
     const isXY = action === 'X' || action === 'Y';
     if (isXY && active.context !== 'WORLD' && active.context !== 'MENU') {
       return true; // Eaten, but not processed
+    }
+
+    if (isXY && active.context === 'WORLD') {
+      for (const shortcut of this.worldShortcuts) if (shortcut(action as 'X' | 'Y')) return true;
     }
 
     if (active.onPress) {

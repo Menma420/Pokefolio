@@ -1,0 +1,292 @@
+{
+  "documents": {
+    "src": "/assets/portfolio/documents-7834b9e60edc.png",
+    "width": 16,
+    "height": 16
+  },
+  "profiles": {
+    "src": "/assets/portfolio/profiles-e20cd94c1cb0.png",
+    "width": 16,
+    "height": 16
+  },
+  "contact": {
+    "src": "/assets/portfolio/contact-c3bdc90e9d21.png",
+    "width": 16,
+    "height": 16
+  },
+  "extras": {
+    "src": "/assets/portfolio/extras-b34d47bace44.png",
+    "width": 16,
+    "height": 16
+  },
+  "resume": {
+    "src": "/assets/portfolio/resume-7834b9e60edc.png",
+    "width": 16,
+    "height": 16
+  },
+  "certificate": {
+    "src": "/assets/portfolio/certificate-1811ee647cf5.png",
+    "width": 16,
+    "height": 16
+  },
+  "github": {
+    "src": "/assets/portfolio/github-d88b49ac410e.png",
+    "width": 16,
+    "height": 16
+  },
+  "profile": {
+    "src": "/assets/portfolio/profile-e20cd94c1cb0.png",
+    "width": 16,
+    "height": 16
+  },
+  "email": {
+    "src": "/assets/portfolio/email-c3bdc90e9d21.png",
+    "width": 16,
+    "height": 16
+  },
+  "language": {
+    "src": "/assets/portfolio/language-16dd428e6825.png",
+    "width": 16,
+    "height": 16
+  },
+  "backend": {
+    "src": "/assets/portfolio/backend-264054c8f620.png",
+    "width": 16,
+    "height": 16
+  },
+  "distributed": {
+    "src": "/assets/portfolio/distributed-a09b4a77b298.png",
+    "width": 16,
+    "height": 16
+  },
+  "database": {
+    "src": "/assets/portfolio/database-d42bf1b77013.png",
+    "width": 16,
+    "height": 16
+  },
+  "cloud": {
+    "src": "/assets/portfolio/cloud-abce56354529.png",
+    "width": 16,
+    "height": 16
+  },
+  "devops": {
+    "src": "/assets/portfolio/devops-3657b1c46042.png",
+    "width": 16,
+    "height": 16
+  },
+  "observability": {
+    "src": "/assets/portfolio/observability-88f06d64e280.png",
+    "width": 16,
+    "height": 16
+  },
+  "frontend": {
+    "src": "/assets/portfolio/frontend-264054c8f620.png",
+    "width": 16,
+    "height": 16
+  },
+  "concept": {
+    "src": "/assets/portfolio/concept-492738a78f2d.png",
+    "width": 16,
+    "height": 16
+  },
+  "documents-large": {
+    "src": "/assets/portfolio/documents-large-8bb73eb02e54.png",
+    "width": 32,
+    "height": 32
+  },
+  "profiles-large": {
+    "src": "/assets/portfolio/profiles-large-3ab24fadec24.png",
+    "width": 32,
+    "height": 32
+  },
+  "contact-large": {
+    "src": "/assets/portfolio/contact-large-a7a32f951f3c.png",
+    "width": 32,
+    "height": 32
+  },
+  "extras-large": {
+    "src": "/assets/portfolio/extras-large-5cf9550598f6.png",
+    "width": 32,
+    "height": 32
+  },
+  "resume-large": {
+    "src": "/assets/portfolio/resume-large-8bb73eb02e54.png",
+    "width": 32,
+    "height": 32
+  },
+  "certificate-large": {
+    "src": "/assets/portfolio/certificate-large-3394838fc661.png",
+    "width": 32,
+    "height": 32
+  },
+  "github-large": {
+    "src": "/assets/portfolio/github-large-9a2b58d7a2ca.png",
+    "width": 32,
+    "height": 32
+  },
+  "profile-large": {
+    "src": "/assets/portfolio/profile-large-3ab24fadec24.png",
+    "width": 32,
+    "height": 32
+  },
+  "email-large": {
+    "src": "/assets/portfolio/email-large-a7a32f951f3c.png",
+    "width": 32,
+    "height": 32
+  },
+  "language-large": {
+    "src": "/assets/portfolio/language-large-e6c67cceae79.png",
+    "width": 32,
+    "height": 32
+  },
+  "backend-large": {
+    "src": "/assets/portfolio/backend-large-85c32ea5aa87.png",
+    "width": 32,
+    "height": 32
+  },
+  "distributed-large": {
+    "src": "/assets/portfolio/distributed-large-9b919c722e1c.png",
+    "width": 32,
+    "height": 32
+  },
+  "database-large": {
+    "src": "/assets/portfolio/database-large-8c8b0fd66a18.png",
+    "width": 32,
+    "height": 32
+  },
+  "cloud-large": {
+    "src": "/assets/portfolio/cloud-large-a6c1926706da.png",
+    "width": 32,
+    "height": 32
+  },
+  "devops-large": {
+    "src": "/assets/portfolio/devops-large-f66a9252d995.png",
+    "width": 32,
+    "height": 32
+  },
+  "observability-large": {
+    "src": "/assets/portfolio/observability-large-f02a67096336.png",
+    "width": 32,
+    "height": 32
+  },
+  "frontend-large": {
+    "src": "/assets/portfolio/frontend-large-85c32ea5aa87.png",
+    "width": 32,
+    "height": 32
+  },
+  "concept-large": {
+    "src": "/assets/portfolio/concept-large-409c1032de8e.png",
+    "width": 32,
+    "height": 32
+  },
+  "trainer-portrait": {
+    "src": "/assets/portfolio/trainer-portrait-cb6bdb595f0c.png",
+    "width": 48,
+    "height": 64
+  },
+  "project-acko-clinic-48": {
+    "src": "/assets/portfolio/project-acko-clinic-48-f4427e8e226f.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-karsh-48": {
+    "src": "/assets/portfolio/project-karsh-48-7183d6f3a78c.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-nomnom-planner-48": {
+    "src": "/assets/portfolio/project-nomnom-planner-48-4499a00a4799.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-pokefolio-48": {
+    "src": "/assets/portfolio/project-pokefolio-48-2fd9991bb048.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-pdf-qa-48": {
+    "src": "/assets/portfolio/project-pdf-qa-48-346dcca48163.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-weatherpi-48": {
+    "src": "/assets/portfolio/project-weatherpi-48-a3f6d60d537b.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-portscanner-48": {
+    "src": "/assets/portfolio/project-portscanner-48-352cb35d497f.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-parallel-distributed-computing-48": {
+    "src": "/assets/portfolio/project-parallel-distributed-computing-48-43a43dfefc84.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-arise-48": {
+    "src": "/assets/portfolio/project-arise-48-5b731e761612.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-pokemon-elo-rating-48": {
+    "src": "/assets/portfolio/project-pokemon-elo-rating-48-2e9773cc616e.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-vanix-48": {
+    "src": "/assets/portfolio/project-vanix-48-2e95e5895e03.png",
+    "width": 48,
+    "height": 48
+  },
+  "project-chatroomapp-48": {
+    "src": "/assets/portfolio/project-chatroomapp-48-de1efba7ad11.png",
+    "width": 48,
+    "height": 48
+  },
+  "language-badge": {
+    "src": "/assets/portfolio/language-badge-ee1546e445cd.png",
+    "width": 8,
+    "height": 8
+  },
+  "backend-badge": {
+    "src": "/assets/portfolio/backend-badge-e270a8ceaabd.png",
+    "width": 8,
+    "height": 8
+  },
+  "distributed-badge": {
+    "src": "/assets/portfolio/distributed-badge-f35a6f93dbe1.png",
+    "width": 8,
+    "height": 8
+  },
+  "database-badge": {
+    "src": "/assets/portfolio/database-badge-65c06eda2764.png",
+    "width": 8,
+    "height": 8
+  },
+  "cloud-badge": {
+    "src": "/assets/portfolio/cloud-badge-5a39cccba153.png",
+    "width": 8,
+    "height": 8
+  },
+  "devops-badge": {
+    "src": "/assets/portfolio/devops-badge-accdb318d3f0.png",
+    "width": 8,
+    "height": 8
+  },
+  "observability-badge": {
+    "src": "/assets/portfolio/observability-badge-f1a6f8d3f4b2.png",
+    "width": 8,
+    "height": 8
+  },
+  "frontend-badge": {
+    "src": "/assets/portfolio/frontend-badge-160585bb6c46.png",
+    "width": 8,
+    "height": 8
+  },
+  "concept-badge": {
+    "src": "/assets/portfolio/concept-badge-5f3c57c5fe67.png",
+    "width": 8,
+    "height": 8
+  }
+}

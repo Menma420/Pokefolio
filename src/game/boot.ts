@@ -6,7 +6,7 @@ import { BattleScene } from './BattleScene';
 export const GAME_WIDTH = 240;
 export const GAME_HEIGHT = 160;
 
-export function mountWorldGame(host: HTMLElement, bridge: GameBridge): () => void {
+export function mountWorldGame(host: HTMLElement, bridge: GameBridge, options:{physicalPixels?:boolean}={}): () => void {
   try {
     const game = new Phaser.Game({
       type: Phaser.CANVAS,
@@ -14,7 +14,7 @@ export function mountWorldGame(host: HTMLElement, bridge: GameBridge): () => voi
       width: GAME_WIDTH,
       height: GAME_HEIGHT,
       backgroundColor: '#314c3a',
-      scene: [new WorldScene(bridge),new BattleScene(bridge)],
+      scene: [new WorldScene(bridge,options.physicalPixels),new BattleScene(bridge)],
       scale: { mode: Phaser.Scale.NONE, width: GAME_WIDTH, height: GAME_HEIGHT },
       render: { pixelArt: true, antialias: false, antialiasGL: false, roundPixels: true },
       audio: { noAudio: true },

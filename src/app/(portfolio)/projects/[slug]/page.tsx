@@ -1,0 +1,5 @@
+import {notFound} from 'next/navigation';
+import {PORTFOLIO_PROJECTS,getPortfolioProject,getProjectTech,getProjectWriteup} from '../../../../content/portfolio';
+export function generateStaticParams(){return PORTFOLIO_PROJECTS.map(project=>({slug:project.slug}));}
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}){const project=getPortfolioProject((await params).slug);return {title:`${project?.name??'Project'} — Uttkarsh`};}
+export default async function Project({params}:{params:Promise<{slug:string}>}){const project=getPortfolioProject((await params).slug);if(!project)notFound();return <><h1>{project.name}</h1><p>{project.summary.pages.join(' ')}</p><p>Role: {project.role}</p><p>Period: {project.period}</p><h2>Technologies and concepts</h2><p>{getProjectTech(project.id).map(skill=>skill.name).join(', ')}</p><a href={project.links.primary.url} target="_blank" rel="noopener noreferrer" style={{textDecoration:'underline'}}>Open {project.links.primary.label}</a><h2>Authored project write-up</h2>{getProjectWriteup(project.id).map((entry,i)=><section key={i}><h3>{entry.question}</h3><p>{entry.text}</p></section>)}</>;}

@@ -1,0 +1,68 @@
+[
+  {
+    "filename": "b4-touch-player-menu.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 1170,
+      "height": 2532
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen menu; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-touch-projects.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 1170,
+      "height": 2532
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen projects; cursor 0; category 0; page 0; section 0. "
+  },
+  {
+    "filename": "b4-touch-bag.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 3,
+    "integerScale": 4,
+    "physicalPixels": {
+      "width": 1170,
+      "height": 2532
+    },
+    "frameBounds": {
+      "x": 35,
+      "y": 0,
+      "width": 320,
+      "height": 213.328125
+    },
+    "pixelBlockMismatches": 0,
+    "intermediateColors": 0,
+    "portfolioState": "Screen bag; cursor 0; category 0; page 0; section 0. "
+  }
+]

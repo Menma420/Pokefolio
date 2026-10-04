@@ -8,7 +8,8 @@ const SettingsSchema = z.object({
   textSpeed: z.enum(['slow', 'normal', 'fast', 'instant']),
   soundMuted: z.boolean(),
   musicMuted: z.boolean(),
-  reducedMotion: z.boolean()
+  reducedMotion: z.boolean(),
+  animationReduced: z.boolean().default(false)
 });
 export type SettingsState = z.infer<typeof SettingsSchema>;
 
@@ -16,7 +17,8 @@ const defaultSettings: SettingsState = {
   textSpeed: 'normal',
   soundMuted: false,
   musicMuted: false,
-  reducedMotion: false
+  reducedMotion: false,
+  animationReduced: false
 };
 
 const settingsStorage = createStorage('uw.settings.v1', SettingsSchema, defaultSettings, 'local');
@@ -29,7 +31,8 @@ export const settingsStore = createStore<SettingsState & { update: (partial: Par
       textSpeed: next.textSpeed,
       soundMuted: next.soundMuted,
       musicMuted: next.musicMuted,
-      reducedMotion: next.reducedMotion
+      reducedMotion: next.reducedMotion,
+      animationReduced: next.animationReduced
     });
     return next;
   })
@@ -42,6 +45,8 @@ const HintsSchema = z.object({
   seenBattleUI: z.boolean(),
   seenFirstMove: z.boolean().default(false),
   seenFirstInteract: z.boolean().default(false),
+  seenPokedex: z.boolean().default(false),
+  seenTrainerCard: z.boolean().default(false),
 });
 export type HintsState = z.infer<typeof HintsSchema>;
 
@@ -50,12 +55,16 @@ const defaultHints: HintsState = {
   seenBattleUI: false,
   seenFirstMove: false,
   seenFirstInteract: false,
+  seenPokedex: false,
+  seenTrainerCard: false,
 };
 
 const hintsStorage = createStorage('uw.hints.v1', HintsSchema, defaultHints, 'local');
 
-export const hintsStore = createStore<HintsState & { markSeen: (key: keyof HintsState) => void }>()((set) => ({
+export const hintsStore = createStore<HintsState & { reset: () => void;
+  markSeen: (key: keyof HintsState) => void }>()((set) => ({
   ...hintsStorage.read(),
+  reset: () => {hintsStorage.write(defaultHints);set(defaultHints);},
   markSeen: (key) => set((state) => {
     const next = { ...state, [key]: true };
     hintsStorage.write({
@@ -63,6 +72,8 @@ export const hintsStore = createStore<HintsState & { markSeen: (key: keyof Hints
       seenBattleUI: next.seenBattleUI,
       seenFirstMove: next.seenFirstMove,
       seenFirstInteract: next.seenFirstInteract,
+      seenPokedex: next.seenPokedex,
+      seenTrainerCard: next.seenTrainerCard,
     });
     return next;
   })

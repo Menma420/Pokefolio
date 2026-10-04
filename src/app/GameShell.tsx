@@ -18,10 +18,16 @@ import { palette } from '../ui/kit/palette';
 import { AudienceId } from '../domain/types';
 import { TitleScreen } from '../ui/opening/TitleScreen';
 import { PixelArtwork } from '../ui/opening/PixelArtwork';
+import { PlayerMenu } from '../ui/portfolio/PlayerMenu';
+import { useRouter } from 'next/navigation';
+import { MusicService } from '../runtime/MusicService';
 
 export function GameShell() {
   const clock=useContext(ClockContext);
+  const router=useRouter();
+  const [portfolioSpeaking,setPortfolioSpeaking]=useState(false);
   const [gameBridge,setGameBridge]=useState<GameBridge|undefined>(undefined);
+  useEffect(()=>new MusicService(clock).mount(),[clock]);
   const hostRef = useRef<HTMLDivElement>(null);
   const orchestratorRef = useRef<GameOrchestrator | null>(null);
   const [orchestrator, setOrchestrator] = useState<GameOrchestrator | null>(null);
@@ -48,7 +54,7 @@ export function GameShell() {
     let destroyGame: (() => void) | undefined;
     void import('../game/boot').then(({ mountWorldGame }) => {
       if (disposed || !hostRef.current) return;
-      destroyGame = mountWorldGame(hostRef.current, bridge);
+      destroyGame = mountWorldGame(hostRef.current, bridge,{physicalPixels:true});
     }).catch((error: unknown) => {
       bridge.emit({ type: 'assetFailed', key: 'phaser-import', message: error instanceof Error ? error.message : String(error) });
     });
@@ -75,6 +81,10 @@ export function GameShell() {
   const handleBattleExit = useCallback(() => orchestratorRef.current?.battleEnded(), []);
   const mode = state?.flow.mode ?? 'TITLE';
   const audience = state?.audienceId;
+  const menuAvailable=useCallback(()=>!!orchestratorRef.current&&['OVERWORLD','INTERIOR'].includes(orchestratorRef.current.state.flow.mode)&&!orchestratorRef.current.state.dialogue&&!orchestratorRef.current.world.sim.state.current.talkingNpcId,[]);
+  const pauseMenu=useCallback(()=>orchestratorRef.current?.world.pause()??Promise.resolve(),[]);
+  const resumeMenu=useCallback(()=>orchestratorRef.current?.world.resume()??Promise.resolve(),[]);
+  const exitPortfolio=useCallback(()=>router.push('/about'),[router]);
 
   return (
     <GameViewport>
@@ -121,7 +131,8 @@ export function GameShell() {
       <p role="status" aria-label="Game state" className="sr-only">
         Flow {mode}; runtime {orchestrator ? 'ready' : 'loading'}; {state?.location ? `Map ${state.location.mapId}; room ${state.location.roomId}; player tile ${state.location.tile.x},${state.location.tile.y}; facing ${state.location.facing}` : 'World starting'}; movement {state?.movementTarget ? `${state.movementTarget.x},${state.movementTarget.y}` : 'idle'}; encounter step {state?.encounterStep ?? 'idle'}; battle {state?.battleVisible ? 'mounted' : 'hidden'}; first encounter {state?.firstEncounterDone ? 'complete' : 'pending'}.
       </p>
-      {mode!=='BATTLE' && <TouchController mode={mode==='TITLE'?'title':['INTRO','ENCOUNTER','AUDIENCE','VS'].includes(mode)?'dialogue':'world'}/>}
+      {orchestrator&&<PlayerMenu available={menuAvailable} pause={pauseMenu} resume={resumeMenu} onExit={exitPortfolio} onSpeakingChange={setPortfolioSpeaking}/>}
+      {mode!=='BATTLE' && <TouchController mode={portfolioSpeaking?'dialogue':mode==='TITLE'?'title':['INTRO','ENCOUNTER','AUDIENCE','VS'].includes(mode)?'dialogue':'world'}/>}
       {!state?.battleVisible&&<TransitionLayer active={transition} type={transitionType ?? undefined} />}
     </GameViewport>
   );

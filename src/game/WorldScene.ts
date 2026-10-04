@@ -4,6 +4,7 @@ import { WorldSnapshot } from '../core/world/types';
 import { MapRenderer } from './MapRenderer';
 import { WORLD_TEXTURES } from './worldArt';
 import { BattleScene } from './BattleScene';
+import { mountWorldRaster } from './WorldRaster';
 
 export class WorldScene extends Phaser.Scene {
   private readonly bridge: GameBridge;
@@ -15,8 +16,9 @@ export class WorldScene extends Phaser.Scene {
   private removeCommandListener: (() => void) | null = null;
   private removeSnapshotListener: (() => void) | null = null;
   private previousMovements = new Map<string, boolean>();
+  private physicalRaster:ReturnType<typeof mountWorldRaster>|null=null;
 
-  constructor(bridge: GameBridge) {
+  constructor(bridge: GameBridge,private readonly physicalPixels=false) {
     super({ key: 'WorldTestRoom' });
     this.bridge = bridge;
   }
@@ -39,9 +41,11 @@ export class WorldScene extends Phaser.Scene {
       return;
     }
     this.tileRenderer = new MapRenderer(this);
+    if(this.physicalPixels)this.physicalRaster=mountWorldRaster(this.game);
     this.removeCommandListener = this.bridge.onCommand((command) => this.executeCommand(command));
     this.removeSnapshotListener = this.bridge.onSnapshot((snapshot) => this.applySnapshot(snapshot));
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.physicalRaster?.destroy();
       this.removeCommandListener?.();
       this.removeSnapshotListener?.();
     });
@@ -78,11 +82,13 @@ export class WorldScene extends Phaser.Scene {
         if (this.bridge.getLatestSnapshot()) this.applySnapshot(this.bridge.getLatestSnapshot()!);
         return { entityId: command.entityId };
       case 'showExclaim':
+        this.physicalRaster?.dirty();
         this.exclaimEntityId = command.entityId;
         this.exclaimTick = this.snapshotValue?.tick ?? -1;
         if (this.snapshotValue) this.tileRenderer.drawEntities(this.snapshotValue, this.exclaimEntityId);
         return { entityId: command.entityId };
       case 'snapshot':
+        this.physicalRaster?.dirty();
         if (!this.snapshotValue) throw new Error('WorldSim has not published a snapshot');
         this.tileRenderer.drawEntities(this.snapshotValue, this.exclaimEntityId);
         return this.snapshotValue;
@@ -90,6 +96,7 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private applySnapshot(snapshot: WorldSnapshot) {
+    this.physicalRaster?.dirty();
     const previous = this.snapshotValue;
     this.snapshotValue = snapshot;
     if (!previous || previous.map.id !== snapshot.map.id) {
@@ -118,6 +125,7 @@ export class WorldScene extends Phaser.Scene {
     if (!room) throw new Error(`Unknown camera room ${roomId}`);
     this.cameraRoomId = roomId;
     this.cameras.main.setScroll(room.x * 16, room.y * 16);
+    this.physicalRaster?.dirty();
     this.game.canvas.dataset.cameraRoom = roomId;
   }
 }
