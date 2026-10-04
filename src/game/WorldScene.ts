@@ -6,6 +6,7 @@ import { WORLD_TEXTURES } from './worldArt';
 import { BattleScene } from './BattleScene';
 import { mountWorldRaster } from './WorldRaster';
 import { followWorldCamera } from '../core/world/camera';
+import { battleAssetsReady, preloadBattleAssets } from './battleAssets';
 
 export class WorldScene extends Phaser.Scene {
   private readonly bridge: GameBridge;
@@ -24,8 +25,10 @@ export class WorldScene extends Phaser.Scene {
   }
 
   preload() {
+    preloadBattleAssets(this, this.bridge);
     this.load.json('pokefolio-world-manifest', '/assets/world/manifest.json');
     this.load.on(Phaser.Loader.Events.FILE_LOAD_ERROR, (file: Phaser.Loader.File) => {
+      if (file.key === 'pokefolio-battle-manifest' || file.key.startsWith('battle-')) return;
       this.bridge.emit({ type: 'assetFailed', key: file.key, message: `Could not load original world artwork: ${file.src}` });
     });
     this.load.once('filecomplete-json-pokefolio-world-manifest', () => {
@@ -36,6 +39,7 @@ export class WorldScene extends Phaser.Scene {
   }
 
   create() {
+    if (!battleAssetsReady(this)) return; // The loader already reported the specific failed asset.
     if (!this.textures.exists(WORLD_TEXTURES.tiles) || !this.textures.exists(WORLD_TEXTURES.characters)) {
       this.bridge.emit({ type: 'assetFailed', key: 'world-art', message: 'Original world atlases did not finish loading.' });
       return;

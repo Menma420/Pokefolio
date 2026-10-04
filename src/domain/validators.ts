@@ -19,11 +19,28 @@ export function validateContent(
   projects: ProjectDef[],
   trees: QuestionTree[],
   parties: Record<AudienceId, ProjectId[]>,
-  isReleaseMode = false
+  isReleaseMode = false,
+  sourceIds?: readonly string[],
 ): Result<boolean, ValidationIssues> {
   const errors: string[] = [];
+  const projectIds = new Set(projects.map(project=>project.id));
+  const audienceIds = new Set(Object.keys(parties));
+  if (projects.length !== 12 || projectIds.size !== projects.length)
+    errors.push('V14 Error: Expected twelve unique portfolio projects.');
+  if (new Set(projects.map(project=>project.slug)).size !== projects.length)
+    errors.push('V14 Error: Duplicate project slug.');
+  const checkSource = (answer: import('./types').AnswerBlock | undefined, location: string) => {
+    if (!answer?.sourceRef || sourceIds && !sourceIds.includes(answer.sourceRef))
+      errors.push(`V15 Error: Missing or unknown source for ${location}.`);
+  };
 
   for (const p of projects) {
+    if (![p.name,p.role,p.period,p.tagline,...(p.overview??[]),...(p.impact??[]),...(p.technologies??[])].every(value=>typeof value==='string' && value.trim()) || !p.overview?.length || !p.impact?.length)
+      errors.push(`V14 Error: Incomplete project metadata ${p.id}.`);
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(p.slug)) errors.push(`V14 Error: Invalid project slug ${p.id}.`);
+    for (const [name,value,limit] of [['shortName',p.visual.shortName,11],['plateName',p.visual.plateName,23],['tagline',p.visual.tagline,37],['tagline',p.tagline,37]] as const)
+      if (!value?.trim() || value.length>limit) errors.push(`V10 Error: ${p.id} ${name} must be present and at most ${limit} characters.`);
+    checkSource(p.summary, `project ${p.id}`);
     const parse = ProjectDefSchema.safeParse(p);
     if (!parse.success) {
       const msg = parse.error.message;
@@ -40,6 +57,12 @@ export function validateContent(
 
     if (!p.links.primary.url.startsWith('https://')) {
       errors.push(`V8 Error in Project ${p.id}: Primary link must be HTTPS.`);
+    }
+    for (const link of [p.links.primary,...p.links.others]) {
+      try {
+        const url=new URL(link.url);
+        if (url.protocol!=='https:' || url.username || url.password || !link.label.trim()) throw new Error('unsafe');
+      } catch { errors.push(`V8 Error: Unsafe or invalid link ${p.id}/${link.label}.`); }
     }
   }
 
@@ -64,6 +87,9 @@ export function validateContent(
 
   const seenTreeKeys = new Set<string>();
   for (const t of trees) {
+    if (!projectIds.has(t.projectId) || !audienceIds.has(t.audienceId) || !parties[t.audienceId]?.includes(t.projectId))
+      errors.push(`V1 Error: Unknown or non-Party project/audience reference ${t.projectId}/${t.audienceId}.`);
+    if (t.rootPrompt) checkSource(t.rootPrompt, `opening ${t.projectId}/${t.audienceId}`);
     const treeKey = `${t.projectId}:${t.audienceId}`;
     if (seenTreeKeys.has(treeKey)) errors.push(`V1 Error: Duplicate tree ${treeKey}.`);
     seenTreeKeys.add(treeKey);
@@ -109,6 +135,14 @@ export function validateContent(
       }
 
       for (const node of Object.values(cTree.nodes)) {
+        if (!node.shortLabel?.trim() || node.shortLabel.length>34)
+          errors.push(`V10 Error: Node ${node.id} needs a shortLabel of at most 34 characters.`);
+        if (!node.topicKey || !/^[a-z][a-z0-9-]*$/.test(node.topicKey))
+          errors.push(`V13 Error: Node ${node.id} has a missing or invalid topicKey.`);
+        if (!/^[a-z0-9][a-z0-9-]*$/.test(node.id) || !node.label?.trim())
+          errors.push(`V4 Error: Invalid node identity/question ${node.id}.`);
+        checkSource(node.answer, `answer ${node.id}`);
+        if (!node.answer?.pages?.every(page=>page.trim())) errors.push(`V2 Error: Node ${node.id} has blank answer pages.`);
         if (ids.has(node.id)) errors.push(`V4 Error: Duplicate ID ${node.id}`);
         ids.add(node.id);
 
@@ -125,11 +159,24 @@ export function validateContent(
         }
 
         // V12: Implicit metrics banned unless explicitly sourced
-        const hasMetric = /\b\d+(?:%|x)(?!\w)/i.test(node.answer.pages.join(' '));
-        if (hasMetric && !node.answer.sourced) {
+        const hasMetric = /\b\d+(?:%|x)(?!\w)/i.test(node.answer?.pages?.join(' ')??'');
+        if (hasMetric && !node.answer?.sourced) {
           errors.push(`V12 Error: Node ${node.id} contains metrics but is not sourced.`);
         }
       }
+      const reached = new Set<string>();
+      const visit = (id: string) => {
+        if (reached.has(id)) return;
+        reached.add(id);
+        const node=cTree.nodes[id];
+        if (!node) { errors.push(`V4 Error: Missing node reference ${id}.`); return; }
+        for (const child of node.childIds) {
+          if (cTree.nodes[child]?.parent!==id) errors.push(`V4 Error: Invalid parent reference ${child}.`);
+          visit(child);
+        }
+      };
+      cTree.rootChildren.forEach(visit);
+      if (reached.size!==Object.keys(cTree.nodes).length) errors.push(`V4 Error: Orphan or unreachable topic in ${treeKey}.`);
       
       const rootTopicKeys = new Set();
       for (const c of cTree.rootChildren) {

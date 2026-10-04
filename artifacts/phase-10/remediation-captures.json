@@ -1,0 +1,86 @@
+[
+  {
+    "filename": "actual-battle-entry.png",
+    "route": "/",
+    "viewportCSS": {
+      "width": 1280,
+      "height": 720
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalScreenshot": {
+      "width": 1280,
+      "height": 720
+    },
+    "nativeComposition": {
+      "width": 240,
+      "height": 160
+    },
+    "sha256": "87cbc5b11b923a723e9a23bb581af1bc63f602dbb2f6bceb8f92d0cba7ce3d55",
+    "renderer": "Actual root-route Phaser world/battle renderer; real clock; no dev arena",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "actual-battle-engineer.png",
+    "route": "/",
+    "viewportCSS": {
+      "width": 1280,
+      "height": 720
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalScreenshot": {
+      "width": 1280,
+      "height": 720
+    },
+    "nativeComposition": {
+      "width": 240,
+      "height": 160
+    },
+    "sha256": "fd2fd89dcdaeae75aa572c4e2ab6e392a23c2726c4c3dac257aea6571c02d8b0",
+    "renderer": "Actual root-route Phaser world/battle renderer; real clock; no dev arena",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "actual-battle-visitor-repeat.png",
+    "route": "/",
+    "viewportCSS": {
+      "width": 1280,
+      "height": 720
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalScreenshot": {
+      "width": 1280,
+      "height": 720
+    },
+    "nativeComposition": {
+      "width": 240,
+      "height": 160
+    },
+    "sha256": "21cd4ad022b9e7c9de90e824dbe9bc4a7a972a9777f9c9fb8a3153e109cfaa18",
+    "renderer": "Actual root-route Phaser world/battle renderer; real clock; no dev arena",
+    "pixelBlockMismatches": 0
+  },
+  {
+    "filename": "behind-immediate-encounter.png",
+    "route": "/",
+    "viewportCSS": {
+      "width": 1280,
+      "height": 720
+    },
+    "dpr": 1,
+    "integerScale": 4,
+    "physicalScreenshot": {
+      "width": 1280,
+      "height": 720
+    },
+    "nativeComposition": {
+      "width": 240,
+      "height": 160
+    },
+    "sha256": "be55d15717621c41272287b4b0d4ae74d9801f9fd6d2d2bfbf2f6b98f180e1ef",
+    "renderer": "Actual root-route Phaser world/battle renderer; real clock; no dev arena",
+    "pixelBlockMismatches": 0
+  }
+]

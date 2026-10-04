@@ -1,0 +1,2 @@
+$ tsx scripts/validate-world.ts
+P9 placement PASS: 36x22 contiguous world; two areas; three interiors; two ordinary NPCs; one challenger; all walkable tiles/landmarks/anchors reachable.

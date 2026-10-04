@@ -1,0 +1,10 @@
+
+Running 2 tests using 1 worker
+
+(node:6444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/2] [chromium] › tests/e2e/release-entry.spec.ts:74:5 › production LOS → audience → VS → actual battle scene and initial project
+[2/2] [chromium] › tests/e2e/release-entry.spec.ts:115:5 › first interaction behind challenger turns and immediately starts encounter
+  2 passed (54.4s)

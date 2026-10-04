@@ -35,6 +35,7 @@ export function compileTree(tree: QuestionTree): Result<CompiledTree, { message:
       childIds,
       topicKey: node.topicKey,
       label: node.label,
+      shortLabel: node.shortLabel,
       answer: node.answer, // Just passes AnswerBlock along
     };
   }

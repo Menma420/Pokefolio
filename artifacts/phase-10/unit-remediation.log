@@ -1,0 +1,27 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v5.0.2 /home/menma/Downloads/Portfolio
+
+Error: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/home/menma/Downloads/Portfolio/node_modules/.pnpm/jsdom@22.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/home/menma/Downloads/Portfolio/node_modules/.pnpm/jsdom@22.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/home/menma/Downloads/Portfolio/node_modules/.pnpm/jsdom@22.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:259858
+    at Object.get (/home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:166443)
+    at rd (/home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:259787)
+    at /home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:441781
+    at Array.some (<anonymous>)
+    at E0.color-contrast-matches [as matches] (/home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:441729)
+    at /home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:463762 undefined
+
+ Test Files  35 passed (35)
+      Tests  195 passed (195)
+   Start at  23:44:31
+   Duration  24.33s (tests 49%, environment 35%, import 10%, transform 5%, worker 1%)
+
+Environment  jsdom was created 35 times · 15.16s total, 35% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

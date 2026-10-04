@@ -1,0 +1,54 @@
+
+Running 42 tests using 2 workers
+
+(node:6518) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:6519) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/42] [chromium] › tests/e2e/battle-production.spec.ts:56:5 › B3 Engineer and Visitor Parties retain all six projects and production scene roles
+[2/42] [chromium] › tests/e2e/battle-production.spec.ts:35:5 › B3 complete production battle sequence and all native scales
+[3/42] [chromium] › tests/e2e/battle-production.spec.ts:62:5 › B3 physical scene and React layers remain crisp at DPR 2 and 3 with nondivisible scales
+[4/42] [chromium] › tests/e2e/battle-production.spec.ts:66:5 › B3 main-game dedicated scene sleeps the world and EXIT restores the exact anchor
+[5/42] [chromium] › tests/e2e/battle-production.spec.ts:84:5 › B3 every authored project has a production battle emblem and a readable plate
+[6/42] [chromium] › tests/e2e/battle.spec.ts:34:5 › audience selector resolves the six-project party for each audience
+[7/42] [chromium] › tests/e2e/battle.spec.ts:46:5 › keyboard completes authored Recruiter interview, switches party project, opens root LINK, and exits
+[8/42] [chromium] › tests/e2e/battle.spec.ts:134:5 › touch-only controls open and read an authored topic
+[9/42] [chromium] › tests/e2e/battle.spec.ts:167:5 › Battle UI provides audience content for every authored active project
+[10/42] [chromium] › tests/e2e/final-world.spec.ts:173:5 › P9 continuous camera crosses the former boundary and renders the expanded world crisply
+[11/42] [chromium] › tests/e2e/final-world.spec.ts:242:5 › P9 three automatic doors, exact return, flavor, discoveries and persistence
+[12/42] [chromium] › tests/e2e/final-world.spec.ts:348:5 › P9 real-time visual checkpoint: town center through old boundary without a room transition
+[13/42] [chromium] › tests/e2e/final-world.spec.ts:439:5 › P8 regression: semantic routes, all project pages and actual PDF remain available without JS
+[14/42] [chromium] › tests/e2e/foundation.spec.ts:4:5 › foundation device-pixel scaling and review captures
+[15/42] [chromium] › tests/e2e/m1-flow.spec.ts:167:5 › M1 golden path: intro, automatic LOS, authored interview, exact return, repeat and refresh
+[16/42] [chromium] › tests/e2e/m1-flow.spec.ts:264:5 › unmount during a running first encounter cleans up to a fresh playable title
+[17/42] [chromium] › tests/e2e/m1-flow.spec.ts:280:5 › route changes abort dialogue, VS, battle wipe, and battle without locking the next world
+[18/42] [chromium] › tests/e2e/m1-flow.spec.ts:325:5 › walking onto the main doorway triggers transition and interior without Enter/A, preserving return point
+[19/42] [chromium] › tests/e2e/opening-production.spec.ts:14:5 › B2 complete opening sequence, native scale evidence and returning-user persistence
+[20/42] [chromium] › tests/e2e/opening-production.spec.ts:41:5 › B2 Engineer and Visitor VS portraits retain locked palettes
+[21/42] [chromium] › tests/e2e/overworld-art.spec.ts:29:5 › original world atlases load, show native silhouettes, and render at integer scales
+[22/42] [chromium] › tests/e2e/portfolio-menus.spec.ts:66:37 › P7 keyboard: every direct path, nested focus, options, links and EXIT
+[23/42] [chromium] › tests/e2e/portfolio-menus.spec.ts:66:37 › P7 touch: every direct path, nested focus, options, links and EXIT
+[24/42] [chromium] › tests/e2e/portfolio-menus.spec.ts:89:37 › P7 keyboard direct Y opens the actual resume PDF immediately and safely
+[25/42] [chromium] › tests/e2e/portfolio-menus.spec.ts:89:37 › P7 touch direct Y opens the actual resume PDF immediately and safely
+[26/42] [chromium] › tests/e2e/portfolio-menus.spec.ts:96:5 › P7 X/Y are available before tutorial completion and inert throughout the actual P6 encounter, audience, VS and battle
+[27/42] [chromium] › tests/e2e/portfolio-production.spec.ts:23:5 › B4 production menu screens: native, 3x, 4x, catalogue, paging, options and EXIT
+[28/42] [chromium] › tests/e2e/portfolio-production.spec.ts:34:5 › B4 direct Y to Resume, external profiles, unsafe/failed resources and semantic fallbacks
+[29/42] [chromium] › tests/e2e/portfolio-production.spec.ts:40:5 › B4 touch intent parity, external controller clearance and menu pixel raster at DPR 3
+[30/42] [chromium] › tests/e2e/remediation.spec.ts:7:5 › integrated foundation: exact text pixels, palette and native composition across DPR × scale
+[31/42] [chromium] › tests/e2e/remediation.spec.ts:45:5 › touch safe-area, hit targets, spacing, gating and outside-surface placement
+[32/42] [chromium] › tests/e2e/remediation.spec.ts:65:5 › dark cursor, stepped transition captures, reduced motion and accessible text
+[33/42] [chromium] › tests/e2e/remediation.spec.ts:78:5 › AUTO hides controls on fine-pointer laptops until the first touch on the game surface
+[34/42] [chromium] › tests/e2e/remediation.spec.ts:82:5 › original controller art at m=3 and m=4: every pressed state, multi-touch and dialogue gating
+[35/42] [chromium] › tests/e2e/smoke.spec.ts:3:5 › has title and game shell mounts
+[36/42] [chromium] › tests/e2e/text-spike.spec.ts:7:5 › isolated rendering spike: DPR 1–3 × native scales 1–8
+[37/42] [chromium] › tests/e2e/viewport.spec.ts:40:5 › desktop and small/mobile viewports use centered integer 3:2 scaling
+[38/42] [chromium] › tests/e2e/world.spec.ts:12:5 › original overworld matches the fixed 240×160 logical screen at 1x, 2x, and 3x
+[39/42] [chromium] › tests/e2e/world.spec.ts:25:5 › paused test room keeps a fixed pixel-render baseline
+[40/42] [chromium] › tests/e2e/world.spec.ts:33:5 › world room supports walk, NPC Enter interaction, automatic doorway, interior return, and pause/resume
+[41/42] [chromium] › tests/e2e/world.spec.ts:79:5 › touch controls send the same movement and interaction intents to WorldSim
+[42/42] [chromium] › tests/e2e/world.spec.ts:95:5 › non-world routes do not request the dynamically loaded Phaser module
+  42 passed (8.3m)

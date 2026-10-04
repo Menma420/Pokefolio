@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { mountBattleRaster } from './BattleRaster';
 import type { GameBridge, IdentifiedGameCommand } from '../runtime/gameBridge/types';
+import { BATTLE_TEXTURES, preloadBattleAssets } from './battleAssets';
 /** Dedicated original battle view. No prose, menus, reducer or WorldSim state here. */
 export class BattleScene extends Phaser.Scene {
   private raster:ReturnType<typeof mountBattleRaster>|undefined;
@@ -8,15 +9,10 @@ export class BattleScene extends Phaser.Scene {
   private opponent!: Phaser.GameObjects.Image;
   constructor(private readonly bridge: GameBridge, private readonly standalone=false) { super({key:'PokefolioBattle',active:standalone}); }
   preload() {
-    this.load.json('pokefolio-battle-manifest','/assets/battle/manifest.json');
-    this.load.once('filecomplete-json-pokefolio-battle-manifest',()=>{
-      const assets=this.cache.json.get('pokefolio-battle-manifest') as Record<string,{src:string}>;
-      for(const key of ['background','opponent-platform','visitor-platform','visitor-back','uttkarsh-front'])this.load.image(`battle-${key}`,assets[key]!.src);
-    });
-    this.load.on(Phaser.Loader.Events.FILE_LOAD_ERROR,(file:Phaser.Loader.File)=>this.bridge.emit({type:'assetFailed',key:file.key,message:`Could not load original battle artwork: ${file.src}`}));
+    preloadBattleAssets(this, this.bridge);
   }
   create() {
-    for(const key of ['background','opponent-platform','visitor-platform','visitor-back','uttkarsh-front'])if(!this.textures.exists(`battle-${key}`)){this.bridge.emit({type:'assetFailed',key:'battle-art',message:'Battle artwork did not finish loading.'});return;}
+    for(const key of BATTLE_TEXTURES)if(!this.textures.exists(`battle-${key}`)){this.bridge.emit({type:'assetFailed',key:'battle-art',message:'Battle artwork did not finish loading.'});return;}
     this.add.image(0,0,'battle-background').setOrigin(0);
     this.add.image(136,60,'battle-opponent-platform').setOrigin(0);
     this.add.image(8,88,'battle-visitor-platform').setOrigin(0);

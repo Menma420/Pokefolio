@@ -68,7 +68,7 @@ function DialoguePage({text,onComplete,clock: injectedClock,disableInputContext=
   <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">{done?current:''}</div>
   <div data-typed aria-hidden="true" className="whitespace-pre"><BitmapText text={current.slice(0,visibleLength)} semantic={false}/></div>
   {awaitInput&&<button type="button" aria-label={done?'Continue dialogue':'Reveal dialogue'} onClick={advance} style={{position:'absolute',left:`calc(${variant==='field'?209:225}*var(--u))`,top:`calc(${variant==='field'?25:33}*var(--u))`,width:'calc(8*var(--u))',height:'calc(8*var(--u))'}}>
-   {done && <Cursor direction="down" style={{position:'absolute',left:0,top:`calc(${reduced?0:bob}*var(--u))`}}/>}
+   {done && <Cursor direction="down" style={{position:'absolute',left:0,top:reduced?0:`calc(${bob}*var(--u))`}}/>}
   </button>}
  </Window>;
 }

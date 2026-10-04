@@ -8,8 +8,9 @@ const AudienceIdSchema = z.string().brand<'AudienceId'>();
 const ProjectTypeIdSchema = z.string().brand<'ProjectTypeId'>();
 
 export const AnswerBlockSchema = z.object({
-  pages: z.array(z.string().max(LIMITS.MAX_PAGE_CHARS)).max(LIMITS.MAX_PAGES_PER_ANSWER),
+  pages: z.array(z.string().min(1).max(LIMITS.MAX_PAGE_CHARS)).min(1).max(LIMITS.MAX_PAGES_PER_ANSWER),
   sourced: z.boolean().optional(),
+  sourceRef: z.string().min(1).optional(),
 });
 
 // Since TopicNode is recursive, we must define it lazily
@@ -18,6 +19,7 @@ export const TopicNodeSchema: z.ZodType<unknown> = z.lazy(() =>
     id: z.string(),
     topicKey: z.string().optional(),
     label: z.string().max(LIMITS.MAX_LABEL_CHARS),
+    shortLabel: z.string().min(1).max(34).optional(),
     answer: AnswerBlockSchema,
     children: z.array(TopicNodeSchema).optional(),
     reactionHook: z.string().optional(),
@@ -60,6 +62,9 @@ export const ProjectDefSchema = z.object({
     others: z.array(LinkDefSchema),
   }),
   visual: z.object({
+    plateName: z.string().min(1).max(23).optional(),
+    shortName: z.string().min(1).max(11).optional(),
+    tagline: z.string().min(1).max(37).optional(),
     logo: AssetRefSchema,
     thumb: AssetRefSchema,
     alt: z.string(),

@@ -1,0 +1,133 @@
+$ vitest run
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.2 [39m[90m/home/menma/Downloads/Portfolio[39m
+
+ [32m✓[39m tests/core/battle/fastcheck.spec.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 215[2mms[22m[39m
+ [32m✓[39m tests/ui/foundation.spec.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 496[2mms[22m[39m
+ [32m✓[39m tests/core/battle/content-completion.spec.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 520[2mms[22m[39m
+   [32m✓[39m P10 real authored battle coverage [2m(3)[22m
+     [33m[2m✓[22m[39m switches every ordered Party pair at root and answer depths 1/2/3 through shared-key nearest-ancestor rules[33m 367[2mms[22m[39m
+ [32m✓[39m tests/domain/content-completion.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 936[2mms[22m[39m
+   [32m✓[39m P10 content provenance, labels and complete shared records [2m(5)[22m
+     [33m[2m✓[22m[39m verifies every supplied question and rejects an altered source claim[33m 413[2mms[22m[39m
+Error: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/home/menma/Downloads/Portfolio/node_modules/.pnpm/jsdom@22.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/home/menma/Downloads/Portfolio/node_modules/.pnpm/jsdom@22.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/home/menma/Downloads/Portfolio/node_modules/.pnpm/jsdom@22.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:259858
+    at Object.get (/home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:166443)
+    at rd (/home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:259787)
+    at /home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:441781
+    at Array.some (<anonymous>)
+    at E0.color-contrast-matches [as matches] (/home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:441729)
+    at /home/menma/Downloads/Portfolio/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.min.js:12:463762 undefined
+ [32m✓[39m tests/ui/content-labels.spec.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 896[2mms[22m[39m
+   [33m[2m✓[22m[39m shows the condensed choice while retaining its complete accessible question[33m 891[2mms[22m[39m
+ [32m✓[39m tests/core/world-art.spec.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1789[2mms[22m[39m
+   [32m✓[39m original production world artwork [2m(4)[22m
+     [33m[2m✓[22m[39m preserves alpha-only pixel edges and the authored per-character palette caps[33m 1725[2mms[22m[39m
+[90mstderr[2m | tests/ui/portfolio.spec.tsx[2m > [22m[2mB4 portfolio operating layer[2m > [22m[2mkeeps the dialogue continuation cursor static when ANIMATION is REDUCED
+[22m[39mAn update to DialoguePage inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ [32m✓[39m tests/ui/opening-art.spec.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 877[2mms[22m[39m
+   [32m✓[39m B2 original opening artwork [2m(2)[22m
+     [33m[2m✓[22m[39m contains complete authored masks at the locked native art dimensions[33m 869[2mms[22m[39m
+ [32m✓[39m tests/fixtures/validators.spec.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 257[2mms[22m[39m
+ [32m✓[39m tests/ui/portfolio.spec.tsx [2m([22m[2m10 tests[22m[2m)[22m[33m 1636[2mms[22m[39m
+   [32m✓[39m B4 portfolio operating layer [2m(10)[22m
+     [33m[2m✓[22m[39m opens seven ordered rows over a paused world, keeps session selection and defaults EXIT to NO[33m 807[2mms[22m[39m
+     [33m[2m✓[22m[39m loads original palette-preserving native portrait, type and inventory art with exact PNG/RLE parity[33m 595[2mms[22m[39m
+ [32m✓[39m tests/scripts/map-compiler.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 219[2mms[22m[39m
+ [32m✓[39m tests/core/input-parity.spec.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 364[2mms[22m[39m
+   [32m✓[39m Input adapter parity [2m(1)[22m
+     [33m[2m✓[22m[39m routes keyboard and touch input through the same action handler[33m 356[2mms[22m[39m
+ [32m✓[39m tests/runtime/world-discovery.spec.ts [2m([22m[2m1 test[22m[2m)[22m[32m 191[2mms[22m[39m
+ [32m✓[39m tests/core/world-camera.spec.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 3620[2mms[22m[39m
+   [32m✓[39m P9 continuous world camera and geometry [2m(6)[22m
+     [33m[2m✓[22m[39m clamps at all four edges and keeps the complete sprite visible on every walkable tile[33m 3138[2mms[22m[39m
+ [32m✓[39m tests/runtime/foundation-remediation.spec.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/ui/scaling.spec.tsx [2m([22m[2m9 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32m✓[39m tests/core/world.spec.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 90[2mms[22m[39m
+ [32m✓[39m tests/ui/kit.spec.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 187[2mms[22m[39m
+ [32m✓[39m tests/domain/tree.spec.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/core/battle/reducer.spec.ts [2m([22m[2m1 test[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/runtime/gameBridge.spec.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/core/encounter.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m tests/runtime/storage.spec.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+[90mstderr[2m | tests/ui/battle.spec.tsx[2m > [22m[2mPhase 4 battle UI[2m > [22m[2mkeeps the transition layer static when reduced motion is enabled
+[22m[39mAn update to TransitionLayer inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to TransitionLayer inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ [32m✓[39m tests/runtime/dialogue.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/runtime/history-sentinel.spec.ts [2m([22m[2m1 test[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/core/battle/switch.spec.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/core/clock.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/ui/battle.spec.tsx [2m([22m[2m8 tests[22m[2m)[22m[33m 5940[2mms[22m[39m
+   [32m✓[39m Phase 4 battle UI [2m(6)[22m
+     [33m[2m✓[22m[39m renders root commands and disables an unavailable link[33m 621[2mms[22m[39m
+     [33m[2m✓[22m[39m dispatches LINK from the root command button[33m 357[2mms[22m[39m
+     [33m[2m✓[22m[39m shows the selected audience role in the VS presentation[33m 736[2mms[22m[39m
+     [33m[2m✓[22m[39m renders audience Party names in a 2x3 grid and lets a project be selected[33m 3511[2mms[22m[39m
+   [33m[2m✓[22m[39m remembers the root command cursor across topic surfaces[33m 385[2mms[22m[39m
+ [32m✓[39m tests/core/screen-stack.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/core/flow.spec.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/core/world-los.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/core/input.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/runtime/ui-store.spec.ts [2m([22m[2m1 test[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/ui/battle-art.spec.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 8087[2mms[22m[39m
+   [32m✓[39m B3 authored battle view [2m(5)[22m
+     [33m[2m✓[22m[39m loads complete original scene, sprites and all project/Party art without missing source assets[33m 1112[2mms[22m[39m
+     [33m[2m✓[22m[39m replicates native RGBA cells without resampling at fractional CSS origins[33m 2394[2mms[22m[39m
+     [33m[2m✓[22m[39m fits complete type labels and wide short names without truncation or changing the font[33m 4540[2mms[22m[39m
+ [32m✓[39m tests/ui/portfolio-menus.spec.tsx [2m([22m[2m34 tests[22m[2m)[22m[33m 8190[2mms[22m[39m
+   [32m✓[39m P7 menu component navigation [2m(10)[22m
+     [33m[2m✓[22m[39m immediately opens from X; bounded arrows select the locked order; B restores world ownership[33m 814[2mms[22m[39m
+     [33m[2m✓[22m[39m restores the exact Pokédex list selection/category and DOM focus after detail and related projects[33m 1015[2mms[22m[39m
+     [33m[2m✓[22m[39m browses the complete twelve-project selector and restores a scrolled catalogue after read-only detail[33m 899[2mms[22m[39m
+     [33m[2m✓[22m[39m opens chronological Experience detail, pages sourced responsibilities, and restores its parent selection[33m 533[2mms[22m[39m
+     [33m[2m✓[22m[39m direct Y opens verified Documents; B closes to world; menu Bag returns to the menu[33m 547[2mms[22m[39m
+     [33m[2m✓[22m[39m Trainer Card includes verified professional identity/qualification and A has no action[33m 316[2mms[22m[39m
+     [33m[2m✓[22m[39m Options keeps seven settings, restores CONTROLS focus and resets tips without changing earned/encounter progress[33m 590[2mms[22m[39m
+   [32m✓[39m P7 independent screens and axe [2m(24)[22m
+     [33m[2m✓[22m[39m Player Menu renders sourced semantic content and passes structural axe[33m 375[2mms[22m[39m
+     [33m[2m✓[22m[39m Pokédex renders sourced semantic content and passes structural axe[33m 433[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m34 passed[39m[22m[90m (34)[39m
+[2m      Tests [22m [1m[32m190 passed[39m[22m[90m (190)[39m
+[2m   Start at [22m 20:28:44
+[2m   Duration [22m 12.00s[2m (tests 35%, environment 34%, transform 20%, import 10%, worker 1%)[22m
+
+[2mEnvironment [22m [33mjsdom was created 34 times[39m[2m · 33.82s total, 34% of tracked time[22m
+[2m            [22m [2mcreate it once per worker with [22m[33mpool: 'vmThreads'[39m[2m (keeps per-file isolation) or [22m[33misolate: false[39m[2m (shares it across files)[22m
+[2m            [22m [2mlearn more: https://vitest.dev/guide/improving-performance#test-environments[22m
+

@@ -1,0 +1,146 @@
+[
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/manifest.json",
+    "time": 1791137386459
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/manifest.json",
+    "status": 200,
+    "time": 1791137387319
+  },
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/background.08e56444dbe2.png",
+    "time": 1791137387331
+  },
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/opponent-platform.dbe56f14ec81.png",
+    "time": 1791137387331
+  },
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/visitor-platform.95920fe8f4c4.png",
+    "time": 1791137387331
+  },
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/visitor-back.a3c1d0cd7628.png",
+    "time": 1791137387331
+  },
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/uttkarsh-front.44467f18e66f.png",
+    "time": 1791137387331
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/background.08e56444dbe2.png",
+    "status": 200,
+    "time": 1791137388187
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/opponent-platform.dbe56f14ec81.png",
+    "status": 200,
+    "time": 1791137388187
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/visitor-platform.95920fe8f4c4.png",
+    "status": 200,
+    "time": 1791137388189
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/visitor-back.a3c1d0cd7628.png",
+    "status": 200,
+    "time": 1791137388190
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/uttkarsh-front.44467f18e66f.png",
+    "status": 200,
+    "time": 1791137388191
+  },
+  {
+    "event": "final-state",
+    "state": "Flow BATTLE; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step startBattle; battle mounted; first encounter pending.",
+    "canvases": [
+      {
+        "cameraX": "128",
+        "cameraY": "40",
+        "mapWidth": "36",
+        "mapHeight": "22",
+        "cameraMode": "follow",
+        "cameraRoom": "east-room",
+        "frameplayer": "player-right-idle",
+        "framenpcGuide": "npc-guide-down-1",
+        "framenpcNeighbor": "npc-neighbor-right-idle",
+        "framechallenger": "challenger-left-idle",
+        "worldArt": "original-pokefolio",
+        "battleArt": "original-pokefolio",
+        "battleScene": "ready",
+        "worldScene": "sleeping"
+      },
+      {
+        "bitmap": "true",
+        "worldRaster": "physical",
+        "scale": "4",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "battleRaster": "physical",
+        "scale": "4",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      },
+      {
+        "bitmap": "true",
+        "ready": "true"
+      }
+    ]
+  }
+]

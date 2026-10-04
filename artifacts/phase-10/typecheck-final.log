@@ -1,0 +1,5 @@
+
+> tmp-app@0.1.0 typecheck
+> tsc --noEmit
+
+tests/ui/portfolio-menus.spec.tsx(89,122): error TS7006: Parameter 'v' implicitly has an 'any' type.

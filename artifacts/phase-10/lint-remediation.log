@@ -1,0 +1,16 @@
+$ eslint . && depcruise src
+
+/home/menma/Downloads/Portfolio/src/app/(portfolio)/resume/page.tsx
+  2:8  warning  'Link' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/menma/Downloads/Portfolio/src/app/(portfolio)/skills/page.tsx
+  1:39  warning  'getPortfolioProject' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/menma/Downloads/Portfolio/tests/core/battle/content-completion.spec.ts
+  10:55  warning  'NodeId' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 3 problems (0 errors, 3 warnings)
+
+
+✔ no dependency violations found (139 modules, 479 dependencies cruised)
+

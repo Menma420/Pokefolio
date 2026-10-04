@@ -54,6 +54,10 @@ export const VERIFIED_SKILLS:Array<[string,string,string]>=[
  ['Operating Systems','CONCEPT','Operating systems are verified core coursework.'],
  ['Computer Networks','CONCEPT','Computer networks are verified core coursework.'],
  ['Concurrency','CONCEPT','The verified Go scanner uses Goroutines, worker pools and configurable concurrency.'],
+ ['Git','DEVOPS','Git is named in the supplied resume methodology and tool set.'],
+ ['Agile/Scrum','CONCEPT','Agile/Scrum is named in the supplied resume methodology and tool set.'],
+ ['Software Engineering','CONCEPT','Software Engineering is listed as relevant coursework in the supplied resume.'],
+ ['Parallel Computing','CONCEPT','Parallel and Distributed Computing is verified coursework, with authored HPC project evidence.'],
 ];
 export const VERIFIED_PROJECTS:Record<string,{technologies:string[];summary:string;impact:string[];period?:string;role?:string}>={
  NOMNOM:{technologies:['Next.js','TypeScript','PostgreSQL','Prisma','Stripe','Clerk','OpenAI'],summary:'Developed a full-stack SaaS platform that generates personalized meal plans via OpenAI, with subscription-based access, authentication, and premium feature gating. Managed the Stripe subscription lifecycle with webhook-driven synchronization and built secure backend APIs with Next.js server routes, Prisma, and PostgreSQL.',impact:['Subscription-based access, authentication, premium feature gating and webhook-driven billing synchronization.']},

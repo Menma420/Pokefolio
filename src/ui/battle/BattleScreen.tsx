@@ -103,7 +103,7 @@ export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageTe
         {!presenting && ctx.view === 'topics' && visibleTopics.length > 0 && (
           <div className="absolute top-[calc(80*var(--u))] left-0 z-20 h-[calc(80*var(--u))] w-full overflow-hidden">
             <Window style={{height:'calc(80*var(--u))'}}>
-              <MenuList options={visibleTopics.map((topic) => topic.label)} activeIndex={menuIndex} pressedIndex={pressed??undefined} onSelect={activateFromPointer} />
+              <MenuList options={visibleTopics.map((topic) => topic.shortLabel??topic.label)} accessibleLabels={visibleTopics.map(topic=>topic.label)} activeIndex={menuIndex} pressedIndex={pressed??undefined} onSelect={activateFromPointer} />
             </Window>
           </div>
         )}

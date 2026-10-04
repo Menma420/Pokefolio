@@ -43,7 +43,7 @@ describe('P7 menu component navigation',()=>{
   press('RIGHT');press('A');press('B');expect(document.activeElement).toBe(screen.getByRole('button',{name:'IIIT ALLAHABAD'}));press('B');expect(document.activeElement).toBe(screen.getByRole('button',{name:'EXPERIENCE'}));
  });
  it('direct Y opens verified Documents; B closes to world; menu Bag returns to the menu',()=>{
-  const {screen,press,select,resume}=setup();press('Y');expect(screen.getByRole('region',{name:'Bag'}).textContent).toContain('A: USE');expect(screen.queryByRole('button',{name:'CERTIFICATES'})).toBeNull();press('B');expect(resume).toHaveBeenCalledOnce();expect(screen.queryByRole('navigation')).toBeNull();
+  const {screen,press,select,resume}=setup();press('Y');expect(screen.getByRole('region',{name:'Bag'}).textContent).toContain('A: USE');expect(screen.getByRole('button',{name:'CERTIFICATES'}).getAttribute('aria-disabled')).toBe('true');press('B');expect(resume).toHaveBeenCalledOnce();expect(screen.queryByRole('navigation')).toBeNull();
   select(3);press('RIGHT');press('B');expect(document.activeElement).toBe(screen.getByRole('button',{name:'BAG'}));
  });
  it('pops an authored extra dialogue to its exact Bag selection with B',()=>{

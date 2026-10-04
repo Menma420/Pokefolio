@@ -1,6 +1,7 @@
 import { ProjectDef, ProjectId } from '../../domain/types';
 import battleAssets from '../../../assets-src/battle/manifest.json';
 import { PROJECT_TYPES } from '../../domain/project-types';
+import { PROJECT_DETAILS, summaryPages } from './details';
 
 export const PROJECT_IDS = {
   ACKO_CLINIC: 'ACKO_CLINIC' as ProjectId,
@@ -22,21 +23,20 @@ const definitions: Array<{
   slug: string;
   name: string;
   type: string;
-  summary: string;
   url: string;
 }> = [
-  { id: 'ACKO_CLINIC', slug: 'acko-clinic', name: 'Acko Clinic', type: PROJECT_TYPES.BACKEND, summary: 'Clinic Journey Management and adjacent backend workflows.', url: 'https://github.com/Menma420' },
-  { id: 'KARSH', slug: 'karsh', name: 'Karsh', type: PROJECT_TYPES.FULL_STACK, summary: 'A personal system for tracking and understanding capability over time.', url: 'https://github.com/Menma420/Karsh' },
-  { id: 'NOMNOM', slug: 'nomnom-planner', name: 'NomNom Planner', type: PROJECT_TYPES.FULL_STACK, summary: 'A full-stack product for personalized meal planning.', url: 'https://github.com/Menma420/NomNom-Planner' },
-  { id: 'POKEFOLIO', slug: 'pokefolio', name: 'Pokefolio', type: PROJECT_TYPES.FULL_STACK, summary: 'A Pokémon-inspired portfolio and interview experience.', url: 'https://github.com/Menma420/Pokefolio' },
-  { id: 'PDF_QA', slug: 'pdf-qa', name: 'PDF-QA', type: PROJECT_TYPES.AI, summary: 'A system for asking questions about PDF documents.', url: 'https://github.com/Menma420/PDF-QA' },
-  { id: 'WEATHER_PI', slug: 'weatherpi', name: 'WeatherPi', type: PROJECT_TYPES.IOT, summary: 'An IoT project that collects and presents sensor readings.', url: 'https://github.com/Menma420/WeatherPi' },
-  { id: 'PORT_SCANNER', slug: 'portscanner', name: 'PortScanner', type: PROJECT_TYPES.NETWORKING, summary: 'A concurrent TCP port scanner with a command-line interface.', url: 'https://github.com/Menma420/PortScanner' },
-  { id: 'PARALLEL_DISTRIBUTED_COMPUTING', slug: 'parallel-distributed-computing', name: 'Parallel-Distributed Computing', type: PROJECT_TYPES.BACKEND, summary: 'Coursework exploring parallel and distributed computing.', url: 'https://github.com/Menma420/Parallel-Distributed_Computing' },
-  { id: 'ARISE', slug: 'arise', name: 'Arise', type: PROJECT_TYPES.FULL_STACK, summary: 'A Solo Leveling-inspired productivity application.', url: 'https://github.com/Menma420/Arise' },
-  { id: 'POKEMON_ELO_RATING', slug: 'pokemon-elo-rating', name: 'Pokémon Elo Rating', type: PROJECT_TYPES.FULL_STACK, summary: 'A Pokémon matchup and Elo ranking project.', url: 'https://github.com/Menma420/PokemonEloRating' },
-  { id: 'VANIX', slug: 'vanix', name: 'Vanix', type: PROJECT_TYPES.FULL_STACK, summary: 'A project exploring real-time voice rooms.', url: 'https://github.com/Menma420/Vanix' },
-  { id: 'CHATROOM_APP', slug: 'chatroomapp', name: 'ChatRoomApp', type: PROJECT_TYPES.FULL_STACK, summary: 'A chat application project.', url: 'https://github.com/Menma420/ChatRoomApp' },
+  { id: 'ACKO_CLINIC', slug: 'acko-clinic', name: 'Acko Clinic', type: PROJECT_TYPES.BACKEND, url: 'https://github.com/Menma420' },
+  { id: 'KARSH', slug: 'karsh', name: 'Karsh', type: PROJECT_TYPES.FULL_STACK, url: 'https://github.com/Menma420/Karsh' },
+  { id: 'NOMNOM', slug: 'nomnom-planner', name: 'NomNom Planner', type: PROJECT_TYPES.FULL_STACK, url: 'https://github.com/Menma420/NomNom-Planner' },
+  { id: 'POKEFOLIO', slug: 'pokefolio', name: 'Pokefolio', type: PROJECT_TYPES.FULL_STACK, url: 'https://github.com/Menma420/Pokefolio' },
+  { id: 'PDF_QA', slug: 'pdf-qa', name: 'PDF-QA', type: PROJECT_TYPES.AI, url: 'https://github.com/Menma420/PDF-QA' },
+  { id: 'WEATHER_PI', slug: 'weatherpi', name: 'WeatherPi', type: PROJECT_TYPES.IOT, url: 'https://github.com/Menma420/WeatherPi' },
+  { id: 'PORT_SCANNER', slug: 'portscanner', name: 'PortScanner', type: PROJECT_TYPES.NETWORKING, url: 'https://github.com/Menma420/PortScanner' },
+  { id: 'PARALLEL_DISTRIBUTED_COMPUTING', slug: 'parallel-distributed-computing', name: 'Parallel-Distributed Computing', type: PROJECT_TYPES.BACKEND, url: 'https://github.com/Menma420/Parallel-Distributed_Computing' },
+  { id: 'ARISE', slug: 'arise', name: 'Arise', type: PROJECT_TYPES.FULL_STACK, url: 'https://github.com/Menma420/Arise' },
+  { id: 'POKEMON_ELO_RATING', slug: 'pokemon-elo-rating', name: 'Pokémon Elo Rating', type: PROJECT_TYPES.FULL_STACK, url: 'https://github.com/Menma420/PokemonEloRating' },
+  { id: 'VANIX', slug: 'vanix', name: 'Vanix', type: PROJECT_TYPES.FULL_STACK, url: 'https://github.com/Menma420/Vanix' },
+  { id: 'CHATROOM_APP', slug: 'chatroomapp', name: 'ChatRoomApp', type: PROJECT_TYPES.FULL_STACK, url: 'https://github.com/Menma420/ChatRoomApp' },
 ];
 
 const visualLabels: Record<string, {plateName:string;shortName:string;tagline:string}> = {
@@ -58,15 +58,16 @@ export const PROJECTS: ProjectDef[] = definitions.map((definition) => ({
   id: PROJECT_IDS[definition.id],
   slug: definition.slug,
   name: definition.name,
-  tagline: definition.summary,
+  tagline: visualLabels[definition.id]!.tagline,
   type: definition.type as ProjectDef['type'],
-  technologies: [],
-  role: definition.id === 'ACKO_CLINIC' ? 'Backend engineering intern' : 'Project author',
-  period: 'Not specified',
-  summary: { pages: [definition.summary] },
-  overview: [],
-  impact: [],
-  links: { primary: { label: 'GitHub repository', url: definition.url }, others: [] },
+  technologies: PROJECT_DETAILS[definition.id]!.technologies,
+  role: PROJECT_DETAILS[definition.id]!.role ?? 'Project author',
+  period: PROJECT_DETAILS[definition.id]!.period ?? 'Not specified',
+  team: PROJECT_DETAILS[definition.id]!.team,
+  summary: { pages: summaryPages(PROJECT_DETAILS[definition.id]!.summary), sourceRef: PROJECT_DETAILS[definition.id]!.sources[0] },
+  overview: PROJECT_DETAILS[definition.id]!.overview,
+  impact: PROJECT_DETAILS[definition.id]!.impact,
+  links: { primary: { label: definition.id === 'ACKO_CLINIC' ? 'Author GitHub profile' : 'GitHub repository', url: definition.url }, others: [] },
   visual: {
     ...visualLabels[definition.id],
     artKey: definition.slug,

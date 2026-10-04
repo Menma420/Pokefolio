@@ -1,0 +1,46 @@
+$ STRICT_RELEASE=true pnpm validate && next build --webpack
+$ python3 scripts/audit-content-source.py && tsx scripts/validate-content.ts
+Source audit PASS: 394 supplied questions; 387 verbatim answers; 7 repository-backed Pokefolio status updates.
+Validated 18 authored project/audience trees.
+▲ Next.js 16.3.8 (webpack)
+✓ Running next.config.ts took 98ms
+- Experiments (use with caution):
+  ⨯ useTypeScriptCli
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.4s
+  Running TypeScript ...
+  Finished TypeScript in 6.0s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/27) ...
+  Generating static pages using 11 workers (6/27) 
+  Generating static pages using 11 workers (13/27) 
+  Generating static pages using 11 workers (20/27) 
+✓ Generating static pages using 11 workers (27/27) in 1213ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /dev/battle
+├ ○ /dev/kit
+├ ○ /dev/text-spike
+├ ○ /dev/world
+├ ○ /experience
+├ ○ /projects
+├   /projects/[slug]
+│ ├ ● /projects/acko-clinic
+│ ├ ● /projects/karsh
+│ ├ ● /projects/nomnom-planner
+│ └ ● [+9 more paths]
+├ ○ /resume
+├ ○ /robots.txt
+├ ○ /sitemap.xml
+└ ○ /skills
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+

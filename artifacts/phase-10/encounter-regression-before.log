@@ -1,0 +1,34 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v5.0.2 /home/menma/Downloads/Portfolio
+
+ ❯ tests/runtime/encounter-entry.spec.ts (5 tests | 1 failed) 60ms
+   ❯ WorldSession → authoritative encounter evaluator integration (5)
+     × A behind the challenger evaluates the newly turned WorldSim facing immediately 41ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/runtime/encounter-entry.spec.ts > WorldSession → authoritative encounter evaluator integration > A behind the challenger evaluates the newly turned WorldSim facing immediately
+AssertionError: expected 'OVERWORLD' to be 'ENCOUNTER' // Object.is equality
+
+Expected: "ENCOUNTER"
+Received: "OVERWORLD"
+
+ ❯ tests/runtime/encounter-entry.spec.ts:64:37
+     62|     // The bridge snapshot was previously left-facing; interaction eve…
+     63|     expect(runtime.world.sim.state.current.npcs.find(n => n.id === 'ch…
+     64|     expect(runtime.state.flow.mode).toBe('ENCOUNTER');
+       |                                     ^
+     65|     expect(runtime.state.returnAnchor).toMatchObject({ tile: { x: 19, …
+     66|     expect(runtime.world.sim.state.current.talkingNpcId).toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  00:20:05
+   Duration  1.86s (environment 52%, transform 28%, import 15%, tests 4%, worker 1%)
+

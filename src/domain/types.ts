@@ -9,12 +9,14 @@ export type ProjectTypeId = Brand<string, 'ProjectTypeId'>;
 export interface AnswerBlock {
   pages: string[];
   sourced?: boolean;
+  sourceRef?: string;
 }
 
 export interface TopicNode {
   id: string;
   topicKey?: string;
   label: string;
+  shortLabel?: string;
   answer: AnswerBlock;
   children?: TopicNode[];
   reactionHook?: string;
@@ -36,6 +38,7 @@ export interface CompiledNode {
   childIds: NodeId[];
   topicKey?: string;
   label: string;
+  shortLabel?: string;
   answer: AnswerBlock;
 }
 

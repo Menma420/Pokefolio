@@ -1,0 +1,73 @@
+
+Running 2 tests using 1 worker
+
+(node:63274) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/2] [chromium] › tests/e2e/release-entry.spec.ts:42:5 › production LOS → audience → VS → actual battle scene and initial project
+  1) [chromium] › tests/e2e/release-entry.spec.ts:42:5 › production LOS → audience → VS → actual battle scene and initial project 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('region', { name: 'Game frame' }).getByRole('alert')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('region', { name: 'Game frame' }).getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Game frame' }).getByRole('alert')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      65 |     await expect(page.locator('canvas[data-battle-scene="ready"][data-world-scene="sleeping"]')).toHaveCount(1);
+      66 |     await expect(page.locator('canvas[data-battle-raster]')).toHaveCount(1);
+    > 67 |     await expect(page.getByRole('region', { name: 'Game frame' }).getByRole('alert')).toHaveCount(0);
+         |                                                                                       ^
+      68 |     await expect(page.getByRole('region', { name: 'Current project' })).toContainText('Acko Clinic');
+      69 |     await expect(page.getByRole('main', { name: 'Interview battle' })).toHaveAttribute('data-battle-frame', /^(5[6-9]|[6-9]\d|\d{3,})$/);
+      70 |     await page.screenshot({ path: `${output}/actual-battle-entry.png` });
+        at /home/menma/Downloads/Portfolio/tests/e2e/release-entry.spec.ts:67:87
+
+    Error Context: test-results/release-entry-production-L-18db1-e-scene-and-initial-project-chromium/error-context.md
+
+
+(node:63398) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[2/2] [chromium] › tests/e2e/release-entry.spec.ts:78:5 › first interaction behind challenger turns and immediately starts encounter
+  2) [chromium] › tests/e2e/release-entry.spec.ts:78:5 › first interaction behind challenger turns and immediately starts encounter 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('status', { name: 'Game state' })
+    Expected substring: "facing left;"
+    Received string:    "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 19,7; facing down; movement idle; encounter step idle; battle hidden; first encounter pending."
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('status', { name: 'Game state' }) with timeout 5000ms
+      - waiting for getByRole('status', { name: 'Game state' })
+        14 × locator resolved to <p role="status" class="sr-only" aria-label="Game state">…</p>
+           - unexpected value "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 19,7; facing down; movement idle; encounter step idle; battle hidden; first encounter pending."
+
+
+      28 |   // A blocked left step changes facing without moving into the NPC.
+      29 |   await page.keyboard.down('ArrowLeft');
+    > 30 |   await expect(page.locator('canvas[data-frameplayer="player-left-idle"]')).toHaveCount(1);
+         |                             ^
+      31 |   await page.keyboard.up('ArrowLeft');
+      32 | }
+      33 | async function readEncounter(page: Page) {
+        at behind (/home/menma/Downloads/Portfolio/tests/e2e/release-entry.spec.ts:30:29)
+        at /home/menma/Downloads/Portfolio/tests/e2e/release-entry.spec.ts:80:3
+
+    Error Context: test-results/release-entry-first-intera-2f5b5-mmediately-starts-encounter-chromium/error-context.md
+
+
+  2 failed
+    [chromium] › tests/e2e/release-entry.spec.ts:42:5 › production LOS → audience → VS → actual battle scene and initial project 
+    [chromium] › tests/e2e/release-entry.spec.ts:78:5 › first interaction behind challenger turns and immediately starts encounter 

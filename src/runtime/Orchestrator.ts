@@ -87,7 +87,10 @@ export class GameOrchestrator {
     this.removers.push(bridge.onEvent('stepCompleted', (event) => this.onWorldStep(event)));
     this.removers.push(bridge.onSnapshot((snapshot) => this.patch({ movementTarget: snapshot.state.player.movement?.to ?? null })));
     this.removers.push(bridge.onEvent('interactionRequested', (event) => {
-      if (event.targetId === 'challenger' && progressStore.getState().firstEncounterDone) this.beginEncounter(true);
+      if (event.targetId === 'challenger') {
+        if (progressStore.getState().firstEncounterDone) void this.beginEncounter(true);
+        else this.tryFirstEncounter(); // WorldSim has already turned the NPC toward the player.
+      }
       else if (WORLD_FLAVOR[event.targetId]) void this.presentWorldFlavor(event.targetId);
     }));
     this.removers.push(bridge.onEvent('assetFailed', (event) => {

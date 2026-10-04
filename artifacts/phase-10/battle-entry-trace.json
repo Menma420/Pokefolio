@@ -1,0 +1,116 @@
+[
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/manifest.json",
+    "time": 1791139451354
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/manifest.json",
+    "status": 200,
+    "time": 1791139452211
+  },
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/background.08e56444dbe2.png",
+    "time": 1791139452215
+  },
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/opponent-platform.dbe56f14ec81.png",
+    "time": 1791139452216
+  },
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/visitor-platform.95920fe8f4c4.png",
+    "time": 1791139452216
+  },
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/visitor-back.a3c1d0cd7628.png",
+    "time": 1791139452216
+  },
+  {
+    "event": "request",
+    "url": "http://127.0.0.1:3100/assets/battle/uttkarsh-front.44467f18e66f.png",
+    "time": 1791139452216
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/background.08e56444dbe2.png",
+    "status": 200,
+    "time": 1791139453089
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/opponent-platform.dbe56f14ec81.png",
+    "status": 200,
+    "time": 1791139453092
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/visitor-platform.95920fe8f4c4.png",
+    "status": 200,
+    "time": 1791139453094
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/visitor-back.a3c1d0cd7628.png",
+    "status": 200,
+    "time": 1791139453094
+  },
+  {
+    "event": "response",
+    "url": "http://127.0.0.1:3100/assets/battle/uttkarsh-front.44467f18e66f.png",
+    "status": 200,
+    "time": 1791139453094
+  },
+  {
+    "event": "overworld-ready",
+    "time": 1791139454475
+  },
+  {
+    "event": "encounter-started",
+    "time": 1791139462206
+  },
+  {
+    "event": "vs-visible",
+    "time": 1791139464174
+  },
+  {
+    "event": "battle-ready",
+    "time": 1791139468712,
+    "state": "Battle view root; project ACKO_CLINIC; audience RECRUITER.",
+    "rendererReady": "true"
+  },
+  {
+    "event": "final-state",
+    "state": "Flow OVERWORLD; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step idle; battle hidden; first encounter complete.",
+    "canvases": [
+      {
+        "cameraX": "128",
+        "cameraY": "40",
+        "mapWidth": "36",
+        "mapHeight": "22",
+        "cameraMode": "follow",
+        "cameraRoom": "east-room",
+        "frameplayer": "player-right-idle",
+        "framenpcGuide": "npc-guide-right-idle",
+        "framenpcNeighbor": "npc-neighbor-right-1",
+        "framechallenger": "challenger-left-idle",
+        "worldArt": "original-pokefolio",
+        "battleArt": "original-pokefolio",
+        "battleScene": "unloaded",
+        "worldScene": "awake",
+        "battleVisitor": "24,48,true",
+        "battleOpponent": "224,8,false"
+      },
+      {
+        "bitmap": "true",
+        "worldRaster": "physical",
+        "scale": "4",
+        "ready": "true"
+      }
+    ]
+  }
+]

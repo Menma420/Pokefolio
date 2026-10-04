@@ -1,0 +1,6 @@
+
+> tmp-app@0.1.0 validate
+> python3 scripts/audit-content-source.py && tsx scripts/validate-content.ts
+
+Source audit PASS: 394 supplied questions; 387 verbatim answers; 7 repository-backed Pokefolio status updates.
+Validated 18 authored project/audience trees.

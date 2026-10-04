@@ -5,7 +5,7 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { BattleContext } from '../../src/core/battle/types';
 import { getAvailableCommands } from '../../src/core/battle/selectors';
 import { ProjectId } from '../../src/domain/types';
-import { AUDIENCE_RECRUITER } from '../../src/content/audiences';
+import { Audiences, AUDIENCE_RECRUITER } from '../../src/content/audiences';
 import { getParty } from '../../src/content/party';
 import { getProject } from '../../src/content/registry';
 import { BattleScreen } from '../../src/ui/battle/BattleScreen';
@@ -93,10 +93,10 @@ it('remembers the root command cursor across topic surfaces',()=>{
 import {globalInputRouter} from '../../src/core/input';
 
 it('quotes a battle reaction without a portrait while retaining the authored service text',async()=>{
- globalDialogueService.cancelAll();const clock=new FakeClock();const completion=globalDialogueService.request('Interesting scope.');
+ globalDialogueService.cancelAll();const clock=new FakeClock();const completion=globalDialogueService.request(Audiences.RECRUITER!.reactions['project-entry'][0]!);
  const view=render(<ClockContext.Provider value={clock}><BattleScreen ctx={context()} visibleTopics={[]} availableCommands={['DETAILS','LINK','PARTY','EXIT']} pageText="" summary="" linkAvailable dispatch={vi.fn()}/></ClockContext.Provider>);
  try{
-  act(()=>clock.tick(1500));expect(view.getByRole('status').textContent).toBe('"Interesting scope."');expect(globalDialogueService.getActive()?.text).toBe('Interesting scope.');
+  act(()=>clock.tick(1500));expect(view.getByRole('status').textContent).toBe(`"${Audiences.RECRUITER!.reactions['project-entry'][0]}"`);expect(globalDialogueService.getActive()?.text).toBe(Audiences.RECRUITER!.reactions['project-entry'][0]);
   expect(view.queryByRole('img',{name:'Recruiter portrait'})).toBeNull();fireEvent.click(view.getByRole('button',{name:'Continue dialogue'}));await completion;
  }finally{view.unmount();globalDialogueService.cancelAll();}
 });
