@@ -43,7 +43,7 @@ describe('Phase A remediation gates',()=>{
   const start=vi.fn(),stop=vi.fn(),connect=vi.fn();const oscillator={type:'',frequency:{value:0},connect,start,stop,disconnect:vi.fn()};const gain={gain:{value:0},connect,disconnect:vi.fn()};
   const audio={state:'running',currentTime:4,destination:{},createOscillator:vi.fn(()=>oscillator),createGain:()=>gain} as unknown as AudioContext;
   let muted=false;const service=new AudioService(()=>audio,()=>muted);for(const name of ['cursor.move','ui.confirm','ui.cancel','ui.buzz','text.tick'] as const)service.play(name);
-  expect(start).toHaveBeenCalledTimes(5);expect(oscillator.type).toBe('square');expect(stop).toHaveBeenLastCalledWith(4.018);for(const name of ['world.door','world.bump','encounter.alert','vs.cue','battle.sendout','link.open','page','menu.open','title.start'] as const)service.play(name);expect(start).toHaveBeenCalledTimes(14);expect(stop.mock.calls.every(call=>call[0]-4<=0.2)).toBe(true);muted=true;service.play('ui.confirm');expect(start).toHaveBeenCalledTimes(14);
+  expect(start).toHaveBeenCalledTimes(5);expect(oscillator.type).toBe('square');expect(stop).toHaveBeenLastCalledWith(4.018);for(const name of ['world.door','world.bump','encounter.alert','vs.cue','battle.sendout','link.open','page','menu.open','title.start'] as const)service.play(name);expect(start).toHaveBeenCalledTimes(14);expect(stop.mock.calls.every(call=>call[0]-4<=1.5)).toBe(true);muted=true;service.play('ui.confirm');expect(start).toHaveBeenCalledTimes(14);
   new AudioService(()=>null).play('ui.confirm');expect(start).toHaveBeenCalledTimes(14);
  });
 });

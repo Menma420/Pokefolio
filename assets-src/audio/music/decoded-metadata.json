@@ -1,0 +1,20 @@
+{
+  "town": {
+    "duration": 88.44,
+    "sampleRate": 48000,
+    "channels": 2,
+    "samples": 4245120
+  },
+  "battle": {
+    "duration": 139.46666666666667,
+    "sampleRate": 48000,
+    "channels": 2,
+    "samples": 6694400
+  },
+  "victory": {
+    "duration": 31.266666666666666,
+    "sampleRate": 48000,
+    "channels": 2,
+    "samples": 1500800
+  }
+}

@@ -99,5 +99,5 @@ test('P7 X/Y are available before tutorial completion and inert throughout the a
  await walk('ArrowDown','7,6');await walk('ArrowDown','7,7');for(let x=8;x<=15;x++)await walk('ArrowRight',`${x},7`);await expect(game(p)).toContainText('Flow ENCOUNTER');
  async function locked(){await act('X',50);await act('Y',50);await expect(portfolio(p)).toHaveCount(0);}
  await locked();for(let i=0;i<50&&!(await p.getByRole('group',{name:'Audience selection'}).count());i++)await act('A',100);await expect(game(p)).toContainText('Flow AUDIENCE');await locked();await act('A',150);
- for(let i=0;i<30&&!(await p.getByRole('main',{name:'Interview challenge'}).count());i++)await act('A',100);await expect(p.getByRole('main',{name:'Interview challenge'})).toBeVisible();await locked();await tick(p,3500);await expect(game(p)).toContainText('Flow BATTLE');await locked();await expect(p.getByRole('main',{name:'Interview battle'})).toBeVisible();
+ for(let i=0;i<30&&!(await p.getByRole('region', { name: 'Interview challenge'}).count());i++)await act('A',100);await expect(p.getByRole('region', { name: 'Interview challenge'})).toBeVisible();await locked();await tick(p,3500);await expect(game(p)).toContainText('Flow BATTLE');await locked();await expect(p.getByRole('region', { name: 'Interview battle'})).toBeVisible();
 });

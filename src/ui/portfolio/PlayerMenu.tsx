@@ -6,7 +6,6 @@ import {createPortfolioView} from '../../core/menu';
 import {FRAME_MS,type ScheduledTask} from '../../core/clock';
 import type {PortfolioScreen,PortfolioView} from '../../domain/menu';
 import {ClockContext,PixelContext} from '../kit/PixelContext';
-import {Window} from '../kit/Window';
 import {DialogueBox} from '../kit/DialogueBox';
 import {audioService} from '../../runtime/AudioService';
 import {playTransition} from '../../runtime/TransitionService';
@@ -16,7 +15,11 @@ import {getAudioContext} from '../../runtime/AudioUnlocker';
 import {PLAYER_MENU,getBagCategories,getSkills,getSkill,getSkillCategories,getPortfolioProjects,getExperiences} from '../../content/portfolio';
 import {Dex,Projects,Experience,Bag,TrainerCard} from './PortfolioScreens';
 import {PlayerMenuScreen,ExitConfirmation,OptionsScreen,ControlsScreen} from './MenuScreens';
-import {Text,box,bounded} from './layout';
+import {box,bounded,Text} from './layout';
+import {Window} from '../kit/Window';
+import {PortfolioArt} from './PortfolioArt';
+import {palette} from '../kit/palette';
+import {PixelPattern} from '../kit/GameChrome';
 const closed=createPortfolioView('closed');
 const current=()=>uiStore.getState().screenStack.at(-1)??closed;
 const patch=(values:Partial<PortfolioView>)=>uiStore.getState().updateScreen(values);
@@ -175,11 +178,10 @@ export function PlayerMenu({available,pause,resume,onExit,onSpeakingChange}:{onS
   {(view.screen==='projects'||view.screen==='project-detail')&&<Projects view={{...view,pressed}} tap={tap} page={section} link={link}/>}
   {(view.screen==='experience'||view.screen==='experience-detail')&&<Experience view={{...view,pressed}} tap={tap} section={section}/>}
   {(view.screen==='bag'||view.screen==='bag-reading')&&<Bag view={{...view,pressed}} tap={tap} category={category}/>}
-  {view.screen==='card'&&<TrainerCard/>}
+  {view.screen==='card'&&<TrainerCard notice={view.notice}/>}
   {view.screen==='options'&&<OptionsScreen view={view} values={values} tap={tap}/>}
   {view.screen==='controls'&&<ControlsScreen/>}
-  {(view.screen==='card'||view.screen==='dex')&&view.notice&&<Window style={{...box(8,8,224,24),padding:0}}><Text text={view.notice} x={7} y={8} width={210} maxLines={1}/></Window>}
-  {reading&&<div style={{...box(0,0,240,160),zIndex:3}}><DialogueBox text={reading} variant="battle" dismissible onComplete={()=>uiStore.getState().popScreen()}/></div>}
+  {reading&&<div style={{...box(0,0,240,160),zIndex:3}}><PixelPattern color={palette.header} step={1}/><Window frame="document" style={{...box(12,12,216,92),padding:0}}><PortfolioArt name="documents-large" x={16} y={24}/><Text text="KEY ITEM" x={64} y={20}/><Text text={getBagCategories()[view.category]?.items[view.cursor]?.name??'DOCUMENT'} x={64} y={37} width={140} maxLines={2}/><Text text="READ WITH A" x={64} y={65}/></Window><DialogueBox text={reading} variant="battle" dismissible onComplete={()=>uiStore.getState().popScreen()}/></div>}
   <span role="status" aria-label="Portfolio state" className="sr-only">Screen {view.screen}; cursor {view.cursor}; category {view.category}; page {view.page}; section {view.section}; depth {stack.length}. {view.notice}</span>
  </section></PixelContext.Provider>;
 }

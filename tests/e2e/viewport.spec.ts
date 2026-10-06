@@ -33,13 +33,13 @@ async function expectViewportGeometry(page: Page, width: number, height: number,
   }));
   expect(overflow).toEqual({ horizontal: false, vertical: false });
 
-  const title = page.getByRole('main', { name: 'Game title' });
+  const title = page.getByRole('region', { name: 'Game title' });
   if (await title.count()) expect(await title.boundingBox()).toEqual(frameBox);
 }
 
 test('desktop and small/mobile viewports use centered integer 3:2 scaling', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('main', { name: 'Game title' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Game title' })).toBeVisible();
 
   await expectViewportGeometry(page, 1280, 720, 4);
   await expectViewportGeometry(page, 640, 360, 2);

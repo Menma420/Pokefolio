@@ -9,7 +9,6 @@ import {BAG,SKILLS,PORTFOLIO_PROJECTS,EXPERIENCE} from '../../src/content/portfo
 import {safeOpen} from '../../src/runtime/safeOpen';
 import {settingsStore,uiStore,hintsStore} from '../../src/runtime/stores';
 import {isReducedMotion} from '../../src/runtime/motion';
-import {MusicService} from '../../src/runtime/MusicService';
 import {DialogueBox} from '../../src/ui/kit/DialogueBox';
 import art from '../../assets-src/portfolio/art.json';
 import manifest from '../../assets-src/portfolio/manifest.json';
@@ -35,7 +34,7 @@ describe('B4 portfolio operating layer',()=>{
  });
  it('renders catalogue thumbnails and type atlas entries without DOM artwork fallbacks',()=>{
   const screen=render(<Projects view={{screen:'projects',cursor:0,category:0,page:0,section:0,project:0,related:0,notice:null}} tap={()=>{}} page={()=>{}} link={()=>{}}/>);
-  expect(screen.queryByRole('img',{name:'Unavailable project artwork'})).toBeNull();expect(screen.container.querySelectorAll('[data-battle-art]')).toHaveLength(14);
+  expect(screen.queryByRole('img',{name:'Unavailable project artwork'})).toBeNull();expect(screen.container.querySelectorAll('[data-battle-art]')).toHaveLength(12);
  });
  it('does not invoke world shortcuts in dialogue, encounter locks or battle',()=>{
   const router=new InputRouter(new FakeClock()),shortcut=vi.fn(()=>true);router.registerWorldShortcut(shortcut);
@@ -46,10 +45,6 @@ describe('B4 portfolio operating layer',()=>{
  });
  it('keeps animation reduction distinct from OS override and resets every tutorial flag',()=>{
   settingsStore.getState().update({animationReduced:true,reducedMotion:false});expect(isReducedMotion()).toBe(true);hintsStore.getState().markSeen('seenTrainerCard');hintsStore.getState().reset();expect(hintsStore.getState().seenTrainerCard).toBe(false);expect(hintsStore.getState().seenFirstMove).toBe(false);
- });
- it('owns music scheduling with Clock and silences/cancels it when muted or unmounted',()=>{
-  const clock=new FakeClock(),stop=vi.fn(),oscillator={frequency:{value:0},connect:vi.fn(),disconnect:vi.fn(),start:vi.fn(),stop,type:'square',onended:null},createOscillator=vi.fn(()=>oscillator),context={state:'running',currentTime:0,destination:{},createOscillator,createGain:()=>({gain:{value:0},connect:vi.fn(),disconnect:vi.fn()})};
-  settingsStore.getState().update({musicMuted:false});const music=new MusicService(clock,()=>context as unknown as AudioContext),dispose=music.mount();expect(createOscillator).toHaveBeenCalledOnce();settingsStore.getState().update({musicMuted:true});clock.tick(3000);expect(createOscillator).toHaveBeenCalledOnce();expect(stop).toHaveBeenCalled();dispose();settingsStore.getState().update({musicMuted:false});clock.tick(3000);expect(createOscillator).toHaveBeenCalledOnce();
  });
  it('keeps the dialogue continuation cursor static when ANIMATION is REDUCED',()=>{
   const clock=new FakeClock();settingsStore.getState().update({animationReduced:true,textSpeed:'instant'});const screen=render(<DialogueBox text="Hello" clock={clock} onComplete={()=>{}}/>);act(()=>clock.tick(300));expect(screen.container.querySelector('[data-cursor]')?.getAttribute('style')).toContain('top: 0px');settingsStore.getState().update({textSpeed:'normal'});

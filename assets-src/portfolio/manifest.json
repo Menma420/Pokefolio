@@ -179,68 +179,73 @@
     "width": 32,
     "height": 32
   },
+  "bag-body": {
+    "src": "/assets/portfolio/bag-body-4925ba571256.png",
+    "width": 64,
+    "height": 64
+  },
   "trainer-portrait": {
-    "src": "/assets/portfolio/trainer-portrait-cb6bdb595f0c.png",
+    "src": "/assets/portfolio/trainer-portrait-f843f69e74ac.png",
     "width": 48,
     "height": 64
   },
   "project-acko-clinic-48": {
-    "src": "/assets/portfolio/project-acko-clinic-48-f4427e8e226f.png",
+    "src": "/assets/portfolio/project-acko-clinic-48-feb4b2cd11a3.png",
     "width": 48,
     "height": 48
   },
   "project-karsh-48": {
-    "src": "/assets/portfolio/project-karsh-48-7183d6f3a78c.png",
+    "src": "/assets/portfolio/project-karsh-48-47748494e0fc.png",
     "width": 48,
     "height": 48
   },
   "project-nomnom-planner-48": {
-    "src": "/assets/portfolio/project-nomnom-planner-48-4499a00a4799.png",
+    "src": "/assets/portfolio/project-nomnom-planner-48-c9149c6d6d22.png",
     "width": 48,
     "height": 48
   },
   "project-pokefolio-48": {
-    "src": "/assets/portfolio/project-pokefolio-48-2fd9991bb048.png",
+    "src": "/assets/portfolio/project-pokefolio-48-e68de0f59aec.png",
     "width": 48,
     "height": 48
   },
   "project-pdf-qa-48": {
-    "src": "/assets/portfolio/project-pdf-qa-48-346dcca48163.png",
+    "src": "/assets/portfolio/project-pdf-qa-48-04181875ff90.png",
     "width": 48,
     "height": 48
   },
   "project-weatherpi-48": {
-    "src": "/assets/portfolio/project-weatherpi-48-a3f6d60d537b.png",
+    "src": "/assets/portfolio/project-weatherpi-48-6ed08ecdf1bc.png",
     "width": 48,
     "height": 48
   },
   "project-portscanner-48": {
-    "src": "/assets/portfolio/project-portscanner-48-352cb35d497f.png",
+    "src": "/assets/portfolio/project-portscanner-48-fd215e23588a.png",
     "width": 48,
     "height": 48
   },
   "project-parallel-distributed-computing-48": {
-    "src": "/assets/portfolio/project-parallel-distributed-computing-48-43a43dfefc84.png",
+    "src": "/assets/portfolio/project-parallel-distributed-computing-48-e4fefda188ea.png",
     "width": 48,
     "height": 48
   },
   "project-arise-48": {
-    "src": "/assets/portfolio/project-arise-48-5b731e761612.png",
+    "src": "/assets/portfolio/project-arise-48-d5fc46c85ef6.png",
     "width": 48,
     "height": 48
   },
   "project-pokemon-elo-rating-48": {
-    "src": "/assets/portfolio/project-pokemon-elo-rating-48-2e9773cc616e.png",
+    "src": "/assets/portfolio/project-pokemon-elo-rating-48-0db7a2535ab8.png",
     "width": 48,
     "height": 48
   },
   "project-vanix-48": {
-    "src": "/assets/portfolio/project-vanix-48-2e95e5895e03.png",
+    "src": "/assets/portfolio/project-vanix-48-11891b92757d.png",
     "width": 48,
     "height": 48
   },
   "project-chatroomapp-48": {
-    "src": "/assets/portfolio/project-chatroomapp-48-de1efba7ad11.png",
+    "src": "/assets/portfolio/project-chatroomapp-48-0483abaa9530.png",
     "width": 48,
     "height": 48
   },
@@ -288,5 +293,615 @@
     "src": "/assets/portfolio/concept-badge-5f3c57c5fe67.png",
     "width": 8,
     "height": 8
+  },
+  "skill-java": {
+    "src": "/assets/portfolio/skill-java-252eaaabec70.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-java-large": {
+    "src": "/assets/portfolio/skill-java-large-fa1008fd18e9.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-c": {
+    "src": "/assets/portfolio/skill-c-2a42aeebabe5.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-c-large": {
+    "src": "/assets/portfolio/skill-c-large-8297158ae727.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-python": {
+    "src": "/assets/portfolio/skill-python-7c822846d2e9.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-python-large": {
+    "src": "/assets/portfolio/skill-python-large-27465bf10d5a.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-go": {
+    "src": "/assets/portfolio/skill-go-25938430c581.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-go-large": {
+    "src": "/assets/portfolio/skill-go-large-f2e4b75f571d.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-sql": {
+    "src": "/assets/portfolio/skill-sql-fd56a7286bb8.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-sql-large": {
+    "src": "/assets/portfolio/skill-sql-large-93cbd6856e73.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-javascript": {
+    "src": "/assets/portfolio/skill-javascript-024e674a055b.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-javascript-large": {
+    "src": "/assets/portfolio/skill-javascript-large-99233d48571a.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-spring-boot": {
+    "src": "/assets/portfolio/skill-spring-boot-d9f5b2ef6eed.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-spring-boot-large": {
+    "src": "/assets/portfolio/skill-spring-boot-large-c87e9e49fc62.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-rest-apis": {
+    "src": "/assets/portfolio/skill-rest-apis-e105e455e2e6.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-rest-apis-large": {
+    "src": "/assets/portfolio/skill-rest-apis-large-bd72ff4b8020.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-microservices": {
+    "src": "/assets/portfolio/skill-microservices-47faa113d49c.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-microservices-large": {
+    "src": "/assets/portfolio/skill-microservices-large-dd83bbcc7aea.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-openfeign": {
+    "src": "/assets/portfolio/skill-openfeign-686144b1e7e8.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-openfeign-large": {
+    "src": "/assets/portfolio/skill-openfeign-large-e0a9d5b316b2.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-webclient": {
+    "src": "/assets/portfolio/skill-webclient-b8fb67b166a3.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-webclient-large": {
+    "src": "/assets/portfolio/skill-webclient-large-770367245cd5.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-aws-sqs": {
+    "src": "/assets/portfolio/skill-aws-sqs-52d879c18e3f.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-aws-sqs-large": {
+    "src": "/assets/portfolio/skill-aws-sqs-large-81fe9ce81a2a.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-temporal": {
+    "src": "/assets/portfolio/skill-temporal-3d3a4de34ac4.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-temporal-large": {
+    "src": "/assets/portfolio/skill-temporal-large-1b5d3a614ced.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-event-driven-arch": {
+    "src": "/assets/portfolio/skill-event-driven-arch-51eb38debcc9.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-event-driven-arch-large": {
+    "src": "/assets/portfolio/skill-event-driven-arch-large-c7235fc79c6d.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-postgresql": {
+    "src": "/assets/portfolio/skill-postgresql-3dbcd1ab0723.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-postgresql-large": {
+    "src": "/assets/portfolio/skill-postgresql-large-20dabf43c497.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-aws-rds": {
+    "src": "/assets/portfolio/skill-aws-rds-350793c220ea.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-aws-rds-large": {
+    "src": "/assets/portfolio/skill-aws-rds-large-45dca1f8e22b.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-elasticsearch": {
+    "src": "/assets/portfolio/skill-elasticsearch-f2a49698afeb.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-elasticsearch-large": {
+    "src": "/assets/portfolio/skill-elasticsearch-large-f92e52cd5f7e.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-aws": {
+    "src": "/assets/portfolio/skill-aws-d48283da870a.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-aws-large": {
+    "src": "/assets/portfolio/skill-aws-large-b77446232008.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-docker": {
+    "src": "/assets/portfolio/skill-docker-a615f8013666.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-docker-large": {
+    "src": "/assets/portfolio/skill-docker-large-95b171cfedbf.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-jenkins": {
+    "src": "/assets/portfolio/skill-jenkins-424c67ba30ee.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-jenkins-large": {
+    "src": "/assets/portfolio/skill-jenkins-large-22431e0214ae.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-ci-cd": {
+    "src": "/assets/portfolio/skill-ci-cd-986c1f9e7f39.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-ci-cd-large": {
+    "src": "/assets/portfolio/skill-ci-cd-large-9cede0791c6a.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-datadog": {
+    "src": "/assets/portfolio/skill-datadog-518c10938596.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-datadog-large": {
+    "src": "/assets/portfolio/skill-datadog-large-0d52a79c8657.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-coralogix": {
+    "src": "/assets/portfolio/skill-coralogix-45a9ddbb9c9c.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-coralogix-large": {
+    "src": "/assets/portfolio/skill-coralogix-large-00c25afa2dde.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-dsa": {
+    "src": "/assets/portfolio/skill-dsa-cdd1fa6dfdee.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-dsa-large": {
+    "src": "/assets/portfolio/skill-dsa-large-866819a11bdb.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-oop": {
+    "src": "/assets/portfolio/skill-oop-c097c1b39a12.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-oop-large": {
+    "src": "/assets/portfolio/skill-oop-large-a27382c5e7ae.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-dbms": {
+    "src": "/assets/portfolio/skill-dbms-6f47775513bf.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-dbms-large": {
+    "src": "/assets/portfolio/skill-dbms-large-fe7b801ba6b4.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-operating-systems": {
+    "src": "/assets/portfolio/skill-operating-systems-ae04c0aa4e6e.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-operating-systems-large": {
+    "src": "/assets/portfolio/skill-operating-systems-large-0c0308328c59.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-computer-networks": {
+    "src": "/assets/portfolio/skill-computer-networks-11f9b1081f7e.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-computer-networks-large": {
+    "src": "/assets/portfolio/skill-computer-networks-large-b38f7ad83534.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-concurrency": {
+    "src": "/assets/portfolio/skill-concurrency-34c43cc09041.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-concurrency-large": {
+    "src": "/assets/portfolio/skill-concurrency-large-24986a45cff2.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-git": {
+    "src": "/assets/portfolio/skill-git-48a443cbd6a6.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-git-large": {
+    "src": "/assets/portfolio/skill-git-large-f9ab3808e131.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-agile-scrum": {
+    "src": "/assets/portfolio/skill-agile-scrum-2dbb31d16f4e.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-agile-scrum-large": {
+    "src": "/assets/portfolio/skill-agile-scrum-large-3f09ffeaa599.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-software-engineering": {
+    "src": "/assets/portfolio/skill-software-engineering-8735d156fe4f.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-software-engineering-large": {
+    "src": "/assets/portfolio/skill-software-engineering-large-3e18f8305d72.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-parallel-computing": {
+    "src": "/assets/portfolio/skill-parallel-computing-330bfa8e398d.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-parallel-computing-large": {
+    "src": "/assets/portfolio/skill-parallel-computing-large-36ca86633e5d.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-typescript": {
+    "src": "/assets/portfolio/skill-typescript-940721981d40.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-typescript-large": {
+    "src": "/assets/portfolio/skill-typescript-large-f9777ec496cb.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-node-js": {
+    "src": "/assets/portfolio/skill-node-js-5a27af5dab2e.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-node-js-large": {
+    "src": "/assets/portfolio/skill-node-js-large-7abd2ca87450.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-express": {
+    "src": "/assets/portfolio/skill-express-1294870db5d3.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-express-large": {
+    "src": "/assets/portfolio/skill-express-large-2db746510188.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-fastapi": {
+    "src": "/assets/portfolio/skill-fastapi-9042ae5358d0.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-fastapi-large": {
+    "src": "/assets/portfolio/skill-fastapi-large-2426cb3924bc.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-flask": {
+    "src": "/assets/portfolio/skill-flask-75a473381f77.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-flask-large": {
+    "src": "/assets/portfolio/skill-flask-large-cf887f5e8f49.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-api-contracts": {
+    "src": "/assets/portfolio/skill-api-contracts-8564b83c0b41.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-api-contracts-large": {
+    "src": "/assets/portfolio/skill-api-contracts-large-dad6e6bdde81.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-authentication": {
+    "src": "/assets/portfolio/skill-authentication-a87b40c2cd92.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-authentication-large": {
+    "src": "/assets/portfolio/skill-authentication-large-c2a2081408b2.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-mqtt": {
+    "src": "/assets/portfolio/skill-mqtt-ffcde33685ad.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-mqtt-large": {
+    "src": "/assets/portfolio/skill-mqtt-large-faf14ec583ee.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-event-handling": {
+    "src": "/assets/portfolio/skill-event-handling-eb5631553c78.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-event-handling-large": {
+    "src": "/assets/portfolio/skill-event-handling-large-f150a1c3f581.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-prisma": {
+    "src": "/assets/portfolio/skill-prisma-6ef950b067e0.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-prisma-large": {
+    "src": "/assets/portfolio/skill-prisma-large-1a75c7dc7b8b.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-redis": {
+    "src": "/assets/portfolio/skill-redis-5705b3219118.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-redis-large": {
+    "src": "/assets/portfolio/skill-redis-large-e9f65d63bd0c.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-faiss": {
+    "src": "/assets/portfolio/skill-faiss-8281f7ea5ae1.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-faiss-large": {
+    "src": "/assets/portfolio/skill-faiss-large-ed75c96cf81a.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-neon": {
+    "src": "/assets/portfolio/skill-neon-1f914fca2d9f.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-neon-large": {
+    "src": "/assets/portfolio/skill-neon-large-8275a422b723.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-testing": {
+    "src": "/assets/portfolio/skill-testing-841289619cce.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-testing-large": {
+    "src": "/assets/portfolio/skill-testing-large-ecdf66416634.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-repository-design": {
+    "src": "/assets/portfolio/skill-repository-design-7cf20771cd3b.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-repository-design-large": {
+    "src": "/assets/portfolio/skill-repository-design-large-e49ad17b8918.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-reconciliation": {
+    "src": "/assets/portfolio/skill-reconciliation-7eeac18dc5ba.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-reconciliation-large": {
+    "src": "/assets/portfolio/skill-reconciliation-large-a63e7bd38243.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-failure-evidence": {
+    "src": "/assets/portfolio/skill-failure-evidence-47414399cd88.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-failure-evidence-large": {
+    "src": "/assets/portfolio/skill-failure-evidence-large-c504123584be.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-react": {
+    "src": "/assets/portfolio/skill-react-f768dfa50063.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-react-large": {
+    "src": "/assets/portfolio/skill-react-large-6fd1c574473d.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-next-js": {
+    "src": "/assets/portfolio/skill-next-js-ef653f3d1365.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-next-js-large": {
+    "src": "/assets/portfolio/skill-next-js-large-02f34fb0b0a1.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-socket-io": {
+    "src": "/assets/portfolio/skill-socket-io-1ffe07411003.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-socket-io-large": {
+    "src": "/assets/portfolio/skill-socket-io-large-21d5d3f5a371.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-idempotency": {
+    "src": "/assets/portfolio/skill-idempotency-906c2b14682f.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-idempotency-large": {
+    "src": "/assets/portfolio/skill-idempotency-large-c4cb4b6d60bd.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-state-machines": {
+    "src": "/assets/portfolio/skill-state-machines-826fa77d0d3b.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-state-machines-large": {
+    "src": "/assets/portfolio/skill-state-machines-large-d3b8f9260e1a.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-retrieval": {
+    "src": "/assets/portfolio/skill-retrieval-424eeb4544c2.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-retrieval-large": {
+    "src": "/assets/portfolio/skill-retrieval-large-561822bf1b8f.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-langchain": {
+    "src": "/assets/portfolio/skill-langchain-32dde17af57a.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-langchain-large": {
+    "src": "/assets/portfolio/skill-langchain-large-cae2f287267d.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-tcp": {
+    "src": "/assets/portfolio/skill-tcp-20e5a1128116.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-tcp-large": {
+    "src": "/assets/portfolio/skill-tcp-large-4d840d7bc118.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-distributed-systems": {
+    "src": "/assets/portfolio/skill-distributed-systems-56f7c91228ea.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-distributed-systems-large": {
+    "src": "/assets/portfolio/skill-distributed-systems-large-0b56a051b861.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-raspberry-pi": {
+    "src": "/assets/portfolio/skill-raspberry-pi-25ef33d08804.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-raspberry-pi-large": {
+    "src": "/assets/portfolio/skill-raspberry-pi-large-b6a22fd28077.png",
+    "width": 32,
+    "height": 32
+  },
+  "skill-rag": {
+    "src": "/assets/portfolio/skill-rag-bba0409c1c6d.png",
+    "width": 16,
+    "height": 16
+  },
+  "skill-rag-large": {
+    "src": "/assets/portfolio/skill-rag-large-633c8e80f4a1.png",
+    "width": 32,
+    "height": 32
   }
 }

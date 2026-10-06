@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className="relative h-full w-full">
+    <div className="relative h-full w-full">
       <a
         href="#portfolio-content"
         className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-black focus:outline-none focus:top-0 focus:left-0"
@@ -30,7 +30,7 @@ export default function Home() {
       </noscript>
 
       {/* Screen readers will reach this if JS is enabled but canvas is bypassed */}
-      <section id="portfolio-content-sr" className="sr-only">
+      <section id="portfolio-content-sr" aria-label="Conventional portfolio navigation" className="sr-only">
         <h2 id="portfolio-content">Portfolio Content</h2>
         <nav aria-label="Portfolio pages">
           <ul>
@@ -42,6 +42,6 @@ export default function Home() {
           </ul>
         </nav>
       </section>
-    </main>
+    </div>
   );
 }

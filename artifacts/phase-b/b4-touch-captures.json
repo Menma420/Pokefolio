@@ -19,7 +19,7 @@
     },
     "pixelBlockMismatches": 0,
     "intermediateColors": 0,
-    "portfolioState": "Screen menu; cursor 0; category 0; page 0; section 0. "
+    "portfolioState": "Screen menu; cursor 0; category 0; page 0; section 0; depth 1. "
   },
   {
     "filename": "b4-touch-projects.png",
@@ -41,7 +41,7 @@
     },
     "pixelBlockMismatches": 0,
     "intermediateColors": 0,
-    "portfolioState": "Screen projects; cursor 0; category 0; page 0; section 0. "
+    "portfolioState": "Screen projects; cursor 0; category 0; page 0; section 0; depth 2. "
   },
   {
     "filename": "b4-touch-bag.png",
@@ -63,6 +63,6 @@
     },
     "pixelBlockMismatches": 0,
     "intermediateColors": 0,
-    "portfolioState": "Screen bag; cursor 0; category 0; page 0; section 0. "
+    "portfolioState": "Screen bag; cursor 0; category 0; page 0; section 0; depth 3. "
   }
 ]

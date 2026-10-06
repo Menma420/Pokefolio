@@ -1,0 +1,24 @@
+{
+  "tiles": {
+    "image": "/assets/world/town-tiles.fb0232fefa6b.png",
+    "atlas": "/assets/world/town-tiles.9b7411c51ec6.json"
+  },
+  "playerFrames": {
+    "player-down-0": "8245960839ba02d12b8460c299f1ac59399d05a8e4cd78a9211d813fd47b5169",
+    "player-down-1": "18d77ba6b3bacde7cecedce129fea75fb510451b19631ca1ad272a280c5a65c0",
+    "player-down-2": "934c1689a79a6c863ba79cfabec62adf559dc1ffdd2dcd31f5fa60b27e00430b",
+    "player-down-idle": "8245960839ba02d12b8460c299f1ac59399d05a8e4cd78a9211d813fd47b5169",
+    "player-left-0": "b52dc1d8d7a1fe642a6397277fcb4920aa7a14375ef9e3b87c42b5428524c990",
+    "player-left-1": "8e0bbf7a2b6130840ed693e4c840704eeaa39a93b5cc9fa370e98305638909b5",
+    "player-left-2": "2f2979346953417ec8fa77dd9161ad50be36e2d85917f5e8e54c303662358196",
+    "player-left-idle": "b52dc1d8d7a1fe642a6397277fcb4920aa7a14375ef9e3b87c42b5428524c990",
+    "player-right-0": "f927c95598790e493e2b1bbfedc86c5a907a216a3af067e15d50c2763c25d460",
+    "player-right-1": "5b2c36acf7c8f962bef85fe9123b4e61c633bc74050886e7d96c60ca944c1835",
+    "player-right-2": "f029b044c308fd3fe3dd6e1089c843ae2cec8923879e5ca28c864e2d3ac04a6f",
+    "player-right-idle": "f927c95598790e493e2b1bbfedc86c5a907a216a3af067e15d50c2763c25d460",
+    "player-up-0": "73e53d6980fbb27fcedf5889f7c2067015dd2bb7d7f41c14145d5baa0f78f404",
+    "player-up-1": "aa5f1cfc739e4863b911bf27e73b6349631c09bc34a616d3e5de8f5487224a77",
+    "player-up-2": "049da12e4008262604378061221d0908f262e4ecc47ac49799e0abebb16c65f0",
+    "player-up-idle": "73e53d6980fbb27fcedf5889f7c2067015dd2bb7d7f41c14145d5baa0f78f404"
+  }
+}

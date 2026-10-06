@@ -6,6 +6,7 @@ import { AUDIENCE_ENGINEER, AUDIENCE_FRIEND, AUDIENCE_RECRUITER } from '../../sr
 import { getAuthoredTrees, getProject, getProjectDefinitions } from '../../src/content/registry';
 import { PROJECT_IDS } from '../../src/content/projects/catalog';
 import { Audiences } from '../../src/content/audiences';
+import { getBattleSummary } from '../../src/content/battle-presentation';
 import { UI_STRINGS } from '../../src/content/ui-strings';
 
 declare global {
@@ -56,7 +57,7 @@ test('keyboard completes authored Recruiter interview, switches party project, o
   await startBattle.focus();
   await page.keyboard.press('Space');
 
-  const challenge = page.getByRole('main', { name: 'Interview battle' });
+  const challenge = page.getByRole('region', { name: 'Interview battle' });
   await expect(challenge).toBeVisible();
   const ackoTree = getAuthoredTrees().find((tree) => tree.projectId === PROJECT_IDS.ACKO_CLINIC && tree.audienceId === AUDIENCE_RECRUITER);
   expect(ackoTree).toBeDefined();
@@ -68,6 +69,7 @@ test('keyboard completes authored Recruiter interview, switches party project, o
   await revealAndAdvance(page, Audiences[AUDIENCE_RECRUITER]!.reactions['project-entry'][0]!, true);
   await expect(page.getByRole('group', { name: 'Battle commands' }).getByRole('button', { name: 'LINK' })).toBeVisible();
   await page.keyboard.press('Enter');
+  await readDialogue(page,getBattleSummary(PROJECT_IDS.ACKO_CLINIC));
 
   await expect(page.getByRole('group', { name: 'Interview topics' }).getByRole('button', { name: rootTopic.label })).toBeVisible();
   await page.keyboard.press('Enter');
@@ -97,7 +99,7 @@ test('keyboard completes authored Recruiter interview, switches party project, o
 
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
-  const party = page.getByRole('main', { name: 'Choose a project' });
+  const party = page.getByRole('region', { name: 'Choose a project' });
   await expect(party).toBeVisible();
   const recruiterParty = getParty(AUDIENCE_RECRUITER);
   expect(recruiterParty).toHaveLength(6);
@@ -110,8 +112,9 @@ test('keyboard completes authored Recruiter interview, switches party project, o
 
   const karshTree = getAuthoredTrees().find((tree) => tree.projectId === karsh!.id && tree.audienceId === AUDIENCE_RECRUITER);
   expect(karshTree).toBeDefined();
-  await expect(page.getByRole('group', { name: 'Interview topics' }).getByRole('button', { name: karshTree!.topics[0]!.label })).toBeVisible();
   await revealAndAdvance(page, Audiences[AUDIENCE_RECRUITER]!.reactions['project-switch'][0]!, true);
+  await readDialogue(page,getBattleSummary(karsh!.id));
+  await expect(page.getByRole('group', { name: 'Interview topics' }).getByRole('button', { name: karshTree!.topics[0]!.label })).toBeVisible();
   await page.keyboard.press('Backspace');
 
   const commands = page.getByRole('group', { name: 'Battle commands' });
@@ -142,19 +145,20 @@ test('touch-only controls open and read an authored topic', async ({ browser }) 
   await page.getByRole('button', { name: 'Start battle' }).tap();
   for (let i = 0; i < 240; i++) {
     await page.clock.runFor(25);
-    const battle = page.getByRole('main', { name: 'Interview battle' });
+    const battle = page.getByRole('region', { name: 'Interview battle' });
     if (await battle.count() && Number(await battle.getAttribute('data-battle-frame')) >= 56) break;
   }
 
   const ackoTree = getAuthoredTrees().find((tree) => tree.projectId === PROJECT_IDS.ACKO_CLINIC && tree.audienceId === AUDIENCE_RECRUITER)!;
   const rootTopic = ackoTree.topics[0]!;
   const confirm = page.getByRole('button', { name: 'A confirm' });
-  await expect(page.getByRole('main', { name: 'Interview battle' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Interview battle' })).toBeVisible();
   await expect(confirm).toBeVisible();
   await revealAndAdvanceWithTouch(page, UI_STRINGS.sendOut(getProject(PROJECT_IDS.ACKO_CLINIC)!.name));
   await revealAndAdvanceWithTouch(page, Audiences[AUDIENCE_RECRUITER]!.reactions['project-entry'][0]!, true);
   await confirm.tap();
   for (let i = 0; i < 4; i++) await page.clock.runFor(50);
+  await readDialogue(page,getBattleSummary(PROJECT_IDS.ACKO_CLINIC),true);
   await expect(page.getByRole('group', { name: 'Interview topics' }).getByRole('button', { name: rootTopic.label })).toBeVisible();
   await confirm.tap();
   for (let i = 0; i < 4; i++) await page.clock.runFor(50);

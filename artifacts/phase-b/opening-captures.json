@@ -11,7 +11,7 @@
     "integerScale": 1,
     "state": "Flow TITLE; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040126858,
+    "clock": 1791139638052,
     "physicalPixels": {
       "width": 240,
       "height": 160
@@ -29,7 +29,7 @@
     "integerScale": 3,
     "state": "Flow TITLE; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040126858,
+    "clock": 1791139638052,
     "physicalPixels": {
       "width": 720,
       "height": 480
@@ -47,7 +47,7 @@
     "integerScale": 4,
     "state": "Flow TITLE; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040126858,
+    "clock": 1791139638052,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -65,7 +65,7 @@
     "integerScale": 5,
     "state": "Flow TITLE; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040126858,
+    "clock": 1791139638052,
     "physicalPixels": {
       "width": 1440,
       "height": 900
@@ -83,7 +83,7 @@
     "integerScale": 4,
     "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040127508,
+    "clock": 1791139638702,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -101,7 +101,7 @@
     "integerScale": 1,
     "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040127508,
+    "clock": 1791139638702,
     "physicalPixels": {
       "width": 240,
       "height": 160
@@ -119,7 +119,7 @@
     "integerScale": 3,
     "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040127508,
+    "clock": 1791139638702,
     "physicalPixels": {
       "width": 720,
       "height": 480
@@ -137,7 +137,7 @@
     "integerScale": 5,
     "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040127508,
+    "clock": 1791139638702,
     "physicalPixels": {
       "width": 1440,
       "height": 900
@@ -155,7 +155,7 @@
     "integerScale": 4,
     "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040127658,
+    "clock": 1791139638852,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -173,7 +173,7 @@
     "integerScale": 4,
     "state": "Flow INTRO; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040127808,
+    "clock": 1791139639002,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -191,7 +191,7 @@
     "integerScale": 4,
     "state": "Flow OVERWORLD; runtime ready; Map m1-town; room west-room; player tile 7,5; facing right; movement idle; encounter step idle; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040130108,
+    "clock": 1791139641302,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -209,7 +209,7 @@
     "integerScale": 4,
     "state": "Flow ENCOUNTER; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step wait; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040134874,
+    "clock": 1791139646068,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -227,7 +227,7 @@
     "integerScale": 4,
     "state": "Flow ENCOUNTER; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040135624,
+    "clock": 1791139646818,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -245,7 +245,7 @@
     "integerScale": 4,
     "state": "Flow ENCOUNTER; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040135824,
+    "clock": 1791139647018,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -263,7 +263,7 @@
     "integerScale": 4,
     "state": "Flow ENCOUNTER; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040136024,
+    "clock": 1791139647218,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -281,7 +281,7 @@
     "integerScale": 4,
     "state": "Flow ENCOUNTER; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step say; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040136224,
+    "clock": 1791139647418,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -299,7 +299,7 @@
     "integerScale": 4,
     "state": "Flow AUDIENCE; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step choice; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040137374,
+    "clock": 1791139648568,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -317,7 +317,7 @@
     "integerScale": 1,
     "state": "Flow VS; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step vs; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040138924,
+    "clock": 1791139650118,
     "physicalPixels": {
       "width": 240,
       "height": 160
@@ -335,7 +335,7 @@
     "integerScale": 3,
     "state": "Flow VS; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step vs; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040138924,
+    "clock": 1791139650118,
     "physicalPixels": {
       "width": 720,
       "height": 480
@@ -353,7 +353,7 @@
     "integerScale": 4,
     "state": "Flow VS; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step vs; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040138924,
+    "clock": 1791139650118,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -371,7 +371,7 @@
     "integerScale": 5,
     "state": "Flow VS; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step vs; battle hidden; first encounter pending.",
     "transition": [],
-    "clock": 1791040138924,
+    "clock": 1791139650118,
     "physicalPixels": {
       "width": 1440,
       "height": 900
@@ -394,7 +394,7 @@
         "frame": "7"
       }
     ],
-    "clock": 1791040139224,
+    "clock": 1791139650418,
     "physicalPixels": {
       "width": 960,
       "height": 640
@@ -403,7 +403,7 @@
   {
     "filename": "b2-sequence-07-battle-arrival-unfinished.png",
     "productionPixelCheck": false,
-    "pixelBlockMismatches": 2160,
+    "pixelBlockMismatches": 0,
     "viewport": {
       "width": 960,
       "height": 640
@@ -412,7 +412,7 @@
     "integerScale": 4,
     "state": "Flow BATTLE; runtime ready; Map m1-town; room east-room; player tile 15,7; facing right; movement idle; encounter step startBattle; battle mounted; first encounter pending.",
     "transition": [],
-    "clock": 1791040139924,
+    "clock": 1791139651118,
     "physicalPixels": {
       "width": 960,
       "height": 640

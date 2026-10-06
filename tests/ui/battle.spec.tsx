@@ -53,22 +53,26 @@ describe('Phase 4 battle UI', () => {
     expect(dispatch).toHaveBeenCalledWith({ type: 'LINK' });
   });
 
-  it('shows the selected audience role in the VS presentation', () => {
+  it('keeps Uttkarsh opposite the selected visitor perspective in the VS presentation', () => {
     const clock=new FakeClock();
     render(<ClockContext.Provider value={clock}><VsScreen audienceId={AUDIENCE_RECRUITER} /></ClockContext.Provider>);
     act(()=>clock.tick(1000));
     expect(screen.getByRole('img', {name:'Uttkarsh challenger artwork'})).toBeTruthy();
-    expect(screen.getByText('THE RECRUITER')).toBeTruthy();
+    expect(screen.getByText('RECRUITER')).toBeTruthy();
+    expect(screen.getByText('UTTKARSH')).toBeTruthy();
     act(()=>clock.tick(1000));
     expect(screen.getByRole('status').textContent).toBe('You were challenged by the Recruiter!');
     expect(screen.getByRole('img', {name:'VS'})).toBeTruthy();
   });
 
-  it('renders audience Party names in a 2x3 grid and lets a project be selected', () => {
+  it('renders six audience Party slots in a vertical roster and lets a project be selected', () => {
     const onSelect = vi.fn(); const clock=new FakeClock();
     const party = getParty(AUDIENCE_RECRUITER).map((id) => ({ id, name: getProject(id)!.name }));
     render(<ClockContext.Provider value={clock}><PartyScreen activeProjectId={party[0]!.id} projects={party} onSelect={onSelect} onCancel={vi.fn()} /></ClockContext.Provider>);
-    expect(screen.getByRole('main', { name: 'Choose a project' }).querySelectorAll('button[aria-pressed]')).toHaveLength(6);
+    const region=screen.getByRole('region', { name: 'Choose a project' });
+    expect(region.getAttribute('data-party-layout')).toBe('vertical-roster');
+    const slots=Array.from(region.querySelectorAll<HTMLButtonElement>('button[aria-pressed]'));
+    expect(slots).toHaveLength(6);expect(slots.map(slot=>Number(slot.dataset.nativeX))).toEqual([8,8,8,8,8,8]);expect(slots.map(slot=>Number(slot.dataset.nativeY))).toEqual([11,31,51,71,91,111]);
     fireEvent.click(screen.getByRole('button', { name: /Karsh/ }));
     fireEvent.click(screen.getByRole('button', { name: /Karsh/ }));
     act(()=>clock.tick(100));

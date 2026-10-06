@@ -25,7 +25,7 @@ export function CommandGrid({ options, activeIndex, disabledOptions = [], onSele
             aria-label={option}
             aria-disabled={disabled}
             onClick={() => onSelect?.(index)}
-            className={`flex min-h-[calc(16*var(--u))] items-center gap-0 text-left  text-[calc(8*var(--u))] leading-[calc(16*var(--u))] ${disabled ? 'text-[var(--ui-disabled)]' : ''}`}
+            className={`flex min-h-[calc(12*var(--u))] items-center gap-0 text-left  text-[calc(8*var(--u))] leading-[calc(12*var(--u))] ${disabled ? 'text-[var(--ui-disabled)]' : ''}`}
           >
             <span className="w-[calc(8*var(--u))] shrink-0">{index === activeIndex ? <Cursor /> : null}</span>
             <BitmapText text={option} color={disabled?palette.disabled:index===pressedIndex?palette.link:undefined}/>

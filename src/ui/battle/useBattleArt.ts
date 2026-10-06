@@ -5,6 +5,7 @@ import { FRAME_MS,type ScheduledTask } from '../../core/clock';
 import { type BattleArtBeat,battleArtFrame } from '../../runtime/BattleView';
 import type { ProjectId } from '../../domain/types';
 import type { BattleContext } from '../../core/battle/types';
+import { audioService } from '../../runtime/AudioService';
 import { isReducedMotion } from '../../runtime/motion';
 export function useBattleArt(ctx:BattleContext,switching:boolean) {
  const clock=useContext(ClockContext),oldProject=useRef(ctx.projectId);
@@ -19,6 +20,13 @@ export function useBattleArt(ctx:BattleContext,switching:boolean) {
   if(!sequence)return;let task:ScheduledTask;const duration=sequence.beat==='initial'?56:70;
   const step=()=>{const f=isReducedMotion()?duration:Math.min(duration,Math.floor((clock.now()-sequence.start)/FRAME_MS+0.0001));setFrame(f);if(f<duration)task=clock.schedule(step,FRAME_MS);};step();return ()=>task?.cancel();
  },[sequence,clock]);
+ const sounded=useRef<{start:number;withdraw:boolean;sendout:boolean}>({start:-1,withdraw:false,sendout:false});
+ useEffect(()=>{
+  if(!sequence)return;
+  if(sounded.current.start!==sequence.start)sounded.current={start:sequence.start,withdraw:false,sendout:false};
+  if(sequence.beat==='switch'&&frame>=16&&!sounded.current.withdraw){sounded.current.withdraw=true;audioService.play('battle.withdraw');}
+  if(frame>=40&&!sounded.current.sendout){sounded.current.sendout=true;audioService.play('battle.sendout');}
+ },[sequence,frame]);
  const beat=sequence?.beat??'idle';const visual=battleArtFrame(beat,frame,isReducedMotion());
  return {beat,frame,oldProjectId:sequence?.oldProjectId??ctx.projectId,...visual};
 }

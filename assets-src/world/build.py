@@ -1,10 +1,10 @@
-"""Original Pokefolio pixel artwork. Coordinates and masks are authored here; no external images.
+"""Pokefolio world artwork, with the immutable user-supplied Sprite Lab Brendan player.
 Run: python3 assets-src/world/build.py
 """
 from pathlib import Path
 import json, hashlib, struct, zlib, math
 ROOT=Path(__file__).resolve().parents[2]; OUT=ROOT/'public/assets/world'
-P={'ink':'#283D38','grass':'#88B875','grassShade':'#66965E','grassLight':'#A4CE89','leaf':'#4B805C','leafDark':'#365C48','leafLight':'#80AA6A','wood':'#98694E','woodDark':'#614C3F','woodLight':'#C79D6A','sand':'#DEC998','sandShade':'#C3AD7D','sandLight':'#F0DDAE','water':'#5CA5AE','waterDark':'#417D91','waterLight':'#A5D3CB','roof':'#A76755','roofDark':'#794D49','roofLight':'#CE9772','wall':'#E3D5AF','wallShade':'#BEAF8A','wallLight':'#F3E7C6','stone':'#9CAA95','stoneShade':'#748672','stoneLight':'#C9D1B5','flower':'#D7A0A0','flowerLight':'#F1D5B5'}
+P={'ink':'#283D38','grass':'#8EBE78','grassShade':'#73A861','grassLight':'#B2D68B','leaf':'#5D9861','leafDark':'#38684D','leafLight':'#88B878','wood':'#98694E','woodDark':'#614C3F','woodLight':'#C79D6A','sand':'#DEC998','sandShade':'#C3AD7D','sandLight':'#F0DDAE','water':'#5CA5AE','waterDark':'#417D91','waterLight':'#A5D3CB','roof':'#687BA5','roofDark':'#3F4D73','roofLight':'#9BAAD2','wall':'#EEEACA','wallShade':'#B8BEAB','wallLight':'#FFF3D5','stone':'#9CAA95','stoneShade':'#748672','stoneLight':'#C9D1B5','flower':'#D7A0A0','flowerLight':'#F1D5B5'}
 def rgba(c):return tuple(bytes.fromhex(c.lstrip('#')))+(255,)
 class Art:
  def __init__(self,w,h,bg=None):self.w=w;self.h=h;self.p=[rgba(bg) if bg else (0,0,0,0)]*(w*h)
@@ -37,13 +37,13 @@ def tile(name,a):
 # Turf variants have readable clustered blades, not noise/dither.
 for v in range(4):
  a=Art(16,16,P['grass'])
- for x,y in [(2,3),(10,11),(6,8)] if v==0 else [(12,4),(3,12)] if v==1 else [(5,3),(11,12)] if v==2 else [(3,7),(12,2)]:
+ for x,y in [[(2,3),(11,8),(5,13)],[(10,2),(3,9),(12,13)],[(5,3),(12,7),(2,13)],[(2,6),(10,3),(9,12)]][v]:
   a.dot(x,y,P['grassShade']);a.dot(x+1,y+1,P['grassShade']);a.dot(x+2,y,P['grassLight'])
  tile('grass-'+str(v),a)
 # Path masks N/E/S/W; banks connect exactly across neighbouring tiles.
 for mask in range(16):
  a=Art(16,16,P['sand'])
- for x,y in [(3,4),(12,10),(6,13)]:a.rect(x,y,2,1,P['sandShade'])
+ for x,y in [(12,10)]:a.rect(x,y,2,1,P['sandShade'])
  for bit,side in [(1,'n'),(2,'e'),(4,'s'),(8,'w')]:
   if mask&bit:continue
   for i in range(16):
@@ -59,11 +59,14 @@ for mask in range(16):
   if mask&bit:continue
   for i in range(16):
    for d,c in enumerate([P['grass'],P['ink'],P['waterLight']]):
-    x,y=(i,d) if side=='n' else (15-d,i) if side=='e' else (i,15-d) if side=='s' else (d,i)
+    depth=d+(1 if i<2 or i>13 else 0)
+    x,y=(i,depth) if side=='n' else (15-depth,i) if side=='e' else (i,15-depth) if side=='s' else (depth,i)
     a.dot(x,y,c)
  tile('water-'+str(mask),a)
-# Connected perimeter stone embankment with dark silhouette and grassy top.
-a=Art(16,16,P['grass']);a.rect(0,4,16,12,P['ink']);a.rect(0,4,16,2,P['stoneLight']);a.rect(1,7,14,8,P['stone']);a.line(0,11,15,11,P['stoneShade']);a.line(7,7,7,10,P['ink']);a.line(3,12,3,15,P['ink']);tile('boundary',a)
+# Dense clipped hedgerow at the same solid world boundary tiles.
+a=Art(16,16,P['grass']);a.rect(0,3,16,11,P['ink']);a.rect(0,4,16,8,P['leafDark']);a.rect(1,3,14,8,P['leaf']);a.rect(3,2,10,2,P['leaf']);a.rect(5,1,6,1,P['leafDark'])
+for x,y in [(2,5),(8,3),(11,7),(5,9)]:a.rect(x,y,3,1,P['leafLight']);a.dot(x+1,y+1,P['leafLight'])
+a.rect(0,12,16,2,P['leafDark']);a.rect(2,14,12,1,P['grass']);tile('boundary',a)
 # Layered flower tussocks / low tufts / pebble, all traversable embellishments.
 for name,kind in [('flowers',0),('tuft',1),('pebbles',2)]:
  a=Art(16,16)
@@ -83,22 +86,21 @@ tile('tall-grass',a)
 # Fence, garden post and original chevron sign, without changing world interactions.
 a=Art(16,16);a.rect(0,6,16,7,P['woodDark']);a.rect(0,7,16,2,P['woodLight']);a.rect(2,3,3,12,P['ink']);a.rect(3,3,1,11,P['wood']);a.rect(11,3,3,12,P['ink']);a.rect(12,3,1,11,P['wood']);tile('fence',a)
 a=Art(16,16);a.rect(7,9,2,7,P['woodDark']);a.rect(2,2,12,9,P['ink']);a.rect(3,3,10,7,P['woodLight']);a.rect(4,4,8,1,P['wood']);a.line(6,6,9,6,P['woodDark']);a.dot(9,5,P['woodDark']);a.dot(9,7,P['woodDark']);tile('sign',a)
-# Tree silhouette is authored scanlines, independent of collisions (canopy overhang).
+# Broad, scalloped tree crowns. The lower tile remains the existing collision anchor.
 tree=Art(32,48)
-for y,left,right in [(0,13,18),(1,10,21),(2,8,23),(3,7,24),(4,5,26),(5,4,27),(6,3,28),(7,2,29),(8,2,29),(9,1,30),(10,1,30),(11,1,30),(12,0,31),(13,0,31),(14,0,31),(15,0,31),(16,1,30),(17,1,30),(18,2,29),(19,2,29),(20,3,28),(21,4,27),(22,4,27),(23,6,25),(24,8,23),(25,11,20)]:
- tree.rect(left,y,right-left+1,1,P['ink']);tree.rect(left+1,y,right-left-1,1,P['leafDark'] if y>18 else P['leaf'])
-# Hand-authored leaf clusters with scalloped rims and cut-in veins.
-for x,y,w in [(10,3,6),(19,5,5),(5,8,7),(15,10,6),(23,12,5),(7,15,5),(15,18,7)]:
- tree.rect(x+1,y,w-2,1,P['leafLight']);tree.rect(x,y+1,w,2,P['leafLight']);tree.rect(x+1,y+3,w-1,1,P['leaf']);tree.dot(x,y+3,P['leafDark']);tree.dot(x+w-1,y,P['leafDark'])
-for x,y in [(7,5),(15,7),(4,14),(12,12),(20,15),(11,20),(24,19)]:
+for y,left,right in [(2,12,19),(3,9,22),(4,6,25),(5,4,27),(6,3,28),(7,3,28),(8,2,29),(9,2,29),(10,1,30),(11,1,30),(12,1,30),(13,0,31),(14,0,31),(15,0,31),(16,0,31),(17,1,30),(18,1,30),(19,1,30),(20,2,29),(21,2,29),(22,3,28),(23,3,28),(24,4,27),(25,5,26),(26,6,25),(27,7,24),(28,9,22),(29,11,20),(30,13,18)]:
+ tree.rect(left,y,right-left+1,1,P['ink']);tree.rect(left+1,y,right-left-1,1,P['leafDark'] if y>23 else P['leaf'])
+for x,y,w,h in [(10,5,10,4),(5,10,8,5),(16,10,11,5),(8,17,9,5),(20,18,7,4),(12,24,8,3)]:
+ tree.rect(x+2,y,w-4,1,P['leafLight']);tree.rect(x+1,y+1,w-2,h-2,P['leafLight']);tree.rect(x,y+h-1,w,1,P['leaf']);tree.dot(x,y+h,P['leafDark']);tree.dot(x+w-1,y+1,P['leafDark'])
+for x,y in [(9,9),(20,8),(4,17),(15,16),(24,24),(8,24)]:
  tree.dot(x,y,P['leafDark']);tree.dot(x+1,y+1,P['leafDark']);tree.dot(x+2,y,P['leafLight'])
-tree.rect(13,24,7,16,P['ink']);tree.rect(14,26,5,13,P['leafDark']);tree.rect(15,27,2,11,P['leaf']);tree.rect(10,39,13,2,P['ink']);tree.rect(11,39,11,1,P['leafDark'])
+tree.rect(13,31,6,12,P['ink']);tree.rect(14,32,4,10,P['wood']);tree.rect(14,32,1,9,P['woodLight']);tree.rect(17,33,1,9,P['woodDark']);tree.rect(10,42,12,2,P['ink']);tree.rect(12,42,8,1,P['woodDark'])
 for ty in range(3):
  for tx in range(2):tile(f'tree-{tx}-{ty}',tree.crop(tx*16,ty*16,16,16))
-# Landmark grand tree, larger crown assembled from the same restrained leaf ramp.
+# The grand tree keeps the same 4×4 tile assembly and all P9 coordinates.
 grand=Art(64,64)
-for ox,oy in [(0,4),(30,4),(15,0),(8,17),(24,17)]:grand.blit(tree.crop(0,0,32,26),ox,oy)
-grand.rect(27,36,10,25,P['ink']);grand.rect(28,39,8,20,P['leafDark']);grand.rect(30,40,3,19,P['leaf']);grand.rect(23,59,19,2,P['ink'])
+for ox,oy in [(0,6),(30,6),(15,0),(7,18),(24,18)]:grand.blit(tree.crop(0,0,32,26),ox,oy)
+grand.rect(27,43,10,18,P['ink']);grand.rect(28,44,8,4,P['leafDark']);grand.rect(28,48,8,12,P['wood']);grand.rect(29,48,2,11,P['woodLight']);grand.rect(34,49,2,11,P['woodDark']);grand.rect(23,60,19,2,P['ink']);grand.rect(25,60,15,1,P['woodDark'])
 for ty in range(4):
  for tx in range(4):tile(f'grand-{tx}-{ty}',grand.crop(tx*16,ty*16,16,16))
 # Timber house: hand-pixelled stepped hip roof, roof courses, mullioned windows and porch.
@@ -134,58 +136,62 @@ for name in ['wall','window','door','door-upper','door-lower','wall-left','wall-
 # Interior polish is limited to replacing the old flat floor/boundary/door tile.
 a=Art(16,16,P['wall']);a.line(0,0,15,0,P['wallLight']);a.line(0,7,15,7,P['wallShade']);a.line(7,1,7,6,P['wallShade']);tile('floor',a)
 a=Art(16,16,P['woodDark']);a.rect(0,0,16,8,P['wallShade']);a.line(0,7,15,7,P['ink']);a.line(0,9,15,9,P['woodLight']);tile('interior-wall',a)
-# Sprites: four original designs, four directions, stand + two opposite footfalls.
-CHARACTERS={
- 'player':{'outline':'#283D38','skin':'#D7AA79','skinShade':'#B77E58','cloth':'#427F8D','light':'#8ABBA9','pants':'#555971','accent':'#E8D5A7'},
- 'npc-guide':{'outline':'#333A43','skin':'#D5A77F','skinShade':'#AE775B','cloth':'#9C694E','light':'#D4AC79','pants':'#687A75','accent':'#E7D7AA'},
- 'npc-neighbor':{'outline':'#403846','skin':'#D6A780','skinShade':'#B17B65','cloth':'#967D9D','light':'#C7A8B5','pants':'#637783','accent':'#E7DCC0'},
- 'challenger':{'outline':'#343C43','skin':'#CCA075','skinShade':'#AB765B','cloth':'#8A555C','light':'#BD8490','pants':'#535E70','accent':'#E0CEAA'},
-}
-def character(kind,direction,step):
- c=CHARACTERS[kind];a=Art(16,32);o=c['outline'];skin=c['skin'];shade=c['skinShade'];shirt=c['cloth'];light=c['light'];pants=c['pants'];accent=c['accent'];bob=1 if step else 0;y=2+bob
- # Original large-headed silhouette, side-part haircut; no borrowed hats or costume.
- for yy,left,right in [(0,5,10),(1,3,11),(2,2,12),(3,1,13),(4,1,13),(5,1,13),(6,2,13),(7,2,13),(8,3,12),(9,3,12),(10,4,11),(11,5,10)]:a.rect(left,y+yy,right-left+1,1,o)
- a.rect(4,y+1,6,1,pants);a.rect(3,y+2,3,1,pants)
- if direction=='up':
-  a.rect(5,y+9,6,2,shade);a.rect(4,y+5,8,3,o);a.rect(3,y+3,2,2,pants)
- elif direction=='down':
-  a.rect(3,y+4,9,5,skin);a.rect(4,y+9,7,1,shade);a.rect(3,y+4,3,1,o);a.dot(4,y+6,o);a.dot(10,y+6,o);a.rect(6,y+9,3,1,shade);a.dot(7,y+7,shade)
+# P11 room-specific fixtures. Solid art is placed only over existing solid tiles.
+for name in ['home-shelf','cottage-cabinet','workshop-console','wall-clock','wall-print','rug']:
+ a=Art(16,16)
+ if name=='rug':
+  a.rect(1,1,14,14,P['woodDark']);a.rect(2,2,12,12,P['woodLight']);a.rect(3,3,10,10,P['wall']);a.rect(5,5,6,6,P['wood']);a.rect(6,6,4,4,P['wall'])
+ elif name=='wall-clock':
+  a.rect(4,2,8,11,P['ink']);a.rect(5,3,6,8,P['wallLight']);a.rect(7,4,1,4,P['woodDark']);a.rect(7,7,3,1,P['woodDark']);a.rect(7,11,2,2,P['woodLight'])
+ elif name=='wall-print':
+  a.rect(2,2,12,12,P['ink']);a.rect(3,3,10,10,P['woodLight']);a.rect(4,4,8,8,P['wallLight']);a.rect(5,7,6,4,P['leafDark']);a.rect(7,5,2,2,P['leaf'])
+ elif name=='home-shelf':
+  a.rect(0,1,16,14,P['ink']);a.rect(1,2,14,12,P['wood']);a.rect(2,4,12,1,P['woodLight']);a.rect(2,10,12,1,P['woodLight'])
+  for x,h in [(2,3),(5,4),(8,3),(11,4)]:a.rect(x,9-h,2,h,P['wallLight'])
+  a.rect(3,12,4,1,P['woodDark']);a.rect(10,12,3,1,P['woodDark'])
+ elif name=='cottage-cabinet':
+  a.rect(0,2,16,14,P['ink']);a.rect(1,3,14,12,P['wood']);a.rect(2,4,5,10,P['woodLight']);a.rect(9,4,5,10,P['woodLight']);a.rect(6,8,1,2,P['ink']);a.rect(10,8,1,2,P['ink']);a.rect(3,5,3,2,P['wallLight']);a.rect(10,5,3,2,P['wallLight'])
  else:
-  right=direction=='right';a.rect(7 if right else 2,y+4,6,5,skin);a.rect(9 if right else 2,y+9,3,1,shade);a.dot(11 if right else 3,y+6,o);a.dot(13 if right else 1,y+7,skin);a.rect(4 if right else 8,y+4,3,4,o);a.dot(6 if right else 8,y+8,shade)
- if kind=='npc-guide':
-  a.rect(3,y,9,3,shirt);a.rect(4,y,7,1,light);a.rect(1 if direction=='left' else 9,y+3,5,1,accent)
- if kind=='npc-neighbor':a.rect(4,y,8,2,shirt);a.dot(3,y+2,light);a.dot(4,y+1,accent);a.rect(12,y+5,2,5,o)
- if kind=='challenger':a.rect(4,y+1,7,1,pants);a.dot(10,y,accent);a.rect(9 if direction=='right' else 4,y+9,3,1,shade)
- a.rect(6,14+bob,4,3,o);a.rect(7,14+bob,2,2,skin)
- a.rect(4,16+bob,8,9,o);a.rect(5,17+bob,6,7,shirt);a.rect(5,17+bob,2,3,light);a.rect(7,16+bob,2,2,accent)
- if direction=='up':a.rect(6,17+bob,5,6,accent);a.rect(7,18+bob,3,4,shirt);a.line(10,18+bob,10,22+bob,o)
- if kind=='challenger':a.rect(3,17+bob,1,7,o);a.rect(12,17+bob,1,7,o);a.line(8,18+bob,8,24+bob,o)
- shift=1 if step==1 else -1 if step==2 else 0
- for x,d in [(3,shift),(11,-shift)]:
-  a.rect(x,17+bob+d,2,7,o);a.rect(x+1 if x==3 else x,18+bob+d,1,3,shirt);a.rect(x+1 if x==3 else x,21+bob+d,1,2,skin)
- for x,active in [(5,step==1),(9,step==2)]:
-  top=25;bottom=30 if not active else 28
-  a.rect(x,top,3,bottom-top+1,o);a.rect(x+1,top,1,bottom-top-1,pants);a.rect(x-1,bottom,4,2,o);a.rect(x,bottom,2,1,accent if active else pants)
- if direction in ['left','right']:a.line(9 if direction=='right' else 5,18+bob,9 if direction=='right' else 5,23+bob,o)
+  a.rect(0,2,16,14,P['ink']);a.rect(1,3,14,11,P['woodDark']);a.rect(3,4,10,6,P['wallLight']);a.rect(4,5,8,4,P['leafDark']);a.rect(6,6,5,1,P['leaf']);a.rect(2,12,5,1,P['wallLight']);a.rect(10,12,3,1,P['leaf'])
+ tile(name,a)
+# Preserve all supplied actors exactly, including the four-direction Trainer neighbor.
+BRENDAN_DIR=ROOT/'assets-src/world/brendan'
+NPC_DIR=ROOT/'assets-src/world/npcs'
+BRENDAN=json.loads((BRENDAN_DIR/'golden.json').read_text())
+assert hashlib.sha256((BRENDAN_DIR/'walking.png').read_bytes()).hexdigest()==BRENDAN['sha256'], 'Brendan golden source changed'
+SOURCES={'player':BRENDAN}
+for kind,name in [('npc-guide','may'),('npc-neighbor','trainer'),('challenger','steven')]:
+ source=json.loads((NPC_DIR/(name+'.json')).read_text())
+ source_png=NPC_DIR/('Trainer-4dir.png' if name=='trainer' else name+'.png')
+ assert hashlib.sha256(source_png.read_bytes()).hexdigest()==source['sha256'], name+' source changed'
+ SOURCES[kind]=source
+CHARACTERS={kind:{str(i):color for i,color in enumerate(source['palette']) if i and any(i in frame for frame in source['frames'])} for kind,source in SOURCES.items()}
+def character(kind,direction,step):
+ source=SOURCES[kind];frame=source['directions'][direction][source['poseMapping'][str(step)]]
+ indices=source['frames'][frame];a=Art(16,32)
+ for y in range(32):
+  for x in range(16):
+   index=indices[y*16+(15-x if direction in source['mirrorDirections'] else x)]
+   if index:a.dot(x,y,source['palette'][index])
  return a
 sprites=[];frames={};tags={}
 for kind in CHARACTERS:
  for direction in ['down','left','right','up']:
-  for step in range(3):
-   name=f'{kind}-{direction}-{step}';a=character(kind,direction,step);frames[name]={'frame':{'x':step*16,'y':len(sprites)//3*32,'w':16,'h':32},'rotated':False,'trimmed':False,'spriteSourceSize':{'x':0,'y':0,'w':16,'h':32},'sourceSize':{'w':16,'h':32},'pivot':{'x':0.5,'y':1}};sprites.append(a)
-  frames[f'{kind}-{direction}-idle']=frames[f'{kind}-{direction}-0'].copy();tags[f'{kind}-{direction}']={'frames':[f'{kind}-{direction}-{s}' for s in [0,1,0,2]],'idle':f'{kind}-{direction}-idle'}
-spriteSheet=Art(48,len(sprites)//3*32)
-for i,a in enumerate(sprites):spriteSheet.blit(a,(i%3)*16,(i//3)*32)
+  for column,step in enumerate([0,1,2,'idle']):
+   name=f'{kind}-{direction}-{step}';a=character(kind,direction,step);frames[name]={'frame':{'x':column*16,'y':len(sprites)//4*32,'w':16,'h':32},'rotated':False,'trimmed':False,'spriteSourceSize':{'x':0,'y':0,'w':16,'h':32},'sourceSize':{'w':16,'h':32},'pivot':{'x':0.5,'y':1}};sprites.append(a)
+  tags[f'{kind}-{direction}']={'frames':[f'{kind}-{direction}-{s}' for s in [0,1,0,2]],'idle':f'{kind}-{direction}-idle'}
+spriteSheet=Art(64,len(sprites)//4*32)
+for i,a in enumerate(sprites):spriteSheet.blit(a,(i%4)*16,(i//4)*32)
 tileSheet=Art(16*16,math.ceil(len(tiles)/16)*16);tileFrames={}
 for i,(name,a) in enumerate(tiles):
  x=i%16*16;y=i//16*16;tileSheet.blit(a,x,y);tileFrames[str(i+1)]={'frame':{'x':x,'y':y,'w':16,'h':16},'rotated':False,'trimmed':False,'spriteSourceSize':{'x':0,'y':0,'w':16,'h':16},'sourceSize':{'w':16,'h':16}}
 def save(name,art,frames,tags=None):
  png=art.png();image=f'{name}.{hashlib.sha256(png).hexdigest()[:12]}.png';OUT.mkdir(parents=True,exist_ok=True);(OUT/image).write_bytes(png)
  atlas={'frames':frames,'meta':{'app':'Pokefolio original pixel authoring','image':image,'size':{'w':art.w,'h':art.h},'scale':'1','frameTags':tags or {}}};data=(json.dumps(atlas,indent=2)+'\n').encode();filename=f'{name}.{hashlib.sha256(data).hexdigest()[:12]}.json';(OUT/filename).write_bytes(data);return {'image':'/assets/world/'+image,'atlas':'/assets/world/'+filename}
-manifest={'tiles':save('town-tiles',tileSheet,tileFrames),'characters':save('town-characters',spriteSheet,frames,tags),'tileSize':16,'artBox':{'width':16,'height':32},'footprint':{'width':16,'height':16},'tileIds':names,'palettes':{'tiles':palettes,'characters':CHARACTERS},'originality':'Authored from integer pixel shapes in assets-src/world/build.py. No external artwork, tracing, extraction, fonts or logos.'}
+manifest={'tiles':save('town-tiles',tileSheet,tileFrames),'characters':save('town-characters',spriteSheet,frames,tags),'tileSize':16,'artBox':{'width':16,'height':32},'footprint':{'width':16,'height':16},'tileIds':names,'palettes':{'tiles':palettes,'characters':CHARACTERS},'originality':'Terrain authored in assets-src/world/build.py. Owner-supplied Sprite Lab Brendan, Steven and May character sheets, plus the supplied Sprite Lab Trainer neighbor; see assets-src/world/brendan/README.md and assets-src/world/npcs/README.md.'}
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 (ROOT/'assets-src/world/palette-sheet.json').write_text(json.dumps(manifest['palettes'],indent=2)+'\n')
-print('Authored',len(tiles),'tiles and',len(sprites),'character frames; original lossless PNG + JSON-hash atlases.')
+print('Authored',len(tiles),'tiles and',len(sprites),'character frames; lossless PNG + JSON-hash atlases.')
 # Repaint visual layers of authored Tiled sources ONLY. Retain all collisions, objects/routes/rooms.
 def paint_map(name):
  p=ROOT/'assets-src/maps'/f'{name}.tmj';m=json.loads(p.read_text());w=m['width'];h=m['height'];layers={l['name']:l for l in m['layers'] if l['type']=='tilelayer'};
@@ -239,3 +245,33 @@ def paint_map(name):
  m['tilesets']=[{'firstgid':1,'name':'pokefolio-town','tilewidth':16,'tileheight':16,'tilecount':len(tiles),'columns':16,'image':'../../public'+manifest['tiles']['image'],'imagewidth':tileSheet.w,'imageheight':tileSheet.h}]
  p.write_text(json.dumps(m,indent=2)+'\n')
 for name in ['m1-town','test-town','m1-interior-test','interior-test']:paint_map(name)
+
+# Distinct but sparse interiors: flat rugs do not imply new collision.
+for filename,fixture in [('m1-interior-test','home-shelf'),('m1-cottage','cottage-cabinet'),('m1-workshop','workshop-console')]:
+ p=ROOT/'assets-src/maps'/f'{filename}.tmj';m=json.loads(p.read_text());layers={l['name']:l for l in m['layers'] if l['type']=='tilelayer'}
+ w=m['width'];collision=layers['collision']['data'];decor=layers['decor']['data']
+ # Reuse the approved interactive fixture and blocked rear counter row.
+ for x,y in [(10,5)]+([(x,3) for x in range(3,12)] if filename!='m1-interior-test' else []):
+  assert collision[y*w+x]&1
+  decor[y*w+x]=names[fixture]
+ for x,name in [(4,'wall-print'),(11,'wall-clock')]:
+  assert collision[x]&1;decor[x]=names[name]
+ for x,y in [(6,6),(7,6),(8,6)]:
+  assert not collision[y*w+x]&3;decor[y*w+x]=names['rug']
+ p.write_text(json.dumps(m,indent=2)+'\n')
+
+# P11 visual clustering on the frozen P9 map. Only decorative tile paint changes.
+p=ROOT/'assets-src/maps/m1-town.tmj';m=json.loads(p.read_text());w=m['width'];layers={l['name']:l for l in m['layers'] if l['type']=='tilelayer'}
+decor=layers['decor']['data'];ground=layers['ground']['data'];collision=layers['collision']['data']
+for at,tile in enumerate(decor):
+ if tile in [names['flowers'],names['tuft'],names['pebbles']]:decor[at]=0
+# Flower beds cluster beside homes and the route; quiet grass between landmarks.
+for ox,oy,points in [(17,2,[(0,0),(1,0),(1,1)]),(3,6,[(0,1),(1,1),(0,2)]),(12,8,[(0,0),(1,0),(1,1)]),(3,14,[(0,0),(1,0),(0,1)]),(23,9,[(0,0),(1,0),(0,1)]),(23,17,[(0,0),(1,0),(0,1)]),(32,16,[(0,0),(1,0),(0,1)])]:
+ for dx,dy in points:
+  at=(oy+dy)*w+ox+dx
+  if not collision[at]&3 and not decor[at] and ground[at] in [names['grass-'+str(i)] for i in range(4)]:decor[at]=names['flowers']
+for x,y in [(2,4),(11,3),(13,7),(4,9),(18,9),(23,11),(30,10),(28,18),(25,20),(10,19)]:
+ at=y*w+x
+ if not collision[at]&3 and not decor[at] and ground[at] in [names['grass-'+str(i)] for i in range(4)]:decor[at]=names['tuft']
+m['tilesets']=[{'firstgid':1,'name':'pokefolio-town','tilewidth':16,'tileheight':16,'tilecount':len(tiles),'columns':16,'image':'../../public'+manifest['tiles']['image'],'imagewidth':tileSheet.w,'imageheight':tileSheet.h}]
+p.write_text(json.dumps(m,indent=2)+'\n')

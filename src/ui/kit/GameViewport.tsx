@@ -35,7 +35,7 @@ export function GameViewport({ children,controllerScale=3 }: { children: ReactNo
   }, [nested,touched,controllerScale]);
   if (nested) return <div className="absolute inset-0">{children}</div>;
   const {n,dpr,x,y,small,touch} = geometry;
-  return <div role="region" aria-label="Game display" className="fixed inset-0 overflow-hidden" style={{ background: palette.black }}>
+  return <main aria-label="Game display" className="fixed inset-0 overflow-hidden" style={{ background: palette.black }}>
     <div data-safe-area aria-hidden="true" style={{position:'absolute',visibility:'hidden',paddingTop:'var(--safe-top, env(safe-area-inset-top, 0px))',paddingRight:'var(--safe-right, env(safe-area-inset-right, 0px))',paddingBottom:'var(--safe-bottom, env(safe-area-inset-bottom, 0px))',paddingLeft:'var(--safe-left, env(safe-area-inset-left, 0px))'}}/>
     {small ? <p style={{ color: palette.onDark }}>This display is too small. <Link href="/about">About</Link> <Link href="/projects">Projects</Link></p> :
       <InGameViewport.Provider value={true}><TouchLayout.Provider value={touch}><PixelContext.Provider value={{n,dpr,originX:x*dpr,originY:y*dpr}}>
@@ -47,5 +47,5 @@ export function GameViewport({ children,controllerScale=3 }: { children: ReactNo
           imageRendering:'pixelated', isolation:'isolate', background:palette.black, outline:'none',
         } as CSSProperties}>{children}</div>
       </PixelContext.Provider></TouchLayout.Provider></InGameViewport.Provider>}
-  </div>;
+  </main>;
 }

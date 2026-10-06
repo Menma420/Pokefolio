@@ -6,6 +6,8 @@ import { WORLD_TEXTURES } from './worldArt';
 import { BattleScene } from './BattleScene';
 import { mountWorldRaster } from './WorldRaster';
 import { followWorldCamera } from '../core/world/camera';
+import {gameClock,FRAME_MS,type Clock,type ScheduledTask} from '../core/clock';
+import {exclaimRise} from './encounterArt';
 import { battleAssetsReady, preloadBattleAssets } from './battleAssets';
 
 export class WorldScene extends Phaser.Scene {
@@ -14,12 +16,14 @@ export class WorldScene extends Phaser.Scene {
   private snapshotValue: WorldSnapshot | null = null;
   private exclaimEntityId: string | null = null;
   private exclaimTick = -1;
+  private cueTask:ScheduledTask|undefined;
+  private cueFrame=0;
   private removeCommandListener: (() => void) | null = null;
   private removeSnapshotListener: (() => void) | null = null;
   private previousMovements = new Map<string, boolean>();
   private physicalRaster:ReturnType<typeof mountWorldRaster>|null=null;
 
-  constructor(bridge: GameBridge,private readonly physicalPixels=false) {
+  constructor(bridge: GameBridge,private readonly physicalPixels=false,private readonly reducedMotion:()=>boolean=()=>false,private readonly presentationClock:Clock=gameClock) {
     super({ key: 'WorldTestRoom' });
     this.bridge = bridge;
   }
@@ -44,11 +48,12 @@ export class WorldScene extends Phaser.Scene {
       this.bridge.emit({ type: 'assetFailed', key: 'world-art', message: 'Original world atlases did not finish loading.' });
       return;
     }
-    this.tileRenderer = new MapRenderer(this);
+    this.tileRenderer = new MapRenderer(this,this.reducedMotion);
     if(this.physicalPixels)this.physicalRaster=mountWorldRaster(this.game);
     this.removeCommandListener = this.bridge.onCommand((command) => this.executeCommand(command));
     this.removeSnapshotListener = this.bridge.onSnapshot((snapshot) => this.applySnapshot(snapshot));
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.cueTask?.cancel();
       this.physicalRaster?.destroy();
       this.removeCommandListener?.();
       this.removeSnapshotListener?.();
@@ -89,12 +94,18 @@ export class WorldScene extends Phaser.Scene {
         this.physicalRaster?.dirty();
         this.exclaimEntityId = command.entityId;
         this.exclaimTick = this.snapshotValue?.tick ?? -1;
-        if (this.snapshotValue) this.tileRenderer.drawEntities(this.snapshotValue, this.exclaimEntityId);
+        this.cueTask?.cancel();this.cueFrame=0;
+        const drawCue=()=>{
+          if(!this.exclaimEntityId||!this.snapshotValue)return;
+          this.tileRenderer.drawEntities(this.snapshotValue,this.exclaimEntityId,exclaimRise(this.cueFrame,this.reducedMotion()));this.physicalRaster?.dirty();
+          if(!this.reducedMotion()&&this.cueFrame<4)this.cueTask=this.presentationClock.schedule(()=>{this.cueFrame+=2;drawCue();},2*FRAME_MS);
+        };
+        drawCue();
         return { entityId: command.entityId };
       case 'snapshot':
         this.physicalRaster?.dirty();
         if (!this.snapshotValue) throw new Error('WorldSim has not published a snapshot');
-        this.tileRenderer.drawEntities(this.snapshotValue, this.exclaimEntityId);
+        this.tileRenderer.drawEntities(this.snapshotValue, this.exclaimEntityId,exclaimRise(this.cueFrame,this.reducedMotion()));
         return this.snapshotValue;
     }
   }
@@ -110,7 +121,7 @@ export class WorldScene extends Phaser.Scene {
     } else if (previous.state.cameraRoomId !== snapshot.state.cameraRoomId) {
       this.setCameraRoom(snapshot.state.cameraRoomId);
     }
-    if (this.exclaimEntityId && snapshot.tick > this.exclaimTick) this.exclaimEntityId = null;
+    if (this.exclaimEntityId && snapshot.tick > this.exclaimTick) {this.exclaimEntityId = null;this.cueTask?.cancel();}
     this.tileRenderer.drawEntities(snapshot, this.exclaimEntityId);
     if (snapshot.map.cameraMode === 'follow') this.followPlayer();
 

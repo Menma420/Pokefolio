@@ -1,0 +1,185 @@
+{
+  "town": {
+    "src": "/assets/audio/town-d2e14292f0f8.mp3",
+    "sha256": "d2e14292f0f874bfe2e3d0d5f3d8fa224ed19bbfda29f4017770b818cc5d193a",
+    "loop": true
+  },
+  "battle": {
+    "src": "/assets/audio/battle-272bddc9934b.mp3",
+    "sha256": "272bddc9934bc26ce8e4c3568d111de627f814abe088133bdd37ecb440db652f",
+    "loop": true
+  },
+  "victory": {
+    "src": "/assets/audio/victory-4db66a56b231.mp3",
+    "sha256": "4db66a56b2315b03fcb95f6533daaf3e9f5086146dbc452a83c2504afe99944b",
+    "loop": false
+  },
+  "cursor.move": {
+    "src": "/assets/audio/cursor.move-e9c3d40aae23.wav",
+    "sampleRate": 22050,
+    "duration": 0.035,
+    "loop": false,
+    "frequencies": [
+      960
+    ]
+  },
+  "ui.confirm": {
+    "src": "/assets/audio/ui.confirm-dd5c31e3b40a.wav",
+    "sampleRate": 22050,
+    "duration": 0.09,
+    "loop": false,
+    "frequencies": [
+      960,
+      1280
+    ]
+  },
+  "ui.cancel": {
+    "src": "/assets/audio/ui.cancel-f087b8170f59.wav",
+    "sampleRate": 22050,
+    "duration": 0.08,
+    "loop": false,
+    "frequencies": [
+      800,
+      640
+    ]
+  },
+  "ui.buzz": {
+    "src": "/assets/audio/ui.buzz-a03469ff0e61.wav",
+    "sampleRate": 22050,
+    "duration": 0.09,
+    "loop": false,
+    "frequencies": [
+      160,
+      120
+    ]
+  },
+  "text.tick": {
+    "src": "/assets/audio/text.tick-a9d29b5b0286.wav",
+    "sampleRate": 22050,
+    "duration": 0.018,
+    "loop": false,
+    "frequencies": [
+      1600
+    ]
+  },
+  "world.door": {
+    "src": "/assets/audio/world.door-89cf53922119.wav",
+    "sampleRate": 22050,
+    "duration": 0.14,
+    "loop": false,
+    "frequencies": [
+      320,
+      480,
+      320
+    ]
+  },
+  "world.bump": {
+    "src": "/assets/audio/world.bump-a5a7242c7cc5.wav",
+    "sampleRate": 22050,
+    "duration": 0.04,
+    "loop": false,
+    "frequencies": [
+      120
+    ]
+  },
+  "encounter.alert": {
+    "src": "/assets/audio/encounter.alert-850c21bc3626.wav",
+    "sampleRate": 22050,
+    "duration": 0.18,
+    "loop": false,
+    "frequencies": [
+      1200,
+      1440,
+      1200
+    ]
+  },
+  "vs.cue": {
+    "src": "/assets/audio/vs.cue-a1545f3b5d06.wav",
+    "sampleRate": 22050,
+    "duration": 0.4,
+    "loop": false,
+    "frequencies": [
+      720,
+      1080,
+      1440,
+      1080
+    ]
+  },
+  "vs.impact": {
+    "src": "/assets/audio/vs.impact-23e45f968aea.wav",
+    "sampleRate": 22050,
+    "duration": 0.12,
+    "loop": false,
+    "frequencies": [
+      180,
+      720,
+      360,
+      1440
+    ]
+  },
+  "battle.sendout": {
+    "src": "/assets/audio/battle.sendout-db7960719d79.wav",
+    "sampleRate": 22050,
+    "duration": 0.18,
+    "loop": false,
+    "frequencies": [
+      560,
+      840,
+      1120
+    ]
+  },
+  "battle.withdraw": {
+    "src": "/assets/audio/battle.withdraw-7d71bbc62485.wav",
+    "sampleRate": 22050,
+    "duration": 0.16,
+    "loop": false,
+    "frequencies": [
+      1120,
+      840,
+      560
+    ]
+  },
+  "link.open": {
+    "src": "/assets/audio/link.open-7d710fea1d59.wav",
+    "sampleRate": 22050,
+    "duration": 0.09,
+    "loop": false,
+    "frequencies": [
+      1020,
+      1360
+    ]
+  },
+  "page": {
+    "src": "/assets/audio/page-d8fad8e7b1c4.wav",
+    "sampleRate": 22050,
+    "duration": 0.025,
+    "loop": false,
+    "frequencies": [
+      800,
+      1000
+    ]
+  },
+  "menu.open": {
+    "src": "/assets/audio/menu.open-9d0d0bfc1ea4.wav",
+    "sampleRate": 22050,
+    "duration": 0.05,
+    "loop": false,
+    "frequencies": [
+      780,
+      1040
+    ]
+  },
+  "title.start": {
+    "src": "/assets/audio/title.start-a7ba08739475.wav",
+    "sampleRate": 22050,
+    "duration": 1.2,
+    "loop": false,
+    "frequencies": [
+      440,
+      660,
+      880,
+      1100,
+      880
+    ]
+  }
+}

@@ -46,6 +46,16 @@ function crossArt(m:number) {
  }
  return {width,height:width,data};
 }
+/** Original hard-edged handheld deck. Hit targets and logical controls are unchanged. */
+function deckArt(w:number,h:number,m:number){
+ const width=w*m,height=h*m,data=new Uint8ClampedArray(width*height*4);
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+  if((x<2||x>=w-2)&&(y<2||y>=h-2))continue;
+  const e=Math.min(x,y,w-1-x,h-1-y),ink=rgb(e===0?palette.outer:e===1?palette.inner:palette.blue);
+  for(let dy=0;dy<m;dy++)for(let dx=0;dx<m;dx++)data.set([...ink,255],((y*m+dy)*width+x*m+dx)*4);
+ }
+ return {width,height,data};
+}
 function TouchButton({action,label,x,y,size=60,dimmed=false,locked=false}:{action:InputAction;label:string;x:number;y:number;size?:number;dimmed?:boolean;locked?:boolean}) {
  const [active,setActive]=useState(false);
  const {dpr}=useContext(PixelContext);
@@ -56,7 +66,7 @@ function TouchButton({action,label,x,y,size=60,dimmed=false,locked=false}:{actio
  useEffect(()=>{if(locked||dimmed)globalInputRouter.handleRelease(action);},[action,locked,dimmed]);
  const image=useMemo(()=>buttonArt(action,active,dimmed,m),[action,active,dimmed,m]);
  const artSize=image.width/dpr;
- return <button aria-label={label} aria-disabled={locked||dimmed} data-action={action} onPointerDown={down} onPointerUp={up} onPointerCancel={up} onLostPointerCapture={up} style={{position:'absolute',left:x,top:y,width:size,height:size,padding:0,touchAction:'none',opacity:active?1:0.5,background:'transparent',border:0}}>
+ return <button aria-label={label} aria-disabled={locked||dimmed} data-action={action} onKeyDown={event=>{if((event.key==='Enter'||event.key===' ')&&!event.repeat&&!locked&&!dimmed){event.preventDefault();globalInputRouter.handlePress(action);globalInputRouter.handleRelease(action);}}} onPointerDown={down} onPointerUp={up} onPointerCancel={up} onLostPointerCapture={up} style={{position:'absolute',left:x,top:y,width:size,height:size,padding:0,touchAction:'none',opacity:active?1:0.5,background:'transparent',border:0}}>
   <Raster image={image} style={{position:'absolute',left:(size-artSize)/2,top:(size-artSize)/2+(active?m/dpr:0),}}/>
  </button>;
 }
@@ -70,10 +80,12 @@ export function TouchController({mode='world',artScale=3}:{mode?:Mode;artScale?:
  const pad=artScale===3?160:216,hit=16*artScale,ab=20*artScale,bankHeight=artScale===3?172:232,mid=(pad-hit)/2;
  return createPortal(<PixelContext.Provider value={{n:Math.round(artScale*dpr),dpr}}><div aria-label="Touch controller" className="touch-controller" data-mode={mode} style={{position:'fixed',inset:0,zIndex:50,pointerEvents:'none','--ui-inner':palette.inner,'--pad-half':`${pad/2}px`,'--bank-half':`${bankHeight/2}px`} as React.CSSProperties}>
   {!topOnly&&<div className="touch-pad" style={{position:'absolute',left:'calc(16px + var(--safe-left, env(safe-area-inset-left, 0px)))',bottom:'calc(16px + var(--safe-bottom, env(safe-area-inset-bottom, 0px)))',width:pad,height:pad,pointerEvents:'auto'}}>
+<Raster image={deckArt(Math.ceil(pad/artScale)+4,Math.ceil(pad/artScale)+4,Math.round(artScale*dpr))} style={{position:'absolute',left:-2*artScale,top:-2*artScale,opacity:0.5,pointerEvents:'none'}}/>
 <Raster image={crossArt(Math.round(artScale*dpr))} style={{position:'absolute',left:(pad-40*artScale)/2,top:(pad-40*artScale)/2,opacity:0.5}}/>
    <TouchButton action="UP" label="Move up" x={mid} y={0} size={hit} locked={locked}/><TouchButton action="LEFT" label="Move left" x={0} y={mid} size={hit} locked={locked}/><TouchButton action="RIGHT" label="Move right" x={pad-hit} y={mid} size={hit} locked={locked}/><TouchButton action="DOWN" label="Move down" x={mid} y={pad-hit} size={hit} locked={locked}/>
   </div>}
   <div className="touch-buttons" style={{position:'absolute',right:'calc(16px + var(--safe-right, env(safe-area-inset-right, 0px)))',bottom:'calc(16px + var(--safe-bottom, env(safe-area-inset-bottom, 0px)))',width:pad,height:bankHeight,pointerEvents:'auto'}}>
+   {!topOnly&&<Raster image={deckArt(Math.ceil(pad/artScale)+4,Math.ceil(bankHeight/artScale)+4,Math.round(artScale*dpr))} style={{position:'absolute',left:-2*artScale,top:-2*artScale,opacity:0.5,pointerEvents:'none'}}/>}
    {!topOnly&&<><TouchButton action="X" label="Menu (X)" x={0} y={0} size={hit} dimmed={dimmed} locked={locked}/><TouchButton action="Y" label="Bag (Y)" x={pad-hit} y={0} size={hit} dimmed={dimmed} locked={locked}/><TouchButton action="B" label="B back" x={0} y={bankHeight-ab} size={ab} locked={locked}/></>}
    <TouchButton action="A" label="A confirm" x={28*artScale} y={mid} size={ab} locked={locked}/>
   </div>

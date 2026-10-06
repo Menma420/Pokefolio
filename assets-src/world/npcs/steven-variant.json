@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "0.8",
+  "tool": "Sprite Lab v0.8.3",
+  "source": "steven.png",
+  "character": {
+    "name": "Builder",
+    "hair": "cap",
+    "face": "standard",
+    "outfit": "dark",
+    "direction": "west",
+    "headWidth": 11,
+    "headHeight": 9,
+    "torsoWidth": 8,
+    "legWidth": 4,
+    "shoeWidth": 3,
+    "colors": {
+      "outline": "#121e1c",
+      "skinLight": "#ffe0be",
+      "skinMid": "#efa888",
+      "skinDark": "#b56659",
+      "clothLight": "#74cdbd",
+      "clothMid": "#39978d",
+      "clothDark": "#1c5b56",
+      "accent": "#ee5c58",
+      "highlight": "#fffff4"
+    }
+  },
+  "provenance": "Steven loaded in supplied Sprite Lab and Randomize clicked. Parameters recorded from the Character Creator controls. Steven-specific band and palette-role adapter repairs the generic creator's Brendan-only assumptions.",
+  "stevenBands": {
+    "head": [
+      10,
+      20
+    ],
+    "torso": [
+      21,
+      25
+    ],
+    "legs": [
+      26,
+      29
+    ],
+    "feet": [
+      30,
+      30
+    ]
+  },
+  "hairRamp": [
+    "#C79D6A",
+    "#98694E",
+    "#614C3F"
+  ]
+}

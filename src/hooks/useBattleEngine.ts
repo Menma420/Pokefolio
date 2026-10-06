@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { battleReduce } from '../core/battle/reducer';
 import { BattleContext, BattleEvent } from '../core/battle/types';
-import { getAvailableCommands, getCurrentPageText, getCurrentSummary, getVisibleTopics } from '../core/battle/selectors';
+import { getAvailableCommands, getCurrentPageText, getVisibleTopics } from '../core/battle/selectors';
 import { Clock, FRAME_MS, gameClock } from '../core/clock';
 import { globalDialogueService } from '../runtime/services/DialogueService';
 import { uiStore } from '../runtime/stores';
@@ -11,6 +11,8 @@ import { AudienceId, ProjectId } from '../domain/types';
 import { getContentTree, getProject } from '../content/registry';
 import { Audiences } from '../content/audiences';
 import { getParty } from '../content/party';
+import { safeOpen } from '../runtime/safeOpen';
+import { getBattleSummary } from '../content/battle-presentation';
 import { UI_STRINGS } from '../content/ui-strings';
 
 import { transitionFrame } from '../runtime/TransitionDirector';
@@ -85,7 +87,7 @@ export function useBattleEngine(initialProject: ProjectId, audience: AudienceId,
         const url = getProject(previous.projectId)?.links.primary.url;
         if (isUsableLink(url)) {
           // Keep window.open in this input event's call stack to preserve browser gesture permission.
-          audioService.play('link.open');window.open(url, '_blank', 'noopener,noreferrer');
+          audioService.play('link.open');safeOpen(url);
         } else {
           globalDialogueService.request(UI_STRINGS.linkUnavailable);
         }
@@ -111,12 +113,11 @@ export function useBattleEngine(initialProject: ProjectId, audience: AudienceId,
   }, [dispatch]);
 
   useEffect(() => () => transitionRef.current?.(), []);
-  useEffect(()=>{if(ctx.view==='sendout')audioService.play('battle.sendout');},[ctx.view,ctx.projectId]);
 
   const visibleTopics = getVisibleTopics(ctx, deps);
   const availableCommands = getAvailableCommands(ctx);
   const pageText = getCurrentPageText(ctx, deps);
-  const summary = getCurrentSummary(ctx, deps);
+  const summary = getBattleSummary(ctx.projectId);
   const primaryLink = getProject(ctx.projectId)?.links.primary.url;
 
   return {

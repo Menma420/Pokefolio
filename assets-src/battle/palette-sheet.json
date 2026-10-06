@@ -3,15 +3,11 @@
     "#496A57",
     "#527D88",
     "#779C70",
-    "#849B74",
     "#91AE94",
     "#91B6AE",
-    "#A7B782",
     "#A9BC82",
     "#A9C2AC",
-    "#B8C9B1",
-    "#BEA579",
-    "#EFE0AC"
+    "#B8C9B1"
   ],
   "opponent-platform": [
     "#283D38",
@@ -42,7 +38,6 @@
   ],
   "uttkarsh-front": [
     "#283D38",
-    "#333A43",
     "#427F8D",
     "#555971",
     "#8ABBA9",
@@ -59,15 +54,14 @@
   ],
   "thumb-acko-clinic": [
     "#283D38",
-    "#527D88",
     "#A4D2BE",
-    "#BEA579",
     "#EFE0AC"
   ],
   "project-karsh": [
     "#283D38",
     "#795D8E",
     "#BC9FCD",
+    "#BEA579",
     "#EFE0AC"
   ],
   "thumb-karsh": [
@@ -86,7 +80,6 @@
   "thumb-nomnom-planner": [
     "#283D38",
     "#9A704E",
-    "#BEA579",
     "#DFC493",
     "#EFE0AC"
   ],
@@ -94,11 +87,13 @@
     "#283D38",
     "#49775F",
     "#ABD39A",
+    "#BEA579",
     "#EFE0AC"
   ],
   "thumb-pokefolio": [
     "#283D38",
     "#49775F",
+    "#ABD39A",
     "#EFE0AC"
   ],
   "project-pdf-qa": [
@@ -110,8 +105,8 @@
   ],
   "thumb-pdf-qa": [
     "#283D38",
+    "#656C9D",
     "#ADBAD7",
-    "#BEA579",
     "#EFE0AC"
   ],
   "project-weatherpi": [
@@ -146,9 +141,7 @@
   ],
   "thumb-parallel-distributed-computing": [
     "#283D38",
-    "#61788B",
     "#B7CBD6",
-    "#BEA579",
     "#EFE0AC"
   ],
   "project-arise": [
@@ -173,8 +166,8 @@
   "thumb-pokemon-elo-rating": [
     "#283D38",
     "#947347",
-    "#BEA579",
-    "#DFC184"
+    "#DFC184",
+    "#EFE0AC"
   ],
   "project-vanix": [
     "#283D38",
@@ -187,7 +180,6 @@
     "#283D38",
     "#75648B",
     "#BCA5C8",
-    "#BEA579",
     "#EFE0AC"
   ],
   "project-chatroomapp": [

@@ -1,6 +1,6 @@
 {
   "background": {
-    "src": "/assets/battle/background.08e56444dbe2.png",
+    "src": "/assets/battle/background.5de81330de0e.png",
     "width": 240,
     "height": 160
   },
@@ -15,132 +15,132 @@
     "height": 24
   },
   "visitor-back": {
-    "src": "/assets/battle/visitor-back.a3c1d0cd7628.png",
+    "src": "/assets/battle/visitor-back.6f812ba8407b.png",
     "width": 64,
     "height": 64
   },
   "uttkarsh-front": {
-    "src": "/assets/battle/uttkarsh-front.44467f18e66f.png",
+    "src": "/assets/battle/uttkarsh-front.6d370954d887.png",
     "width": 64,
     "height": 64
   },
   "project-acko-clinic": {
-    "src": "/assets/battle/project-acko-clinic.1e3d01a5a7c5.png",
+    "src": "/assets/battle/project-acko-clinic.ba6488116518.png",
     "width": 64,
     "height": 64
   },
   "thumb-acko-clinic": {
-    "src": "/assets/battle/thumb-acko-clinic.4bd9022ad744.png",
+    "src": "/assets/battle/thumb-acko-clinic.19d57094430d.png",
     "width": 16,
     "height": 16
   },
   "project-karsh": {
-    "src": "/assets/battle/project-karsh.ab08d575dd90.png",
+    "src": "/assets/battle/project-karsh.6b6eb7a9ce33.png",
     "width": 64,
     "height": 64
   },
   "thumb-karsh": {
-    "src": "/assets/battle/thumb-karsh.cae45a0b846e.png",
+    "src": "/assets/battle/thumb-karsh.a08a98944dbe.png",
     "width": 16,
     "height": 16
   },
   "project-nomnom-planner": {
-    "src": "/assets/battle/project-nomnom-planner.a97ffea2ec8a.png",
+    "src": "/assets/battle/project-nomnom-planner.76e7e657fe6e.png",
     "width": 64,
     "height": 64
   },
   "thumb-nomnom-planner": {
-    "src": "/assets/battle/thumb-nomnom-planner.75da207884ea.png",
+    "src": "/assets/battle/thumb-nomnom-planner.b444cd86cf8e.png",
     "width": 16,
     "height": 16
   },
   "project-pokefolio": {
-    "src": "/assets/battle/project-pokefolio.871c61324e56.png",
+    "src": "/assets/battle/project-pokefolio.6d67c1d1c434.png",
     "width": 64,
     "height": 64
   },
   "thumb-pokefolio": {
-    "src": "/assets/battle/thumb-pokefolio.fdccd91f6ba0.png",
+    "src": "/assets/battle/thumb-pokefolio.a1b94d26ca2b.png",
     "width": 16,
     "height": 16
   },
   "project-pdf-qa": {
-    "src": "/assets/battle/project-pdf-qa.5294eef40dab.png",
+    "src": "/assets/battle/project-pdf-qa.812641032f16.png",
     "width": 64,
     "height": 64
   },
   "thumb-pdf-qa": {
-    "src": "/assets/battle/thumb-pdf-qa.c931c7478007.png",
+    "src": "/assets/battle/thumb-pdf-qa.dc933dd8ba0b.png",
     "width": 16,
     "height": 16
   },
   "project-weatherpi": {
-    "src": "/assets/battle/project-weatherpi.cef6e09af91c.png",
+    "src": "/assets/battle/project-weatherpi.2fb6a833b402.png",
     "width": 64,
     "height": 64
   },
   "thumb-weatherpi": {
-    "src": "/assets/battle/thumb-weatherpi.cbcdcc17adf5.png",
+    "src": "/assets/battle/thumb-weatherpi.a62f98e91485.png",
     "width": 16,
     "height": 16
   },
   "project-portscanner": {
-    "src": "/assets/battle/project-portscanner.ffb71639e5fa.png",
+    "src": "/assets/battle/project-portscanner.f3005bcd9f57.png",
     "width": 64,
     "height": 64
   },
   "thumb-portscanner": {
-    "src": "/assets/battle/thumb-portscanner.9eb1dea386a3.png",
+    "src": "/assets/battle/thumb-portscanner.1911756d919b.png",
     "width": 16,
     "height": 16
   },
   "project-parallel-distributed-computing": {
-    "src": "/assets/battle/project-parallel-distributed-computing.42abba7d3f8e.png",
+    "src": "/assets/battle/project-parallel-distributed-computing.c6749a07bd1b.png",
     "width": 64,
     "height": 64
   },
   "thumb-parallel-distributed-computing": {
-    "src": "/assets/battle/thumb-parallel-distributed-computing.dfe613e46bc9.png",
+    "src": "/assets/battle/thumb-parallel-distributed-computing.cd98c67adf22.png",
     "width": 16,
     "height": 16
   },
   "project-arise": {
-    "src": "/assets/battle/project-arise.af7ae4c9f0c1.png",
+    "src": "/assets/battle/project-arise.0ba69e53255c.png",
     "width": 64,
     "height": 64
   },
   "thumb-arise": {
-    "src": "/assets/battle/thumb-arise.7b8bd988e08b.png",
+    "src": "/assets/battle/thumb-arise.ad020fe1cca5.png",
     "width": 16,
     "height": 16
   },
   "project-pokemon-elo-rating": {
-    "src": "/assets/battle/project-pokemon-elo-rating.51579df94035.png",
+    "src": "/assets/battle/project-pokemon-elo-rating.78a194670d73.png",
     "width": 64,
     "height": 64
   },
   "thumb-pokemon-elo-rating": {
-    "src": "/assets/battle/thumb-pokemon-elo-rating.377040db0c6b.png",
+    "src": "/assets/battle/thumb-pokemon-elo-rating.12d395719c24.png",
     "width": 16,
     "height": 16
   },
   "project-vanix": {
-    "src": "/assets/battle/project-vanix.5108cf4f74d6.png",
+    "src": "/assets/battle/project-vanix.0c62fd985d35.png",
     "width": 64,
     "height": 64
   },
   "thumb-vanix": {
-    "src": "/assets/battle/thumb-vanix.f4917eb035c1.png",
+    "src": "/assets/battle/thumb-vanix.9d6928b33418.png",
     "width": 16,
     "height": 16
   },
   "project-chatroomapp": {
-    "src": "/assets/battle/project-chatroomapp.c6d14b8c414a.png",
+    "src": "/assets/battle/project-chatroomapp.403a6b1a8f00.png",
     "width": 64,
     "height": 64
   },
   "thumb-chatroomapp": {
-    "src": "/assets/battle/thumb-chatroomapp.f7a1074e970b.png",
+    "src": "/assets/battle/thumb-chatroomapp.e00a1067f272.png",
     "width": 16,
     "height": 16
   },

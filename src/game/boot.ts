@@ -2,11 +2,12 @@ import Phaser from 'phaser';
 import type { GameBridge } from '../runtime/gameBridge/types';
 import { WorldScene } from './WorldScene';
 import { BattleScene } from './BattleScene';
+import type {Clock} from '../core/clock';
 
 export const GAME_WIDTH = 240;
 export const GAME_HEIGHT = 160;
 
-export function mountWorldGame(host: HTMLElement, bridge: GameBridge, options:{physicalPixels?:boolean}={}): () => void {
+export function mountWorldGame(host: HTMLElement, bridge: GameBridge, options:{physicalPixels?:boolean;reducedMotion?:()=>boolean;clock?:Clock}={}): () => void {
   try {
     const game = new Phaser.Game({
       type: Phaser.CANVAS,
@@ -14,7 +15,7 @@ export function mountWorldGame(host: HTMLElement, bridge: GameBridge, options:{p
       width: GAME_WIDTH,
       height: GAME_HEIGHT,
       backgroundColor: '#314c3a',
-      scene: [new WorldScene(bridge,options.physicalPixels),new BattleScene(bridge)],
+      scene: [new WorldScene(bridge,options.physicalPixels,options.reducedMotion,options.clock),new BattleScene(bridge)],
       scale: { mode: Phaser.Scale.NONE, width: GAME_WIDTH, height: GAME_HEIGHT },
       render: { pixelArt: true, antialias: false, antialiasGL: false, roundPixels: true },
       audio: { noAudio: true },

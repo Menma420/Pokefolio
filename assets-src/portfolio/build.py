@@ -1,4 +1,4 @@
-"""Original B4 inventory/encyclopedia art, composed at whole native pixels."""
+"""Original P11 inventory/encyclopedia art, composed at whole native pixels."""
 from pathlib import Path
 import json,hashlib,struct,zlib
 ROOT=Path(__file__).resolve().parents[2]
@@ -46,19 +46,32 @@ for k in list(assets):
  for y in range(32):
   for x in range(32):large.dot(x,y,a.p[(y//2)*16+x//2])
  assets[k+'-large']=large
-# Original trainer-card portrait: tailored teal jacket, profile details, authored at 48×64.
-a=Art(48,64);skin='#D7AA79';shade='#B77E58';hair='#283D38';coat='#427F8D';light='#8ABBA9';cream='#E8D5A7'
-a.poly([(17,30),(31,30),(31,37),(41,41),(47,52),(47,63),(0,63),(1,52),(8,42),(17,37)],O)
-a.poly([(19,29),(29,29),(29,39),(24,44),(19,39)],skin);a.rect(21,33,8,3,shade)
-a.poly([(16,38),(23,44),(31,38),(39,43),(44,54),(44,63),(3,63),(5,53),(10,44)],coat)
-a.poly([(16,38),(23,44),(19,49),(13,42)],light);a.poly([(31,38),(24,44),(28,49),(35,42)],light)
-a.rect(22,46,2,18,O);a.rect(8,53,10,1,O);a.rect(9,54,8,5,light);a.rect(31,53,8,1,O);a.rect(31,54,7,5,light)
-for y in [49,55,61]:a.dot(25,y,cream)
-a.poly([(12,10),(17,5),(30,5),(36,11),(36,24),(32,31),(25,35),(17,31),(12,23)],hair)
-a.poly([(15,12),(18,8),(29,8),(33,12),(33,24),(29,30),(24,32),(18,29),(15,23)],skin)
-a.rect(14,18,2,7,shade);a.rect(30,19,3,7,shade);a.rect(19,22,2,2,hair);a.rect(28,22,2,2,hair);a.rect(23,25,2,1,shade);a.rect(22,28,5,1,hair)
-a.poly([(11,12),(14,6),(20,3),(29,3),(35,7),(36,15),(31,13),(28,8),(23,12),(18,10),(15,16)],hair)
-a.rect(17,6,7,1,'#555971');a.rect(25,5,6,1,'#555971');a.rect(33,15,2,3,hair)
+# Original field bag: a tangible key-item inventory, rather than a file-list icon.
+a=Art(64,64)
+a.poly([(20,8),(23,2),(40,2),(44,8),(44,16),(53,22),(56,51),(51,59),(12,59),(7,52),(10,22),(20,16)],O)
+a.poly([(23,9),(25,5),(38,5),(41,9),(41,17),(22,17)],G);a.rect(26,8,12,6,O)
+a.poly([(17,17),(47,17),(52,23),(53,49),(48,55),(15,55),(11,49),(13,24)],G)
+a.poly([(17,18),(46,18),(50,24),(49,30),(15,30),(13,24)],C)
+a.rect(16,29,34,2,O);a.rect(20,32,24,2,H);a.rect(20,34,24,12,O);a.rect(22,36,20,8,I)
+a.rect(16,46,33,2,O);a.rect(17,48,31,5,H);a.rect(20,50,24,1,I)
+a.rect(13,24,3,26,H);a.rect(49,24,3,26,H);a.rect(17,53,30,2,C)
+for x in [22,38]:a.rect(x,24,5,12,O);a.rect(x+1,25,3,7,H);a.rect(x+1,32,3,3,C)
+a.rect(29,37,6,5,O);a.rect(30,38,4,3,C);a.rect(10,54,6,5,O);a.rect(48,54,6,5,O)
+assets['bag-body']=a
+# A compact original trainer portrait. Head, shoulders, coat and hands are distinct masses.
+a=Art(48,64);skin='#D7AA79';shade='#B77E58';hair='#283D38';coat='#427F8D';light='#8ABBA9';accent='#E8D5A7';pants='#555971'
+a.poly([(17,3),(30,3),(35,9),(35,18),(31,25),(19,25),(14,20),(13,10)],hair)
+a.poly([(18,9),(30,9),(33,12),(32,21),(28,25),(21,24),(17,20)],skin)
+a.rect(29,14,3,7,shade);a.rect(19,15,3,2,hair);a.rect(28,15,3,2,hair);a.rect(23,20,5,1,shade)
+a.poly([(14,8),(17,3),(29,3),(34,8),(33,11),(15,11)],coat);a.rect(18,5,11,2,light);a.rect(12,10,24,2,hair);a.rect(13,11,21,1,accent)
+a.rect(21,25,8,6,hair);a.rect(22,25,6,5,skin)
+a.poly([(14,29),(20,27),(25,33),(30,27),(38,31),(45,42),(46,56),(40,63),(8,63),(3,54),(5,39)],hair)
+a.poly([(13,32),(19,30),(25,36),(31,30),(37,34),(40,47),(38,61),(10,61),(7,46),(8,38)],coat)
+a.poly([(19,30),(25,36),(21,41),(15,33)],light);a.poly([(31,30),(25,36),(29,41),(35,33)],accent)
+a.rect(23,38,2,23,hair);a.rect(26,41,1,15,accent);a.rect(12,48,9,1,hair);a.rect(13,49,7,5,light)
+a.poly([(6,41),(10,39),(13,47),(12,55),(8,59),(4,54)],light);a.rect(6,53,5,6,skin);a.rect(8,56,2,3,shade)
+a.poly([(38,39),(43,40),(46,47),(44,56),(39,59),(35,55)],hair);a.poly([(39,42),(42,44),(43,50),(41,54),(38,54)],light);a.rect(37,54,6,6,skin);a.rect(39,56,3,3,shade)
+a.rect(11,61,27,3,pants);a.rect(13,58,9,2,hair);a.rect(28,58,8,2,hair)
 assets['trainer-portrait']=a
 # Faithful whole-pixel 48px project treatments derive from our own approved 64px emblems.
 battle=json.load(open(ROOT/'assets-src/battle/art.json'))
@@ -88,6 +101,8 @@ for name,rows in badges.items():
   for x,bit in enumerate(row):
    if bit=='1':a.dot(x,y,H)
  assets[name+'-badge']=a
+from skills import author_skills
+author_skills(Art,assets,ROOT)
 out=ROOT/'public/assets/portfolio';out.mkdir(parents=True,exist_ok=True)
 manifest={}
 for name,a in assets.items():

@@ -33,7 +33,7 @@ describe('original production world artwork', () => {
     for (const art of CHARACTER_ART) for (const direction of CHARACTER_DIRECTIONS) for (const pose of [0, 1, 2]) {
       const f = atlas.frames[`${art}-${direction}-${pose}`].frame;
       const palette = new Set(Object.values(manifest.palettes.characters[art]).map(color => color.toUpperCase()));
-      expect(palette.size).toBeLessThanOrEqual(7);
+      expect(palette.size).toBe({player:14,'npc-guide':15,'npc-neighbor':6,challenger:11}[art]);
       let visible = 0;
       for (let y = 0; y < 32; y++) for (let x = 0; x < 16; x++) {
         const i = ((f.y + y) * spritePng.width + f.x + x) * 4;

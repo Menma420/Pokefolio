@@ -1,0 +1,246 @@
+[
+  {
+    "id": "java",
+    "category": "LANGUAGE"
+  },
+  {
+    "id": "c",
+    "category": "LANGUAGE"
+  },
+  {
+    "id": "python",
+    "category": "LANGUAGE"
+  },
+  {
+    "id": "go",
+    "category": "LANGUAGE"
+  },
+  {
+    "id": "sql",
+    "category": "LANGUAGE"
+  },
+  {
+    "id": "javascript",
+    "category": "LANGUAGE"
+  },
+  {
+    "id": "spring-boot",
+    "category": "BACKEND"
+  },
+  {
+    "id": "rest-apis",
+    "category": "BACKEND"
+  },
+  {
+    "id": "microservices",
+    "category": "DISTRIBUTED"
+  },
+  {
+    "id": "openfeign",
+    "category": "BACKEND"
+  },
+  {
+    "id": "webclient",
+    "category": "BACKEND"
+  },
+  {
+    "id": "aws-sqs",
+    "category": "DISTRIBUTED"
+  },
+  {
+    "id": "temporal",
+    "category": "DISTRIBUTED"
+  },
+  {
+    "id": "event-driven-arch",
+    "category": "DISTRIBUTED"
+  },
+  {
+    "id": "postgresql",
+    "category": "DATABASE"
+  },
+  {
+    "id": "aws-rds",
+    "category": "DATABASE"
+  },
+  {
+    "id": "elasticsearch",
+    "category": "DATABASE"
+  },
+  {
+    "id": "aws",
+    "category": "CLOUD"
+  },
+  {
+    "id": "docker",
+    "category": "DEVOPS"
+  },
+  {
+    "id": "jenkins",
+    "category": "DEVOPS"
+  },
+  {
+    "id": "ci-cd",
+    "category": "DEVOPS"
+  },
+  {
+    "id": "datadog",
+    "category": "OBSERVABILITY"
+  },
+  {
+    "id": "coralogix",
+    "category": "OBSERVABILITY"
+  },
+  {
+    "id": "dsa",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "oop",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "dbms",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "operating-systems",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "computer-networks",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "concurrency",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "git",
+    "category": "DEVOPS"
+  },
+  {
+    "id": "agile-scrum",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "software-engineering",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "parallel-computing",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "typescript",
+    "category": "LANGUAGE"
+  },
+  {
+    "id": "node-js",
+    "category": "BACKEND"
+  },
+  {
+    "id": "express",
+    "category": "BACKEND"
+  },
+  {
+    "id": "fastapi",
+    "category": "BACKEND"
+  },
+  {
+    "id": "flask",
+    "category": "BACKEND"
+  },
+  {
+    "id": "api-contracts",
+    "category": "BACKEND"
+  },
+  {
+    "id": "authentication",
+    "category": "BACKEND"
+  },
+  {
+    "id": "mqtt",
+    "category": "DISTRIBUTED"
+  },
+  {
+    "id": "event-handling",
+    "category": "DISTRIBUTED"
+  },
+  {
+    "id": "prisma",
+    "category": "DATABASE"
+  },
+  {
+    "id": "redis",
+    "category": "DATABASE"
+  },
+  {
+    "id": "faiss",
+    "category": "DATABASE"
+  },
+  {
+    "id": "neon",
+    "category": "CLOUD"
+  },
+  {
+    "id": "testing",
+    "category": "DEVOPS"
+  },
+  {
+    "id": "repository-design",
+    "category": "DEVOPS"
+  },
+  {
+    "id": "reconciliation",
+    "category": "OBSERVABILITY"
+  },
+  {
+    "id": "failure-evidence",
+    "category": "OBSERVABILITY"
+  },
+  {
+    "id": "react",
+    "category": "FRONTEND"
+  },
+  {
+    "id": "next-js",
+    "category": "FRONTEND"
+  },
+  {
+    "id": "socket-io",
+    "category": "FRONTEND"
+  },
+  {
+    "id": "idempotency",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "state-machines",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "retrieval",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "langchain",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "tcp",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "distributed-systems",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "raspberry-pi",
+    "category": "CONCEPT"
+  },
+  {
+    "id": "rag",
+    "category": "CONCEPT"
+  }
+]

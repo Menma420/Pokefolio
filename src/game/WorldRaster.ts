@@ -6,8 +6,10 @@ export function mountWorldRaster(game:Phaser.Game):{dirty:()=>void;destroy:()=>v
  const logical=game.canvas,canvas=document.createElement('canvas');canvas.dataset.bitmap='true';canvas.dataset.worldRaster='physical';canvas.setAttribute('aria-hidden','true');
  Object.assign(canvas.style,{position:'absolute',display:'block',pointerEvents:'none',imageRendering:'pixelated'});
  const previousOpacity=logical.style.opacity;logical.style.opacity='0';logical.parentElement!.appendChild(canvas);
- let dirty=true,lastGeometry='';
+ let dirty=true,lastGeometry='',disposed=false;
  const draw=()=>{
+  // Navigation can detach the logical canvas before a queued render/resize callback.
+  if(disposed||!logical.parentElement)return;
   const covered=game.scene.isActive('PokefolioBattle');canvas.style.visibility=covered?'hidden':'visible';if(covered)return;
   const rect=logical.getBoundingClientRect(),parent=logical.parentElement!.getBoundingClientRect(),dpr=window.devicePixelRatio||1;
   const n=Math.round(rect.width*dpr/240);if(n<1)return;
@@ -22,5 +24,5 @@ export function mountWorldRaster(game:Phaser.Game):{dirty:()=>void;destroy:()=>v
  // A menu can pause world rendering. Its frozen image must still follow layout
  // changes without resuming simulation or waiting for another Phaser frame.
  const observer=new ResizeObserver(draw);observer.observe(logical);
- return {dirty:()=>{dirty=true;},destroy:()=>{observer.disconnect();game.events.off(Phaser.Core.Events.POST_RENDER,draw);logical.style.opacity=previousOpacity;canvas.remove();}};
+ return {dirty:()=>{dirty=true;},destroy:()=>{disposed=true;observer.disconnect();game.events.off(Phaser.Core.Events.POST_RENDER,draw);logical.style.opacity=previousOpacity;canvas.remove();}};
 }

@@ -118,9 +118,7 @@ export class GameOrchestrator {
 
   start(): void {
     if (this.disposed || this.introActive || this.value.flow.mode !== 'TITLE' || !this.value.rendererReady) return;
-    unlockAudio();
-    audioService.play('ui.confirm');
-    audioService.play('title.start');
+    unlockAudio(()=>audioService.play('title.start'));
     this.introActive = true;
     const introSeen = progressStore.getState().introSeen;
     const steps: EncounterStep[] = introSeen ? [] : INTRO_NARRATION.map(text=>({type:'say' as const,text}));
@@ -133,6 +131,7 @@ export class GameOrchestrator {
       this.input.unregister('intro-lock');
       this.transition({ type: 'INTRO_COMPLETE' });
       await this.world.resume();
+      this.hints.arrival();
       this.patch({ firstEncounterDone: progressStore.getState().firstEncounterDone });
     }).catch((error: unknown) => {
       if (!this.disposed) void this.recover(error);

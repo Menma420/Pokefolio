@@ -758,9 +758,9 @@
       "name": "pokefolio-town",
       "tilewidth": 16,
       "tileheight": 16,
-      "tilecount": 81,
+      "tilecount": 87,
       "columns": 16,
-      "image": "../../public/assets/world/town-tiles.65e430cea1e0.png",
+      "image": "../../public/assets/world/town-tiles.fb0232fefa6b.png",
       "imagewidth": 256,
       "imageheight": 96
     }

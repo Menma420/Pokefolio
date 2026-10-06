@@ -9,6 +9,7 @@ import { getParty } from '../../src/content/party';
 import type { AudienceId } from '../../src/domain/types';
 import { FIRST_ENCOUNTER_DIALOGUE, INTRO_NARRATION } from '../../src/content/narrative';
 import { Audiences } from '../../src/content/audiences';
+import {getBattleSummary} from '../../src/content/battle-presentation';
 import { UI_STRINGS } from '../../src/content/ui-strings';
 
 function gameState(page: Page) { return page.getByRole('status', { name: 'Game state' }); }
@@ -26,11 +27,11 @@ async function expectAlignedLayers(page: Page, mainName?: string) {
   expect(canvasBox!.height).toBe(160 * Number(await page.getByRole('region', { name: 'Game frame' }).getAttribute('data-scale')));
   expect(frameBox!.width / frameBox!.height).toBe(3 / 2);
   if (mainName) {
-    const box = await page.getByRole('main', { name: mainName }).boundingBox();
+    const box = await page.getByRole('region', { name: mainName }).boundingBox();
     expect(box!.width).toBe(frameBox!.width);
     expect(box!.height).toBe(frameBox!.height);
   }
-  const battleMain = page.getByRole('main', { name: 'Interview battle' });
+  const battleMain = page.getByRole('region', { name: 'Interview battle' });
   if (await battleMain.isVisible()) {
     try {
       const box = await battleMain.boundingBox({ timeout: 500 });
@@ -40,7 +41,7 @@ async function expectAlignedLayers(page: Page, mainName?: string) {
       }
     } catch {}
   }
-  const vsMain = page.getByRole('main', { name: 'Interview challenge' });
+  const vsMain = page.getByRole('region', { name: 'Interview challenge' });
   if (await vsMain.isVisible()) {
     try {
       const box = await vsMain.boundingBox({ timeout: 500 });
@@ -119,7 +120,7 @@ async function walkOneTile(page: Page, key: string, from: string, to: string) {
 
 async function startOverworld(page: Page) {
   await page.goto('/');
-  await expect(page.getByRole('main', { name: 'Game title' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Game title' })).toBeVisible();
   await expectAlignedLayers(page, 'Game title');
   await page.getByRole('button', { name: 'PRESS START' }).click();
   await expect.poll(async()=>await dialogue(page).count() || (await gameState(page).innerText()).includes('Flow OVERWORLD')).toBeTruthy();
@@ -145,11 +146,11 @@ async function selectAudience(page: Page, label: string) {
 
 async function enterFirstBattle(page: Page, audienceId: AudienceId) {
   const firstProject = getParty(audienceId)[0]!;
-  await expect(page.getByRole('main', { name: 'Interview challenge' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Interview challenge' })).toBeVisible();
   await expect(page.locator('[data-bitmap-text]').filter({hasText:Audiences[audienceId]!.announcement})).toBeVisible();
   fs.mkdirSync('artifacts/phase-a/flow',{recursive:true});if(process.env.POKEFOLIO_FLOW_SCREENSHOTS!=='0')await page.screenshot({path:`artifacts/phase-a/flow/vs-${audienceId}.png`});
   await expect(gameState(page)).toContainText('Flow BATTLE');
-  await expect(page.getByRole('main', { name: 'Interview battle' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Interview battle' })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Current project' })).toContainText(getProject(firstProject)!.name);
   return firstProject;
 }
@@ -160,7 +161,7 @@ async function exitBattleThroughCommand(page: Page) {
   await exit.click();if(!selected)await exit.click();
   await expect(dialogue(page)).toHaveText('Battle over!');
   if(process.env.POKEFOLIO_FLOW_SCREENSHOTS!=='0')await page.screenshot({path:'artifacts/phase-a/flow/battle-over.png'});
-  await expect(page.getByRole('main', {name:'Interview battle'})).toHaveCount(0);
+  await expect(page.getByRole('region', { name: 'Interview battle'})).toHaveCount(0);
   await expect(gameState(page)).toContainText('Flow OVERWORLD');
 }
 
@@ -168,7 +169,7 @@ test('M1 golden path: intro, automatic LOS, authored interview, exact return, re
   page.on('pageerror', (error) => console.error(`M1 page error: ${error.message}\n${error.stack ?? ''}`));
   await startOverworld(page);
   await walkOneTile(page, 'ArrowDown', '7,5', '7,6');
-  await expect(page.locator('[data-bitmap-text]').filter({hasText:'Arrow Keys: Move'})).toBeVisible();
+  await expect(page.locator('[data-bitmap-text]').filter({hasText:'X: MENU      Y: RESUME'})).toBeVisible();
   await walkOneTile(page, 'ArrowDown', '7,6', '7,7');
   for (let x = 7; x < 15; x += 1) await walkOneTile(page, 'ArrowRight', `${x},7`, `${x + 1},7`);
 
@@ -194,6 +195,7 @@ test('M1 golden path: intro, automatic LOS, authored interview, exact return, re
   await readBattleDialogue(page, UI_STRINGS.sendOut(getProject(projectId)!.name));
   await readBattleDialogue(page, Audiences[AUDIENCE_RECRUITER]!.reactions['project-entry'][0]!);
   await page.keyboard.press('Enter');
+  await readBattleDialogue(page,getBattleSummary(projectId));
   await expect(page.getByRole('group', { name: 'Interview topics' }).getByRole('button', { name: rootTopic.label })).toBeVisible();
   await page.keyboard.press('Enter');
   await readBattleDialogue(page, Audiences[AUDIENCE_RECRUITER]!.reactions['detail-open'][0]!);
@@ -249,12 +251,12 @@ test('M1 golden path: intro, automatic LOS, authored interview, exact return, re
   await page.evaluate(() => window.history.back());
   await expect(dialogue(page)).toHaveText('Battle over!');
   if(process.env.POKEFOLIO_FLOW_SCREENSHOTS!=='0')await page.screenshot({path:'artifacts/phase-a/flow/battle-over.png'});
-  await expect(page.getByRole('main', {name:'Interview battle'})).toHaveCount(0);
+  await expect(page.getByRole('region', { name: 'Interview battle'})).toHaveCount(0);
   await expect(state).toContainText('Flow OVERWORLD');
   await expect.poll(() => displayedAnchor(page)).toEqual(repeatAnchor);
 
   await page.reload();
-  await expect(page.getByRole('main', { name: 'Game title' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Game title' })).toBeVisible();
   await page.getByRole('button', { name: 'PRESS START' }).click();
   await expect(state).toContainText('Flow OVERWORLD');
   await expect(state).toContainText('first encounter complete');
@@ -268,7 +270,7 @@ test('unmount during a running first encounter cleans up to a fresh playable tit
   await page.goto('/dev/battle');
   await expect(page.getByRole('button', { name: 'Start battle' })).toBeVisible();
   await page.goto('/');
-  await expect(page.getByRole('main', { name: 'Game title' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Game title' })).toBeVisible();
   await page.getByRole('button', { name: 'PRESS START' }).click();
   if (await dialogue(page).count()) {
     for (const line of INTRO_NARRATION) await advanceDialogue(page, line);
@@ -284,7 +286,7 @@ test('route changes abort dialogue, VS, battle wipe, and battle without locking 
     await page.goto('/dev/battle');
     await expect(page.getByRole('button', { name: 'Start battle' })).toBeVisible();
     await page.goto('/');
-    await expect(page.getByRole('main', { name: 'Game title' })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Game title' })).toBeVisible();
     await page.getByRole('button', { name: 'PRESS START' }).click();
     await expect(gameState(page)).toContainText('Flow OVERWORLD');
   };
@@ -306,7 +308,7 @@ test('route changes abort dialogue, VS, battle wipe, and battle without locking 
 
   await restartWorld();
   await beginSelectedEncounter();
-  await expect(page.getByRole('main', { name: 'Interview challenge' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Interview challenge' })).toBeVisible();
   await expectAlignedLayers(page, 'Interview challenge');
   await abortAndVerifyWorld();
 
@@ -318,7 +320,7 @@ test('route changes abort dialogue, VS, battle wipe, and battle without locking 
   await restartWorld();
   await beginSelectedEncounter();
   await expect(gameState(page)).toContainText('Flow BATTLE');
-  await expect(page.getByRole('main', { name: 'Interview battle' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Interview battle' })).toBeVisible();
   await abortAndVerifyWorld();
 });
 

@@ -44,7 +44,7 @@ async function readEncounter(page: Page) {
   for (const line of FIRST_ENCOUNTER_DIALOGUE) await readText(page, line);
 }
 async function settleBattle(page: Page, filename: string, project: string) {
-  const battle = page.getByRole('main', { name: 'Interview battle' });
+  const battle = page.getByRole('region', { name: 'Interview battle' });
   await expect(battle).toBeVisible();
   await expect(page.locator('canvas[data-battle-scene="ready"][data-world-scene="sleeping"]')).toHaveCount(1);
   await expect(page.locator('canvas[data-battle-raster][data-ready="true"]')).toHaveCount(1);
@@ -94,14 +94,14 @@ test('production LOS → audience → VS → actual battle scene and initial pro
     trace.push({ event: 'encounter-started', time: Date.now() });
     await readEncounter(page);
     await page.getByRole('group', { name: 'Audience selection' }).getByRole('button', { name: 'I’m hiring' }).click();
-    await expect(page.getByRole('main', { name: 'Interview challenge' })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Interview challenge' })).toBeVisible();
     trace.push({ event: 'vs-visible', time: Date.now() });
     await expect(state(page)).toContainText('Flow BATTLE');
     await expect(page.locator('canvas[data-battle-scene="ready"][data-world-scene="sleeping"]')).toHaveCount(1);
     await expect(page.locator('canvas[data-battle-raster]')).toHaveCount(1);
     await expect(page.getByRole('region', { name: 'Game frame' }).getByRole('alert')).toHaveCount(0);
     await expect(page.getByRole('region', { name: 'Current project' })).toContainText('Acko Clinic');
-    await expect(page.getByRole('main', { name: 'Interview battle' })).toHaveAttribute('data-battle-frame', /^(5[6-9]|[6-9]\d|\d{3,})$/);
+    await expect(page.getByRole('region', { name: 'Interview battle' })).toHaveAttribute('data-battle-frame', /^(5[6-9]|[6-9]\d|\d{3,})$/);
     await settleBattle(page, 'actual-battle-entry.png', 'Acko Clinic');
     trace.push({ event: 'battle-ready', time: Date.now(), state: await page.getByRole('status', { name: 'Battle state' }).innerText(), rendererReady: await page.locator('[data-battle-view-ready]').getAttribute('data-battle-view-ready') });
     await exit(page, '15,7', 'right');
@@ -124,7 +124,7 @@ test('first interaction behind challenger turns and immediately starts encounter
   await readEncounter(page);
   const engineer = page.getByRole('button', { name: 'I’m an engineer' });
   await engineer.click(); await engineer.click();
-  await expect(page.getByRole('main', { name: 'Interview challenge' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Interview challenge' })).toBeVisible();
   await settleBattle(page, 'actual-battle-engineer.png', 'Acko Clinic');
   await exit(page, '19,7', 'left');
   // Walking into the sightline again is inert after completing the first battle.
@@ -137,7 +137,7 @@ test('first interaction behind challenger turns and immediately starts encounter
   const visitor = page.getByRole('button', { name: 'I’m just visiting' });
   await visitor.click(); await visitor.click();
   await readText(page, FIRST_ENCOUNTER_DIALOGUE[3]);
-  await expect(page.getByRole('main', { name: 'Interview challenge' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Interview challenge' })).toBeVisible();
   await settleBattle(page, 'actual-battle-visitor-repeat.png', 'Pokefolio');
   await exit(page, '19,7', 'left');
 });
