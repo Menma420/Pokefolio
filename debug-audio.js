@@ -1,5 +1,5 @@
-const { chromium } = require('playwright-core');
 (async () => {
+  const { chromium } = await import('@playwright/test');
   const browser = await chromium.launch();
   const page = await browser.newPage();
   page.on('console', msg => console.log('BROWSER LOG:', msg.text()));

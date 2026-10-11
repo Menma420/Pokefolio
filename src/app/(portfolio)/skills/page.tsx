@@ -1,4 +1,4 @@
-import { SKILL_CATEGORIES, getSkills, getPortfolioProject, PORTFOLIO_PROJECTS } from '../../../content/portfolio';
+import { SKILL_CATEGORIES, getSkills, PORTFOLIO_PROJECTS } from '../../../content/portfolio';
 import Link from 'next/link';
 
 export const metadata = {

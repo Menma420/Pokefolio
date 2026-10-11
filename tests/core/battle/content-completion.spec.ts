@@ -7,7 +7,7 @@ import type { BattleContext, BattleDeps, ViewSnapshot } from '../../../src/core/
 import { getAuthoredTrees, getContentTree } from '../../../src/content/registry';
 import { getParty } from '../../../src/content/party';
 import { Audiences } from '../../../src/content/audiences';
-import type { AudienceId, CompiledNode, CompiledTree, NodeId, ProjectId } from '../../../src/domain/types';
+import type { AudienceId, CompiledNode, CompiledTree, ProjectId } from '../../../src/domain/types';
 
 const deps: BattleDeps = {getTree:getContentTree,getReactionPool:id=>Audiences[id]?.reactions,cooldownPolicy:{maxCooldown:10}};
 const context = (projectId:ProjectId,audienceId:AudienceId): BattleContext => ({projectId,audienceId,partyOrder:getParty(audienceId),view:'root',focusId:null,pageIndex:0,visited:new Set(),reactionCounts:{},reactionCooldown:0});

@@ -36,18 +36,13 @@ export class MusicService {
    let buffer=this.buffers.get(track);
    if(!buffer){const response=await this.load(manifest[track].src);if(!response.ok)throw new Error('Audio export unavailable');buffer=await audio.decodeAudioData(await response.arrayBuffer());this.buffers.set(track,buffer);}
    if(this.disposed||generation!==this.generation||document.hidden||settingsStore.getState().musicMuted)return;
-   if(track==='victory'&&this.offset>=5){this.finishVictory();return;}
+   if(track==='victory'&&this.offset>=buffer.duration){this.finishVictory();return;}
    const source=audio.createBufferSource(),gain=audio.createGain();source.buffer=buffer;source.loop=manifest[track].loop;gain.gain.value=0.22;source.connect(gain);gain.connect(audio.destination);
    if(track==='victory')source.onended=()=>{
     if(this.source!==source||this.disposed)return;
     source.disconnect();gain.disconnect();this.source=null;this.gain=null;this.finishVictory();
    };
-   const duration = track === 'victory' ? Math.max(0, 5 - this.offset) : undefined;
-   if (duration !== undefined) {
-      source.start(0,source.loop?this.offset%buffer.duration:this.offset, duration);
-   } else {
-      source.start(0,source.loop?this.offset%buffer.duration:this.offset);
-   }
+   source.start(0,source.loop?this.offset%buffer.duration:this.offset);
    this.started=audio.currentTime;this.source=source;this.gain=gain;
   }catch{if(generation===this.generation){this.failed.add(track);this.pause();if(track==='victory')this.finishVictory();}}
  }

@@ -1,5 +1,4 @@
 import { PROFILE, EXPERIENCE, BAG } from '../../../content/portfolio';
-import Link from 'next/link';
 
 export const metadata = {
   title: 'Resume',

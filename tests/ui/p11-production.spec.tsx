@@ -97,6 +97,18 @@ describe('P11 original art contracts',()=>{
  });
 });
 describe('P11 scene audio transport',()=>{
+ it('resumes victory beyond five seconds and finishes only at the decoded track duration',async()=>{
+  const sources:{loop:boolean;onended:(()=>void)|null;start:ReturnType<typeof vi.fn>;stop:ReturnType<typeof vi.fn>;connect:ReturnType<typeof vi.fn>;disconnect:ReturnType<typeof vi.fn>}[]=[];
+  const context={state:'running',currentTime:1,destination:{},decodeAudioData:vi.fn(async()=>({duration:12})),createBufferSource:()=>{const source={loop:false,onended:null,start:vi.fn(),stop:vi.fn(),connect:vi.fn(),disconnect:vi.fn()};sources.push(source);return source;},createGain:()=>({gain:{value:0},connect:vi.fn(),disconnect:vi.fn()})} as unknown as AudioContext;
+  const load=vi.fn(async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(4)} as Response)),music=new MusicService(new FakeClock(),()=>context,load),dispose=music.mount();
+  try{
+   music.playVictory();await vi.waitFor(()=>expect(sources).toHaveLength(1));expect(sources[0]!.start).toHaveBeenCalledWith(0,0);
+   Object.assign(context,{currentTime:8});settingsStore.getState().update({musicMuted:true});settingsStore.getState().update({musicMuted:false});
+   await vi.waitFor(()=>expect(sources).toHaveLength(2));expect(sources[1]!.start).toHaveBeenCalledWith(0,7);expect(music.getStatus().track).toBe('victory');
+   Object.assign(context,{currentTime:13});settingsStore.getState().update({musicMuted:true});settingsStore.getState().update({musicMuted:false});
+   await vi.waitFor(()=>expect(sources).toHaveLength(3));expect(sources[2]!.loop).toBe(true);expect(sources[2]!.start).toHaveBeenCalledWith(0,0);expect(music.getStatus().track).toBe('town');
+  }finally{dispose();}
+ });
  it('plays the victory track once, keeps it through world return, and resumes town on its actual end',async()=>{
   const sources:{loop:boolean;buffer:unknown;onended:(()=>void)|null;start:ReturnType<typeof vi.fn>;stop:ReturnType<typeof vi.fn>;connect:ReturnType<typeof vi.fn>;disconnect:ReturnType<typeof vi.fn>}[]=[];
   const context={state:'running',currentTime:1,destination:{},decodeAudioData:vi.fn(async()=>({duration:60})),createBufferSource:()=>{const source={loop:false,buffer:null,onended:null,start:vi.fn(),stop:vi.fn(),connect:vi.fn(),disconnect:vi.fn()};sources.push(source);return source;},createGain:()=>({gain:{value:0},connect:vi.fn(),disconnect:vi.fn()})} as unknown as AudioContext;
