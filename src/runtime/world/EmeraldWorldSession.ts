@@ -1,12 +1,14 @@
 import {FRAME_MS,type Clock,type ScheduledTask} from '../../core/clock';
 import type {EncounterCancellation} from '../../core/encounter';
-import {EmeraldWorld,type Body,DIRECTIONS} from '../../core/emerald/world';
+import {EmeraldWorld,type Body} from '../../core/emerald/world';
 import type {EmeraldBundle,Facing,SourceObject} from '../../core/emerald/types';
 import type {WorldAnchor,WorldSnapshot,WorldEntity,WorldNpc,TilePosition} from '../../core/world/types';
 import type {InputRouter,InputAction} from '../../core/input';
 import type {Direction,MapData} from '../../domain/map';
 import type {GameBridge} from '../gameBridge';
 import type {WorldSessionContract} from './WorldSessionContract';
+import {resolveSourceInteraction,runSourceInteraction,type SourceInteractionTarget} from '../../core/emerald/interactions';
+import {createNpcDialogueOverride} from './npcDialogueOverrides';
 
 export const toSourceFacing:Record<Direction,Facing>={up:'north',down:'south',left:'west',right:'east'};
 export const fromSourceFacing:Record<Facing,Direction>={north:'up',south:'down',west:'left',east:'right'};
@@ -22,6 +24,10 @@ export class EmeraldWorldSession implements WorldSessionContract {
  private talkingNpcId:string|null=null;private removeReady:()=>void;
  private maps=new Map<string,MapData>();
  private cancelScript:(()=>void)|undefined;
+ private interactionTarget:SourceInteractionTarget|null=null;
+ private interactionCancelled=false;
+ private interactionTasks=new Map<ScheduledTask,()=>void>();
+ private completedNpcDialogues=new Set<string>();
  constructor(bundle:EmeraldBundle,readonly challenger:SourceChallengerBinding|null,private bridge:GameBridge,private input:InputRouter,private clock:Clock){
   const source=challenger?bundle.maps[challenger.map]?.events.object_events[challenger.objectEventId-1]:undefined;
   if(challenger&&(!source||source.graphics_id!==challenger.graphicsId||source.script!==challenger.script))throw new Error('Source challenger metadata does not match the pinned actor');
@@ -60,22 +66,68 @@ export class EmeraldWorldSession implements WorldSessionContract {
   this.schedule(deadline+FRAME_MS);
  },Math.max(0,deadline-this.clock.now()));}
  private handleInput(action:InputAction){
-  if(this.world.paused||this.world.player.step||this.world.transition)return;
+  if(this.world.paused||this.world.player.step||this.world.transition||this.interactionTarget)return;
   if(actionFacing[action])this.pendingDirection=actionFacing[action];
   if(action==='B'){this.endInteraction();return;}
   if(action!=='A')return;
-  const p=this.world.player,d=DIRECTIONS[p.facing],actor=this.world.objects.find(o=>!o.step&&o.x===p.x+d.x&&o.y===p.y+d.y&&(o.elevation===p.elevation||o.elevation===0));
-  if(!actor)return;
-  actor.facing=({north:'south',south:'north',west:'east',east:'west'} as const)[p.facing];
-  this.talkingNpcId=this.entityId(actor);this.publish();
-  this.bridge.emit({type:'interactionRequested',mapId:this.world.renderer.map.name,targetId:this.talkingNpcId,targetType:'npc'});
-  // Non-portfolio source scripts are diagnostic data, not invented dialogue.
-  if(this.talkingNpcId!=='challenger')this.endInteraction();
+  const target=resolveSourceInteraction(this.world);if(!target)return;
+  this.talkingNpcId=target.actor?this.entityId(target.actor):target.id;
+  if(this.talkingNpcId==='challenger'){
+   target.actor!.facing=({north:'south',south:'north',west:'east',east:'west'} as const)[this.world.player.facing];
+  }else this.interactionTarget=target;
+  this.publish();this.bridge.emit({type:'interactionRequested',mapId:this.world.renderer.map.name,targetId:this.talkingNpcId,targetType:target.kind});
  }
- endInteraction(){this.talkingNpcId=null;this.publish();}
+ endInteraction(){this.interactionTarget=null;this.talkingNpcId=null;this.publish();}
+ cancelInteraction(){this.interactionCancelled=true;for(const [task,resolve] of this.interactionTasks){task.cancel();resolve();}this.interactionTasks.clear();}
+ private waitInteraction(frames:number){
+  if(this.interactionCancelled||this.disposed)return Promise.resolve();
+  return new Promise<void>(resolve=>{const task=this.clock.schedule(()=>{this.interactionTasks.delete(task);resolve();},frames*FRAME_MS);this.interactionTasks.set(task,resolve);});
+ }
+ async runInteraction(targetId:string,present:(text:string)=>Promise<void>){
+  const target=this.interactionTarget;
+  if(!target||target.id!==targetId)throw new Error('Source interaction target no longer owned');
+  this.interactionCancelled=false;Object.assign(this.world.interaction,{active:true,lastTarget:targetId,error:null});this.world.interaction.executions++;
+  this.publish();
+  const originalFacing=target.actor?.facing;
+  try{
+   while(target.actor?.step&&!this.interactionCancelled&&!this.disposed){await this.waitInteraction(1);this.world.advanceActor(target.actor);this.publish();}
+   const override=createNpcDialogueOverride(this.world,target,this.completedNpcDialogues);
+   await runSourceInteraction(this.world,target,{
+    say:(text,label)=>present(override?.text(label)??text),cancelled:()=>this.interactionCancelled||this.disposed,
+    facePlayer:()=>{if(target.actor){target.actor.facing=({north:'south',south:'north',west:'east',east:'west'} as const)[this.world.player.facing];this.publish();}},
+    effect:async(command,args)=>{
+     this.world.interaction.effects.push(`${command} ${args.join(', ')}`);
+     if(command==='fadescreen'){
+      if(!['FADE_TO_BLACK','FADE_FROM_BLACK'].includes(args[0]!))throw new Error(`Unsupported fade ${args[0]}`);
+      for(let i=1;i<=16&&!this.interactionCancelled&&!this.disposed;i++){this.world.interactionShade=args[0]==='FADE_TO_BLACK'?16-i:i;this.publish();await this.waitInteraction(1);}
+     }else if(command==='applywaitmovement'){
+      const program=this.world.bundle.interactions!.programs[args[1]!];
+      if(!target.actor||args[0]!==target.actor.source?.local_id||program?.join(',')!=='face_original_direction,step_end')throw new Error(`Unsupported source movement ${args.join(',')}`);
+      target.actor.facing=this.world.bundle.interactions!.initialFacings[target.actor.source!.movement_type]!;this.publish();await this.waitInteraction(1);
+     }else if(command==='delay')await this.waitInteraction(Number(args[0]));
+     else if(command==='playfanfare'){
+      // No source fanfare/audio driver in this slice. Expose the omission; don't
+      // substitute a UI click or mutate the approved audio/battle implementation.
+      this.world.interaction.effects.push(`AUDIO_UNAVAILABLE: ${args[0]}`);
+     }else if(command==='waitfanfare')return;
+     else if(command==='incrementgamestat'){const key=args[0]!;this.world.gameStats[key]=(this.world.gameStats[key]??0)+1;}
+     else if(command==='special'&&args[0]==='HealPlayerParty')this.world.interaction.effects.push('NO_POKEMON_PARTY: source heal has no interview-Party HP equivalent');
+     else throw new Error(`Unsupported source effect ${command} ${args.join(',')}`);
+    },
+   });
+   if(override&&!this.interactionCancelled&&!this.disposed)this.completedNpcDialogues.add(target.id);
+  }catch(error){this.world.interaction.error=String(error);throw error;}
+  finally{
+   this.world.interaction.active=false;this.world.interactionShade=16;
+   // Stationary source movement patterns resume facing their original direction.
+   // Wandering actors keep the conversation-facing pose until their next step.
+   if(target.actor&&originalFacing&&target.actor.source?.movement_type.startsWith('MOVEMENT_TYPE_FACE_'))target.actor.facing=originalFacing;
+   this.publish();
+  }
+ }
  async pause(){this.world.paused=true;this.pendingDirection=undefined;this.publish();return this.bridge.send({type:'pauseWorld'});}
  async resume(){await this.bridge.send({type:'resumeWorld'});this.world.paused=false;this.publish();}
- forceResume(){this.cancelScript?.();this.world.paused=false;this.talkingNpcId=null;this.pendingDirection=undefined;this.publish();}
+ forceResume(){this.cancelScript?.();this.cancelInteraction();this.interactionTarget=null;this.world.paused=false;this.talkingNpcId=null;this.pendingDirection=undefined;this.publish();}
  private body(id:string){const b=this.world.objects.find(o=>this.entityId(o)===id);if(!b)throw new Error(`Unknown source actor ${id}`);return b;}
  async faceEntity(id:string,facing:Direction){this.body(id).facing=toSourceFacing[facing];this.publish();await this.bridge.send({type:'faceEntity',entityId:id,facing});}
  showExclaim(entityId:string){return this.bridge.send({type:'showExclaim',entityId});}
@@ -98,5 +150,5 @@ export class EmeraldWorldSession implements WorldSessionContract {
   await this.bridge.send({type:'loadMap',mapId:anchor.mapId});await this.bridge.send({type:'setCameraRoom',roomId:anchor.roomId});await this.resume();
  }
  sourceObject(id:string):SourceObject|undefined{return this.body(id).source;}
- dispose(){this.disposed=true;this.timer?.cancel();this.cancelScript?.();this.removeReady();this.input.unregister('emerald-world-session');}
+ dispose(){this.disposed=true;this.timer?.cancel();this.cancelScript?.();this.cancelInteraction();this.removeReady();this.input.unregister('emerald-world-session');}
 }

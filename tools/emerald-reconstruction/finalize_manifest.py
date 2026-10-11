@@ -14,7 +14,8 @@ if __name__=='__main__':
  code=list(Path(__file__).parent.glob('*.py'))+list(Path(__file__).parent.glob('*.mjs'))+list(Path(__file__).parent.glob('*.ts'))
  for directory in ['src/core/emerald','src/game/emerald','src/app/dev/emerald']:
   code.extend(p for p in (ROOT/directory).rglob('*') if p.suffix in ['.ts','.tsx'])
- for name in ['src/app/GameShell.tsx','src/app/page.tsx','src/runtime/Orchestrator.ts','src/runtime/world/EmeraldWorldSession.ts','src/runtime/world/WorldSessionContract.ts','src/runtime/world/sourceChallenger.ts']:
+ for name in ['src/app/GameShell.tsx','src/app/page.tsx','src/runtime/Orchestrator.ts','src/runtime/world/EmeraldWorldSession.ts','src/runtime/world/WorldSessionContract.ts','src/runtime/world/sourceChallenger.ts','src/runtime/world/npcDialogueOverrides.ts','src/content/world/npc-easter-eggs.json','src/ui/kit/text.ts']:
   code.append(ROOT/name)
+ code.extend(p for p in (ROOT/'tests/emerald-reconstruction').rglob('*') if p.suffix in ['.ts','.py'])
  manifest['toolchain']=[{'path':str(p.relative_to(ROOT)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(code)]
  (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');print('Provenance:',len(manifest['inputs']),'source inputs;',len(manifest['outputs']),'private outputs')

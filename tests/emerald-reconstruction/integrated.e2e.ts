@@ -1,6 +1,8 @@
 import {test,expect,type Page,type Download} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
+import {INTRO_NARRATION} from '../../src/content/narrative';
+import {paginateDialogue} from '../../src/ui/kit/text';
 
 const canvas='canvas[data-world-art="source-emerald"]';
 const state=(page:Page)=>page.getByRole('status',{name:'Game state'});
@@ -124,3 +126,38 @@ test('normal source root Bag opens the original PDF safely and web routes remain
  const response=await page.request.get('/documents/Uttkarsh_Malviya.pdf');expect(createHash('sha256').update(await response.body()).digest('hex')).toBe('1c2a144d5d245a874879f4423c7ca87831eed7002a3efa8435d8e58b65669f5e');await tab.close();
  for(const path of ['/about','/projects','/projects/pokefolio','/skills','/experience','/resume']){const r=await page.request.get(path);expect(r.status()).toBe(200);expect(await r.text()).toContain('<main');}
 });
+
+for(const [name,path] of [['source','/'],['legacy','/?world=legacy']] as const){
+ test(`fresh ${name} startup stays revealed without the double blackout`,async({page})=>{
+  await page.goto(path);
+  await expect(page.getByRole('button',{name:'PRESS START'})).toBeEnabled({timeout:90000});
+  // Let Phaser boot with real time before controlling the transition clock.
+  await expect.poll(()=>page.locator('canvas[data-world-raster]').evaluate(node=>{const canvas=node as HTMLCanvasElement;return canvas.getContext('2d')!.getImageData(0,0,canvas.width,canvas.height).data.some((v,i)=>i%4!==3&&v!==0);})).toBe(true);
+  await page.clock.install();await page.clock.pauseAt(await page.evaluate(()=>Date.now()+100));await page.clock.runFor(300);
+  await page.keyboard.press('Enter');await page.clock.runFor(600);await expect(state(page)).toContainText('Flow INTRO');
+  for(const line of INTRO_NARRATION)for(const text of paginateDialogue(line,210,8)){
+   const reveal=page.getByRole('button',{name:'Reveal dialogue'});if(await reveal.isVisible())await reveal.click();
+   await expect(page.locator('div[role="status"].sr-only')).toHaveText(text);
+   await page.getByRole('button',{name:'Continue dialogue'}).click();await page.clock.runFor(1);
+  }
+  const transition=page.locator('[data-transition="intro-reveal"]');await expect(transition).toHaveCount(1);
+  const proof:object[]=[];let revealedHash='';const label=process.env.STARTUP_EVIDENCE_LABEL??'after';
+  for(const target of [3,42,84,120]){
+   while(Number(await transition.getAttribute('data-frame'))<target)await page.clock.runFor(5);
+   const frame=Number(await transition.getAttribute('data-frame'));
+   const opacity=await transition.evaluate(node=>Number((node.firstElementChild as HTMLElement).style.opacity));
+   const filename=`startup-${name}-${label}-${frame}.png`;
+   await mkdir(output,{recursive:true});const bytes=await page.screenshot({path:`${output}/${filename}`});
+   const hash=createHash('sha256').update(bytes).digest('hex');if(!revealedHash)revealedHash=hash;
+   proof.push({filename,frame,opacity,hash,viewportCSS:page.viewportSize(),dpr:await page.evaluate(()=>devicePixelRatio),scale:await page.getByRole('region',{name:'Game frame'}).first().getAttribute('data-scale'),flow:await state(page).textContent()});
+   expect.soft(opacity,`revealed world must remain visible at frame ${frame}`).toBe(0);
+   expect.soft(hash,`paused world pixels must stay unchanged at frame ${frame}`).toBe(revealedHash);
+  }
+  await writeFile(`${output}/startup-${name}-${label}.json`,JSON.stringify(proof,null,2));
+  await page.clock.runFor(1000);await expect(state(page)).toContainText('Flow OVERWORLD');await expect(transition).toHaveCount(0);
+  expect(await page.evaluate(()=>JSON.parse(sessionStorage.getItem('uw.progress.v1')!).introSeen)).toBe(true);
+  await page.clock.resume();await page.reload();await expect(page.getByRole('button',{name:'PRESS START'})).toBeEnabled({timeout:90000});
+  await page.clock.pauseAt(await page.evaluate(()=>Date.now()+100));await page.clock.runFor(300);await page.keyboard.press('Enter');await page.clock.runFor(700);
+  await expect(state(page)).toContainText('Flow OVERWORLD');await expect(page.getByRole('button',{name:/dialogue/})).toHaveCount(0);await expect(transition).toHaveCount(0);
+ });
+}

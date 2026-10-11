@@ -8,6 +8,8 @@ export interface WorldSessionContract {
  isInterior(mapId:string):boolean;
  getSnapshot():WorldSnapshot;
  endInteraction():void;
+ runInteraction?(targetId:string,present:(text:string)=>Promise<void>):Promise<void>;
+ cancelInteraction?():void;
  pause():Promise<unknown>;
  resume():Promise<void>;
  faceEntity(entityId:string,facing:Direction):Promise<void>;

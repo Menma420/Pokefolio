@@ -5,6 +5,7 @@ import argparse, hashlib, json, re, struct, subprocess, sys
 from PIL import Image
 from decode_map import discover_map, decode_map_bin, write_csv, write_debug_pngs
 from load_scripts import load_edits
+from extract_interactions import extract_interactions
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 PIN=json.loads((HERE/'source-pin.json').read_text())
@@ -154,7 +155,8 @@ int main(int argc,char **argv){{if(argc!=8)return 2;int w=atoi(argv[3]),h=atoi(a
   flags.update(['FLAG_RESCUED_BIRCH','FLAG_SYS_POKEDEX_GET','FLAG_SYS_B_DASH','FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK','FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK','FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_1','FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_2','FLAG_HIDE_PLAYERS_HOUSE_DAD'])
   flags.update(['FLAG_HIDE_ROUTE_101_BIRCH_ZIGZAGOON_BATTLE','FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG','FLAG_HIDE_ROUTE_101_ZIGZAGOON','FLAG_HIDE_ROUTE_101_BIRCH','FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM','FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_SIBLING','FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM'])
   flags.discard('FLAG_HIDE_LITTLEROOT_TOWN_FAT_MAN');flags.discard('FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH')
-  flags.update(['FLAG_RECEIVED_RUNNING_SHOES','FLAG_VISITED_LITTLEROOT_TOWN'])
+  # players_house.inc sets TV_HOME during the already-completed intro (state 7).
+  flags.update(['FLAG_RECEIVED_RUNNING_SHOES','FLAG_VISITED_LITTLEROOT_TOWN','FLAG_SYS_TV_HOME'])
   self.actor('OBJ_EVENT_GFX_BRENDAN_NORMAL')
   for m in maps.values():
    for obj in m['events']['object_events']:
@@ -178,7 +180,8 @@ int main(int argc,char **argv){{if(argc!=8)return 2;int w=atoi(argv[3]),h=atoi(a
     path=metadata[warp['dest_map']];target=json.loads(self.read(str(path.relative_to(self.repo))));index=int(warp['dest_warp_id']);anchor=target['warp_events'][index]
     warp_checks.append({'map':name,'sourceWarpIndex':i,'destinationSourcePath':str(path.relative_to(self.repo)),'destinationWarpIndex':index,'destinationAnchor':anchor,'runtimeIncluded':target['id'] in {v['id'] for v in maps.values()}})
   self.save('warp-destination-validation.json',warp_checks,'resolve all warp IDs against actual source metadata, including unimplemented second floors')
-  self.save('bundle.json',bundle,'normalized indexed source runtime input; no screenshots')
+  bundle['interactions']=extract_interactions(self.repo,maps,self.read)
+  self.save('bundle.json',bundle,'normalized indexed source runtime input and bounded interaction scripts; no screenshots')
   self.save('source-pin.json',PIN,'pinned source provenance')
   self.save('gbagfx-checks.json',self.tool_checks,'actual upstream converter comparisons')
   manifest={'source':PIN,'inputs':list(self.inputs.values()),'outputs':self.outputs.copy(),'commands':self.commands,'python':sys.version.split()[0],'toolVersions':{'gcc':subprocess.check_output(['gcc','--version'],text=True).splitlines()[0]},'distribution':'PRIVATE/LOCAL; no public assets or static imports'}

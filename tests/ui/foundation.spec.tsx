@@ -72,3 +72,12 @@ it('reserves the field indicator cell on line two without losing authored words'
  const pages=paginateDialogue('Word Word Word Word Word Word',60,8);expect(pages).toEqual(['Word Word\nWord','Word Word\nWord']);
  expect(pages.flatMap(page=>page.split('\n').map((line,index)=>({line,index}))).every(({line,index})=>[...line].reduce((sum,char)=>sum+glyphAdvance(char),0)<=60-(index===1?8:0))).toBe(true);
 });
+
+it('reveals the starting world once and never blacks it out again during the intro hold',()=>{
+ const clock=new FakeClock();const states:Array<{frame:number;opacity:number}>=[];const complete=vi.fn();
+ new TransitionDirector(clock).play('intro-reveal',false,frame=>states.push(frame),complete);
+ clock.tick(126*FRAME_MS+1);
+ expect(states[0]?.opacity).toBe(1);
+ expect(states.filter(frame=>frame.frame>=2).every(frame=>frame.opacity===0)).toBe(true);
+ expect(complete).toHaveBeenCalledOnce();
+});

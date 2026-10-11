@@ -63,6 +63,26 @@ initial logical frame for deterministic inspection. Tests require local extracte
 data explicitly; `pnpm emerald:test` fails if it is absent. Normal public tests
 skip the private-data group and still run synthetic renderer tests.
 
+## Source interactions
+
+In normal local gameplay, face an adjacent NPC/sign/furniture target and press
+Enter/A. Source object events, background events and metatile behavior share one
+resolver; the source script selects the original text and required flag/variable
+branch. Enter/A reveals/advances pages; Backspace/B cancels and releases movement.
+The current checkpoint supports all eight ordinary NPCs, twenty background events,
+both TVs and the running-shoes manual. The Route101 Youngster remains the separate
+portfolio challenger adapter. No ordinary actor is turned into a trainer.
+
+`pnpm emerald:extract` also compiles reachable interaction programs/texts from the
+pinned source into the ignored bundle. Unknown active commands are reported with
+source file/label, never filtered out. This is a bounded interaction subset, not
+a full story VM; later TV/news, item/Pokédex/Match Call branches remain explicit
+limitations. The declared completed-intro checkpoint includes `FLAG_SYS_TV_HOME`,
+matching its source initialization. Source Pokémon healing/fanfares have explicit
+diagnostics because the portfolio has neither Pokémon HP nor a source audio driver.
+See [the interaction report](../../docs/EMERALD-SOURCE-INTERACTIONS-REPORT.md) for
+identities, tests, screenshots and exact unsupported scope.
+
 ## Scope and provenance
 
 Five source maps are decoded: Littleroot (20×20), Route 101 (20×20), both houses'
@@ -110,7 +130,7 @@ visibility/progress overrides. Source event coordinates/scripts remain intact.
 NPC wandering uses source direction order, ranges, delays and RNG, with adapter
 task scheduling. Walk poses/flip commands and 16-frame normal steps are sourced.
 
-Still unproven/unimplemented: full script VM beyond that selected ON_LOAD subset and LT-00–LT-04 cutscenes, source
+Still unproven/unimplemented: full script VM beyond the selected ON_LOAD/interaction subsets and LT-00–LT-04 cutscenes, source
 door graphic/task-cycle timing, turn-in-place timing, exact OAM allocation and
 field-effect/shadow scheduling, weather/palette fade lifecycle, second-floor
 warps, Route101→Oldale and ledge jumps. Unsupported interior destinations are
@@ -128,3 +148,25 @@ LT-06/LT-07 states, then compare using `--kind authentic-emulator`. Such manifes
 must also contain emulator identity and ROM SHA256. The comparison writes an
 exact pixel count and a magenta mismatch PNG; it rejects non-native dimensions.
 After this gate, port the missing script/transition task subset and LT-00–LT-03.
+
+### Original PokéFolio NPC dialogue profile
+
+Normal local gameplay replaces only the eight ordinary NPCs' displayed messages
+with [`src/content/world/npc-easter-eggs.json`](../../src/content/world/npc-easter-eggs.json).
+These are original PokéFolio-authored Easter eggs, not Emerald source dialogue.
+The interpreter supplies each executed source text label to its host; the runtime
+adapter verifies map/event/graphic/script identity and substitutes authored pages.
+Source programs, flags, effects and extracted strings remain unchanged. Mom's
+`TakeCareHoney` message uses the post-rest slot, including on repeat visits.
+First/repeat history is local to the world session, survives map changes, and is
+recorded only after successful completion. The Route 101 challenger is excluded.
+
+`pnpm emerald:test` includes the override regressions. Regenerate the private NPC
+location/source/displayed-dialogue catalogue with:
+
+```sh
+node --import tsx tools/emerald-reconstruction/write_npc_catalogue.mjs
+```
+
+The report and screenshots remain in the existing
+`artifacts/emerald-source/phase-p0-interactions/` folder.

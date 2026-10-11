@@ -1,6 +1,8 @@
 # Source-driven Littleroot implementation — 2026-10-11
 
-> **Latest normal-game integration:** see [Littleroot integration report](EMERALD-LITTLEROOT-INTEGRATION-REPORT.md). The report below records the earlier diagnostic-only increment.
+> Canonical local phase report, screenshots and checks: [open the phase folder](../artifacts/emerald-source/phase-reconstruction/REPORT.md). The full NPC location/dialogue catalogue is included in the private P0 report. This source-safe repository copy preserves the implementation history; extracted dialogue/assets stay ignored.
+
+> **Latest normal-game integration:** see [Littleroot integration report](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-integration/REPORT.md). The report below records the earlier diagnostic-only increment.
 
 ## Status
 
@@ -20,17 +22,17 @@ independent compositor do not establish equality with an authentic emulator.
 | Evidence | File |
 | --- | --- |
 | Reproduction guide | [README](/home/menma/Downloads/Portfolio/tools/emerald-reconstruction/README.md) |
-| Source audit and assumption corrections | [Source audit](/home/menma/Downloads/Portfolio/artifacts/emerald-source/SOURCE_AUDIT.md) |
+| Source audit and assumption corrections | [Source audit](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-reconstruction/support/SOURCE_AUDIT.md) |
 | Source and generated-output provenance | [Manifest](/home/menma/Downloads/Portfolio/artifacts/emerald-source/manifest.json) |
 | Consolidated check results | [Check results](/home/menma/Downloads/Portfolio/artifacts/emerald-source/check-results.json) |
-| Native-resolution capture | [240×160 screenshot](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/town-1x-native.png) |
-| Rendered town at 4× | [Town screenshot](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/town-4x.png) |
+| Native-resolution capture | [240×160 screenshot](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-reconstruction/screenshots/town-1x-native.png) |
+| Rendered town at 4× | [Town screenshot](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-reconstruction/screenshots/town-4x.png) |
 | Full source map preview | [Full map](/home/menma/Downloads/Portfolio/artifacts/emerald-source/LittlerootTown/metatile-map.png) |
 | Decoded metatile atlas | [Atlas](/home/menma/Downloads/Portfolio/artifacts/emerald-source/LittlerootTown/metatile-atlas.png) |
-| Native comparison counts | [Pixel comparison](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/independent-diff.json) |
-| Native comparison image | [Zero-difference image](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/independent-diff.png) |
-| Physical-scale and color checks | [Physical validation](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/physical-validation.json) |
-| Authentic source-build blocker | [Build log](/home/menma/Downloads/Portfolio/artifacts/emerald-source/source-build-attempt.log) |
+| Native comparison counts | [Pixel comparison](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-reconstruction/screenshots/independent-diff.json) |
+| Native comparison image | [Zero-difference image](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-reconstruction/screenshots/independent-diff.png) |
+| Physical-scale and color checks | [Physical validation](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-reconstruction/screenshots/physical-validation.json) |
+| Authentic source-build blocker | [Build log](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-reconstruction/checks/source-build-attempt.log) |
 
 These evidence files are private local outputs. Sharing the Markdown file alone
 does not include the extracted assets or screenshots.

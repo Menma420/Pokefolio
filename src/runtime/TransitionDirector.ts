@@ -21,7 +21,8 @@ export function transitionFrame(type:TransitionKind,frame:number,reduced=false):
  else if(type==='cut') opacity=f===0?1:0;
  else if(type==='fade-in') opacity=[1,0.67,0.34,0][Math.min(3,Math.floor(f/2))]!;
  else if(type==='title-start') {blink=f<12&&Math.floor(f/3)%2===1; if(f>=12)opacity=fadeOpacity(f-12,8);}
- else if(type==='intro-reveal') opacity=(f<2||f>=42&&f<44||f>=84&&f<86)?1:0;
+ // Reveal once; the remaining intro hold must not re-cover the visible world.
+ else if(type==='intro-reveal') opacity=f<2?1:0;
  else opacity=fadeOpacity(f,type==='door'?6:8);
  return {frame:f,opacity,coverage,flash,offset,blink};
 }

@@ -115,7 +115,7 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
       {mode === 'INTRO' && state?.dialogue && <div className="absolute inset-0 z-20"><PixelArtwork name="intro-background" /><PixelArtwork name="intro-uttkarsh" x={88} y={26} label="Uttkarsh welcomes you" /><DialogueBox text={state.dialogue} speed="normal" onComplete={() => orchestrator?.completeDialogue()} /></div>}
 
       {(mode === 'ENCOUNTER' || mode === 'AUDIENCE') && state?.dialogue && <DialogueBox text={state.dialogue} speaker="VISITOR" onComplete={() => orchestrator?.completeDialogue()} />}
-      {(mode === 'OVERWORLD' || mode === 'INTERIOR') && state?.dialogue && <DialogueBox text={state.dialogue} dismissible onComplete={() => orchestrator?.completeDialogue()} />}
+      {(mode === 'OVERWORLD' || mode === 'INTERIOR') && state?.dialogue && <DialogueBox text={state.dialogue} dismissible onBack={() => orchestrator?.cancelWorldDialogue()} onComplete={() => orchestrator?.completeDialogue()} />}
 
       {mode === 'AUDIENCE' && state?.audiencePrompt && (
         <>

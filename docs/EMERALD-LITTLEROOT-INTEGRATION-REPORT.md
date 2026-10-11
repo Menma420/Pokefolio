@@ -1,5 +1,9 @@
 # Littleroot normal-game integration
 
+> Canonical local phase report, screenshots and checks: [open the phase folder](../artifacts/emerald-source/phase-integration/REPORT.md). The full NPC location/dialogue catalogue is included in the private P0 report. This source-safe repository copy preserves the implementation history; extracted dialogue/assets stay ignored.
+
+Latest interaction follow-up: [Source NPC and object interactions](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-p0-interactions/REPORT.md). The original integration results below are retained as historical evidence.
+
 Status: working local/private integration; repository-wide checks have the caveats below. This does not establish emulator-pixel equality.
 
 ## Run
@@ -121,13 +125,13 @@ Visual review: inspected actual normal-root town, challenger dialogue, audience,
 
 Review links:
 
-- [Normal local entry, 4×](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/integrated-town-4x.png)
-- [Route101 challenger](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/integrated-challenger-dialogue.png)
-- [Actual battle entry](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/integrated-actual-battle.png)
-- [Answer navigation](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/integrated-answer.png)
-- [Exact world return](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/integrated-exact-return.png)
-- [Native 1×](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/integrated-town-1x.png)
-- [Largest-fit desktop](/home/menma/Downloads/Portfolio/artifacts/emerald-source/screenshots/integrated-town-largest-fit.png)
+- [Normal local entry, 4×](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-integration/screenshots/integrated-town-4x.png)
+- [Route101 challenger](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-integration/screenshots/integrated-challenger-dialogue.png)
+- [Actual battle entry](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-integration/screenshots/integrated-actual-battle.png)
+- [Answer navigation](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-integration/screenshots/integrated-answer.png)
+- [Exact world return](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-integration/screenshots/integrated-exact-return.png)
+- [Native 1×](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-integration/screenshots/integrated-town-1x.png)
+- [Largest-fit desktop](/home/menma/Downloads/Portfolio/artifacts/emerald-source/phase-integration/screenshots/integrated-town-largest-fit.png)
 
 ## Files changed in this integration
 

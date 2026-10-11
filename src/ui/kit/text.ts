@@ -5,6 +5,7 @@ export function glyphAdvance(char: string): number {
  return /[0-9]/.test(char) ? 6 : Math.max(3, rows.split('/')[0]!.length+1);
 }
 export function paginateDialogue(text: string, width: number, secondLineInset=0): string[] {
+ if(text.includes('\f'))return text.split('\f').flatMap(part=>paginateDialogue(part,width,secondLineInset));
  const lines: string[] = [];
  for (const paragraph of text.split('\n')) {
   let line=''; let used=0;

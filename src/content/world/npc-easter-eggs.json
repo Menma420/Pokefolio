@@ -1,0 +1,371 @@
+{
+  "schemaVersion": "1.0",
+  "contentKind": "pokefolio-authored-dialogue-overrides",
+  "sourceCommit": "731ad5bfd6e6f265508d0efcca0ba42f9dcf5881",
+  "notes": [
+    "All text is original PokéFolio-authored Easter-egg dialogue, not Pokémon Emerald source text.",
+    "Apply as a text override layer only. Keep source identities, interaction geometry, movement, flags, branches, action order, and supported effects unchanged.",
+    "Each page has at most two explicit lines. The special Route 101 Youngster challenger is excluded.",
+    "Mom's messages must preserve ordering around the existing rest effect."
+  ],
+  "npcs": [
+    {
+      "id": "littleroot-twin",
+      "name": "Twin",
+      "map": "LittlerootTown",
+      "objectEventId": 1,
+      "graphicsId": "OBJ_EVENT_GFX_TWIN",
+      "script": "LittlerootTown_EventScript_Twin",
+      "easterEggTheme": "multi-domain builder; many projects",
+      "firstInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "You saved PROF. BIRCH!",
+                "I'm so glad!"
+              ],
+              [
+                "They say you collect projects",
+                "from all sorts of fields."
+              ],
+              [
+                "Not Pokémon, not badges—",
+                "just one idea after another!"
+              ]
+            ]
+          }
+        ]
+      },
+      "repeatInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "Still chasing new ideas?",
+                "Try finishing one, too!"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "littleroot-fat-man",
+      "name": "Fat Man",
+      "map": "LittlerootTown",
+      "objectEventId": 2,
+      "graphicsId": "OBJ_EVENT_GFX_FAT_MAN",
+      "script": "LittlerootTown_EventScript_FatMan",
+      "easterEggTheme": "PC storage, logs, backups, debugging",
+      "firstInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "This PC stores items and data.",
+                "The power of science!"
+              ],
+              [
+                "A builder named Uttkarsh says",
+                "good logs help catch bugs."
+              ],
+              [
+                "I thought logs were fallen trees.",
+                "Computers are very strange!"
+              ]
+            ]
+          }
+        ]
+      },
+      "repeatInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "Remember to back up your work.",
+                "Even genius needs a backup."
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "littleroot-boy-2",
+      "name": "Boy 2",
+      "map": "LittlerootTown",
+      "objectEventId": 3,
+      "graphicsId": "OBJ_EVENT_GFX_BOY_2",
+      "script": "LittlerootTown_EventScript_Boy",
+      "easterEggTheme": "reproduce bugs, inspect logs, iterate",
+      "firstInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "PROF. BIRCH studies here,",
+                "then tests ideas in the wild."
+              ],
+              [
+                "I hear Uttkarsh hunts bugs",
+                "the same way: reproduce them,"
+              ],
+              [
+                "read the logs, try again.",
+                "That's real field research!"
+              ]
+            ]
+          }
+        ]
+      },
+      "repeatInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "A bug that won't reproduce",
+                "is a very sneaky Pokémon."
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "brendans-house-mom",
+      "name": "Mom",
+      "map": "LittlerootTown_BrendansHouse_1F",
+      "objectEventId": 1,
+      "graphicsId": "OBJ_EVENT_GFX_MOM",
+      "script": "PlayersHouse_1F_EventScript_Mom",
+      "easterEggTheme": "gets absorbed in building; rest and downtime",
+      "firstInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "You've been building again,",
+                "haven't you, honey?"
+              ],
+              [
+                "Rest a little. A fresh mind",
+                "spots what tired eyes miss."
+              ]
+            ]
+          },
+          {
+            "pages": [
+              [
+                "Your work will still be there",
+                "after a little downtime."
+              ]
+            ]
+          }
+        ],
+        "preserveSourceEffectOrder": true
+      },
+      "repeatInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "Save your work, honey.",
+                "Even great builders need sleep."
+              ]
+            ]
+          },
+          {
+            "pages": [
+              [
+                "Your work will still be there",
+                "after a little downtime."
+              ]
+            ]
+          }
+        ],
+        "preserveSourceEffectOrder": true
+      }
+    },
+    {
+      "id": "mays-house-rival-mom",
+      "name": "Rival's Mom",
+      "map": "LittlerootTown_MaysHouse_1F",
+      "objectEventId": 4,
+      "graphicsId": "OBJ_EVENT_GFX_WOMAN_4",
+      "script": "RivalsHouse_1F_EventScript_RivalMom",
+      "easterEggTheme": "backend services, integrations, Acko Clinic",
+      "firstInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "My husband studies Pokémon",
+                "out in the field."
+              ],
+              [
+                "A young engineer named Uttkarsh",
+                "builds services that work together."
+              ],
+              [
+                "He calls one project Acko Clinic.",
+                "Sounds like a place for Pokémon!"
+              ]
+            ]
+          }
+        ]
+      },
+      "repeatInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "One service may look healthy,",
+                "while its neighbour is in trouble."
+              ],
+              [
+                "You have to check the whole",
+                "journey, not just one step."
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mays-house-rival-sibling",
+      "name": "Rival's Sibling",
+      "map": "LittlerootTown_MaysHouse_1F",
+      "objectEventId": 6,
+      "graphicsId": "OBJ_EVENT_GFX_NINJA_BOY",
+      "script": "RivalsHouse_1F_EventScript_RivalSibling",
+      "easterEggTheme": "chess and thinking ahead",
+      "firstInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "Hey, neighbor!",
+                "I heard you play chess."
+              ],
+              [
+                "I tried planning three moves ahead…",
+                "then forgot the first one!"
+              ]
+            ]
+          }
+        ]
+      },
+      "repeatInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "Practice beats a perfect plan.",
+                "Even in chess. Probably."
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "birchs-lab-aide",
+      "name": "Birch's Aide",
+      "map": "LittlerootTown_ProfessorBirchsLab",
+      "objectEventId": 1,
+      "graphicsId": "OBJ_EVENT_GFX_SCIENTIST_1",
+      "script": "LittlerootTown_ProfessorBirchsLab_EventScript_Aide",
+      "easterEggTheme": "observability: logs, metrics, traces",
+      "firstInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "We track Pokémon habitats,",
+                "numbers, and changes over time."
+              ],
+              [
+                "Uttkarsh calls it observability:",
+                "logs, metrics, and traces…"
+              ],
+              [
+                "so a problem can't hide",
+                "forever in the tall grass."
+              ]
+            ]
+          }
+        ]
+      },
+      "repeatInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "If an experiment fails,",
+                "record what happened."
+              ],
+              [
+                "That's how the next one",
+                "gets a little better."
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "birchs-lab-professor-birch",
+      "name": "Professor Birch",
+      "map": "LittlerootTown_ProfessorBirchsLab",
+      "objectEventId": 2,
+      "graphicsId": "OBJ_EVENT_GFX_PROF_BIRCH",
+      "script": "LittlerootTown_ProfessorBirchsLab_EventScript_Birch",
+      "easterEggTheme": "scientific method and breadth of projects",
+      "firstInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "Good science begins with a",
+                "question, not an assumption."
+              ],
+              [
+                "Observe. Form a hypothesis.",
+                "Test it in the field."
+              ],
+              [
+                "Then follow the evidence.",
+                "Never let a guess win!"
+              ],
+              [
+                "I've heard Uttkarsh builds",
+                "projects across many fields…"
+              ],
+              [
+                "each one teaches him",
+                "how the pieces fit together."
+              ]
+            ]
+          }
+        ]
+      },
+      "repeatInteraction": {
+        "messages": [
+          {
+            "pages": [
+              [
+                "Curiosity starts the journey.",
+                "Evidence tells you where to go."
+              ],
+              [
+                "That works for software",
+                "as well as Pokémon, I suspect."
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -92,6 +92,7 @@ export class GameOrchestrator<W extends WorldSessionContract=WorldSession> {
         if (progressStore.getState().firstEncounterDone) void this.beginEncounter(true);
         else this.tryFirstEncounter(); // WorldSim has already turned the NPC toward the player.
       }
+      else if (this.world.runInteraction) void this.presentSourceInteraction(event.targetId);
       else if (WORLD_FLAVOR[event.targetId]) void this.presentWorldFlavor(event.targetId);
     }));
     this.removers.push(bridge.onEvent('assetFailed', (event) => {
@@ -143,6 +144,11 @@ export class GameOrchestrator<W extends WorldSessionContract=WorldSession> {
     const resolve = this.dialogueResolve;
     this.dialogueResolve = null;
     resolve?.();
+  }
+
+  cancelWorldDialogue():void {
+    this.world.cancelInteraction?.();
+    this.completeDialogue();
   }
 
   setAudienceCursor(index:number):void {if(this.choiceResolve)this.patch({audienceCursor:Math.max(0,Math.min(this.value.audienceChoices.length-1,index))});}
@@ -212,6 +218,24 @@ export class GameOrchestrator<W extends WorldSessionContract=WorldSession> {
     if (distance <= 2) this.hints.firstInteract();
   }
 
+  private async presentSourceInteraction(targetId:string) {
+    if(this.disposed||this.flavorActive||this.encounterActive||!['OVERWORLD','INTERIOR'].includes(this.flow.state.mode))return;
+    this.flavorActive=true;this.input.clearHeld();this.patch({error:null});
+    const remove=globalDialogueService.subscribe(request=>{if(!this.disposed)this.patch({dialogue:request?.text??null});});
+    try{
+      await this.world.pause();if(this.disposed)return;
+      await this.world.runInteraction!(targetId,async text=>{
+        if(this.disposed)return;
+        this.dialogueResolve=()=>globalDialogueService.completeActive();
+        await globalDialogueService.request(text);
+      });
+    }catch(error){if(!this.disposed){console.warn('Source interaction failed',error);this.patch({error:'Source interaction unavailable. See development diagnostics.'});}}
+    finally{
+      remove();this.dialogueResolve=null;this.flavorActive=false;
+      if(!this.disposed){this.world.endInteraction();this.patch({dialogue:null});this.input.clearHeld();await this.world.resume();}
+    }
+  }
+
   private async presentWorldFlavor(targetId: string) {
     if (this.disposed || this.flavorActive || !['OVERWORLD', 'INTERIOR'].includes(this.flow.state.mode)) return;
     const flavor = WORLD_FLAVOR[targetId];
@@ -241,7 +265,7 @@ export class GameOrchestrator<W extends WorldSessionContract=WorldSession> {
   }
 
   private tryFirstEncounter() {
-    if (this.disposed || this.encounterActive || this.flow.state.mode !== 'OVERWORLD' || progressStore.getState().firstEncounterDone) return;
+    if (this.disposed || this.flavorActive || this.encounterActive || this.flow.state.mode !== 'OVERWORLD' || progressStore.getState().firstEncounterDone) return;
     const snapshot = this.world.getSnapshot();
     const player = snapshot.state.player;
     if (player.movement) return;

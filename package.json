@@ -17,7 +17,7 @@
     "test:e2e": "playwright test",
     "validate": "python3 scripts/audit-content-source.py && tsx scripts/validate-content.ts",
     "emerald:extract": "python3 tools/emerald-reconstruction/run.py extract",
-    "emerald:test": "python3 tools/emerald-reconstruction/run.py test && EMERALD_TEST_SOURCE=1 vitest run tests/emerald-reconstruction/runtime.test.ts tests/emerald-reconstruction/integrated-runtime.test.ts",
+    "emerald:test": "python3 tools/emerald-reconstruction/run.py test && EMERALD_TEST_SOURCE=1 vitest run tests/emerald-reconstruction/runtime.test.ts tests/emerald-reconstruction/integrated-runtime.test.ts tests/emerald-reconstruction/interactions.test.ts tests/emerald-reconstruction/npc-overrides.test.ts",
     "emerald:dev": "EMERALD_LOCAL=1 next dev --webpack --hostname 127.0.0.1 --port 3101",
     "emerald:e2e": "playwright test --config tools/emerald-reconstruction/playwright.config.ts",
     "game:local": "EMERALD_LOCAL=1 next dev --webpack --hostname 127.0.0.1 --port 3101"
