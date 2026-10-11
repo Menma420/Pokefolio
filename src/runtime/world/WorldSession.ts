@@ -6,12 +6,13 @@ import { Direction, MapData, NpcRoute } from '../../domain/map';
 import { GameBridge } from '../gameBridge';
 import { TilePosition, WorldAnchor, WorldDirection, WorldEvent, WorldSnapshot } from '../../core/world/types';
 import { DEFAULT_STEP_TICKS, WorldSim, WORLD_TICK_MS } from '../../core/world/worldSim';
+import type {WorldSessionContract} from './WorldSessionContract';
 
 const DIRECTION_ACTIONS: Array<[InputAction, WorldDirection]> = [
   ['UP', 'up'], ['RIGHT', 'right'], ['DOWN', 'down'], ['LEFT', 'left'],
 ];
 
-export class WorldSession {
+export class WorldSession implements WorldSessionContract {
   readonly sim: WorldSim;
   private timer: ScheduledTask | null = null;
   private started = false;
@@ -26,7 +27,7 @@ export class WorldSession {
 
   constructor(
     private readonly maps: ReadonlyMap<string, MapData>,
-    startMapId: string,
+    readonly startMapId: string,
     private readonly bridge: GameBridge,
     private readonly input: InputRouter,
     private readonly clock: Clock = gameClock,
@@ -37,6 +38,10 @@ export class WorldSession {
     this.removeReady = bridge.onEvent('worldReady', () => { void this.initialize(); });
     input.register('world-session', 'WORLD', (action) => this.handleInput(action));
   }
+
+  isInterior(mapId:string){return mapId!==this.startMapId;}
+  getSnapshot(){return this.sim.getSnapshot();}
+  endInteraction(){this.sim.dispatch({type:'endInteraction'});this.publish();}
 
   private async initialize() {
     if (this.started || this.detached) return;

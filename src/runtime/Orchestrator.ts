@@ -7,12 +7,13 @@ import { Direction } from '../domain/map';
 import { AudienceId } from '../domain/types';
 import { Audiences, AUDIENCE_RECRUITER } from '../content/audiences';
 import { ENCOUNTER_AUDIENCE_CHOICES, ENCOUNTER_AUDIENCE_PROMPT, FIRST_ENCOUNTER_DIALOGUE, INTRO_NARRATION } from '../content/narrative';
-import { M1_TOWN_MAP_ID, PRODUCTION_INTERIOR_MAP_IDS, WORLD_TEST_MAPS } from '../content/maps';
+import { M1_TOWN_MAP_ID, WORLD_TEST_MAPS } from '../content/maps';
 import { WORLD_FLAVOR } from '../content/worldFlavor';
 import { progressStore, uiStore } from './stores';
 import { GameBridge } from './gameBridge';
 import { Clock, gameClock, FRAME_MS } from '../core/clock';
 import { WorldSession } from './world/WorldSession';
+import type {WorldSessionContract} from './world/WorldSessionContract';
 import { unlockAudio } from './AudioUnlocker';
 import { globalDialogueService } from './services/DialogueService';
 import { audioService } from './AudioService';
@@ -57,8 +58,8 @@ const initialState: GameExperienceState = {
   encounterStep: null,
 };
 
-export class GameOrchestrator {
-  readonly world: WorldSession;
+export class GameOrchestrator<W extends WorldSessionContract=WorldSession> {
+  readonly world: W;
   readonly encounters: EncounterMachine;
   readonly flow = new FlowMachine();
   private value = initialState;
@@ -77,9 +78,9 @@ export class GameOrchestrator {
   private flavorVisits = new Set<string>();
   private hints: HintService;
 
-  constructor(private readonly bridge: GameBridge, private readonly input: InputRouter, private readonly clock: Clock = gameClock) {
+  constructor(private readonly bridge: GameBridge, private readonly input: InputRouter, private readonly clock: Clock = gameClock,createWorld?:(bridge:GameBridge,input:InputRouter,clock:Clock)=>W) {
     this.value = { ...initialState, flow: this.flow.state, firstEncounterDone: progressStore.getState().firstEncounterDone };
-    this.world = new WorldSession(WORLD_TEST_MAPS, M1_TOWN_MAP_ID, bridge, input, clock, true);
+    this.world = (createWorld?createWorld(bridge,input,clock):new WorldSession(WORLD_TEST_MAPS, M1_TOWN_MAP_ID, bridge, input, clock, true)) as W;
     this.encounters = new EncounterMachine(clock);
     this.removers.push(this.encounters.subscribe((snapshot) => this.patch({ encounterStep: snapshot.step?.type ?? null })));
     this.hints = new HintService(clock, (hint) => this.patch({ hint }));
@@ -183,28 +184,28 @@ export class GameOrchestrator {
 
   private onMapArrived(event: Extract<WorldEvent, { type: 'mapArrived' }>) {
     const firstReady=!this.value.rendererReady;
-    const current = this.world.sim.state.current;
+    const current = this.world.getSnapshot().state;
     this.patch({
       rendererReady: true,
       location: { mapId: event.mapId, roomId: event.roomId, tile: { x: current.player.x, y: current.player.y }, facing: current.player.facing },
     });
     if(firstReady)playTransition('fade-in',()=>{},undefined,this.clock);
-    if (this.flow.state.mode === 'OVERWORLD' && PRODUCTION_INTERIOR_MAP_IDS.some(id => id === event.mapId)) this.transition({ type: 'ENTER_INTERIOR' });
-    else if (this.flow.state.mode === 'INTERIOR' && event.mapId === M1_TOWN_MAP_ID) this.transition({ type: 'LEAVE_INTERIOR' });
+    if (this.flow.state.mode === 'OVERWORLD' && this.world.isInterior(event.mapId)) this.transition({ type: 'ENTER_INTERIOR' });
+    else if (this.flow.state.mode === 'INTERIOR' && !this.world.isInterior(event.mapId)) this.transition({ type: 'LEAVE_INTERIOR' });
     if (this.flow.state.mode === 'OVERWORLD') this.tryFirstEncounter();
   }
 
   private onWorldStep(event: Extract<WorldEvent, { type: 'stepCompleted' }>) {
-    if (event.entityId !== this.world.sim.state.current.player.id) return;
-    const player = this.world.sim.state.current.player;
-    this.patch({ location: { mapId: this.world.sim.state.current.mapId, roomId: event.cameraRoomId, tile: { x: event.tile.x, y: event.tile.y }, facing: player.facing } });
+    if (event.entityId !== this.world.getSnapshot().state.player.id) return;
+    const player = this.world.getSnapshot().state.player;
+    this.patch({ location: { mapId: this.world.getSnapshot().state.mapId, roomId: event.cameraRoomId, tile: { x: event.tile.x, y: event.tile.y }, facing: player.facing } });
     this.hints.firstMove();
     this.showInteractHintIfNear();
     this.tryFirstEncounter();
   }
 
   private showInteractHintIfNear() {
-    const state = this.world.sim.state.current;
+    const state = this.world.getSnapshot().state;
     const challenger = state.npcs.find((npc) => npc.id === 'challenger');
     if (!challenger) return;
     const distance = Math.abs(challenger.x - state.player.x) + Math.abs(challenger.y - state.player.y);
@@ -231,7 +232,7 @@ export class GameOrchestrator {
       this.dialogueResolve = null;
       this.flavorActive = false;
       if (!this.disposed) {
-        this.world.sim.dispatch({ type: 'endInteraction' });
+        this.world.endInteraction();
         this.patch({ dialogue: null });
         this.input.clearHeld();
         await this.world.resume();
@@ -241,7 +242,7 @@ export class GameOrchestrator {
 
   private tryFirstEncounter() {
     if (this.disposed || this.encounterActive || this.flow.state.mode !== 'OVERWORLD' || progressStore.getState().firstEncounterDone) return;
-    const snapshot = this.world.sim.getSnapshot();
+    const snapshot = this.world.getSnapshot();
     const player = snapshot.state.player;
     if (player.movement) return;
     const challenger = snapshot.state.npcs.find((npc) => npc.id === 'challenger');
@@ -253,13 +254,13 @@ export class GameOrchestrator {
 
   private async beginEncounter(repeat: boolean) {
     if (this.disposed || this.encounterActive || this.flow.state.mode !== 'OVERWORLD') return;
-    const snapshot = this.world.sim.getSnapshot();
+    const snapshot = this.world.getSnapshot();
     if (snapshot.state.player.movement) return;
     const player = snapshot.state.player;
     const anchor: WorldAnchor = { mapId: snapshot.map.id, roomId: snapshot.state.cameraRoomId, tile: { x: player.x, y: player.y }, facing: player.facing };
     this.encounterActive = true;
     this.input.clearHeld();
-    if (snapshot.state.talkingNpcId) this.world.sim.dispatch({ type: 'endInteraction' });
+    if (snapshot.state.talkingNpcId) this.world.endInteraction();
     this.patch({ returnAnchor: anchor, error: null });
     this.transition({ type: 'ENCOUNTER_DETECTED' });
     try {
@@ -282,7 +283,7 @@ export class GameOrchestrator {
   }
 
   private encounterSteps(repeat: boolean, playerTile: TilePosition): EncounterStep[] {
-    const snapshot = this.world.sim.getSnapshot();
+    const snapshot = this.world.getSnapshot();
     const challenger = snapshot.state.npcs.find((npc) => npc.id === 'challenger')!;
     const dx = Math.sign(playerTile.x - challenger.x);
     const dy = Math.sign(playerTile.y - challenger.y);

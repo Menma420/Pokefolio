@@ -29,7 +29,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    ".next-emerald-local/types/**/*.ts",
+    ".next-emerald-local/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

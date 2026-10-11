@@ -23,8 +23,12 @@ import { useRouter } from 'next/navigation';
 import { audioService } from '../runtime/AudioService';
 import { isReducedMotion } from '../runtime/motion';
 import { MusicService } from '../runtime/MusicService';
+import {EmeraldWorldSession,type SourceChallengerBinding} from '../runtime/world/EmeraldWorldSession';
+import type {WorldSessionContract} from '../runtime/world/WorldSessionContract';
+import type {EmeraldBundle} from '../core/emerald/types';
 
-export function GameShell() {
+type GameRuntime=GameOrchestrator<WorldSessionContract>;
+export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld?:boolean;sourceChallenger?:SourceChallengerBinding|null}) {
   const clock=useContext(ClockContext);
   const router=useRouter();
   const [portfolioSpeaking,setPortfolioSpeaking]=useState(false);
@@ -33,8 +37,9 @@ export function GameShell() {
   useEffect(()=>{const service=new MusicService(clock);music.current=service;const dispose=service.mount(),disposeSfx=audioService.mount();return ()=>{dispose();disposeSfx();music.current=null;};},[clock]);
   useEffect(()=>gameBridge?.onEvent('battleReady',()=>music.current?.setScene('battle')),[gameBridge]);
   const hostRef = useRef<HTMLDivElement>(null);
-  const orchestratorRef = useRef<GameOrchestrator | null>(null);
-  const [orchestrator, setOrchestrator] = useState<GameOrchestrator | null>(null);
+  const orchestratorRef = useRef<GameRuntime | null>(null);
+  const [orchestrator, setOrchestrator] = useState<GameRuntime | null>(null);
+  const [loadingError,setLoadingError]=useState<string|null>(null);
   const [state, setState] = useState<GameExperienceState | null>(null);
   const transition = useStore(uiStore, (value: UiState) => value.isTransitioning);
   const portfolioOpen=useStore(uiStore,value=>value.screenStack.length>0);
@@ -43,13 +48,7 @@ export function GameShell() {
 
   useEffect(() => {
     const bridge = createGameBridge(clock);
-    const runtime = new GameOrchestrator(bridge, globalInputRouter, clock);
-    orchestratorRef.current = runtime;
-    const removeState = runtime.subscribe((next) => {
-      setGameBridge(bridge);
-      setState(next);
-      setOrchestrator(runtime);
-    });
+    let runtime:GameRuntime|undefined,removeState:(()=>void)|undefined;
     const adapter = new KeyboardAdapter(globalInputRouter);
     const previousFocus = globalInputRouter.isGameFocused;
     globalInputRouter.isGameFocused = true;
@@ -57,25 +56,35 @@ export function GameShell() {
 
     let disposed = false;
     let destroyGame: (() => void) | undefined;
-    void import('../game/boot').then(({ mountWorldGame }) => {
-      if (disposed || !hostRef.current) return;
-      destroyGame = mountWorldGame(hostRef.current, bridge,{physicalPixels:true,reducedMotion:isReducedMotion,clock});
-    }).catch((error: unknown) => {
+    const initialize=async()=>{
+      const useSource=sourceWorld&&new URLSearchParams(location.search).get('world')!=='legacy';
+      let session:EmeraldWorldSession|undefined;
+      let bundle:EmeraldBundle|undefined;
+      if(useSource){const response=await fetch('/dev/emerald/data');if(!response.ok)throw new Error('Private source data unavailable. Run pnpm emerald:extract, or use /?world=legacy.');bundle=await response.json() as EmeraldBundle;}
+      if(disposed)return;
+      runtime=new GameOrchestrator<WorldSessionContract>(bridge,globalInputRouter,clock,bundle?((b,i,c)=>session=new EmeraldWorldSession(bundle!,sourceChallenger,b,i,c)):undefined);
+      const current=runtime;orchestratorRef.current=current;
+      removeState=current.subscribe(next=>{setGameBridge(bridge);setState(next);setOrchestrator(current);});
+      if(session){const {mountEmeraldGame}=await import('../game/emerald/GameScene');if(!disposed&&hostRef.current)destroyGame=mountEmeraldGame(hostRef.current,bridge,session.world);}
+      else{const {mountWorldGame}=await import('../game/boot');if(!disposed&&hostRef.current)destroyGame=mountWorldGame(hostRef.current,bridge,{physicalPixels:true,reducedMotion:isReducedMotion,clock});}
+    };
+    void initialize().catch((error: unknown) => {
+      if(disposed)return;setLoadingError(error instanceof Error?error.message:String(error));
       bridge.emit({ type: 'assetFailed', key: 'phaser-import', message: error instanceof Error ? error.message : String(error) });
     });
 
     return () => {
       disposed = true;
       destroyGame?.();
-      removeState();
-      runtime.dispose();
+      removeState?.();
+      runtime?.dispose();
       adapter.unmount();
       globalInputRouter.clearHeld();
       globalInputRouter.isGameFocused = previousFocus;
       orchestratorRef.current = null;
       uiStore.getState().endTransition();
     };
-  }, [clock]);
+  }, [clock,sourceWorld,sourceChallenger]);
 
   useEffect(() => {
     if (!orchestrator || state?.flow.mode !== 'TITLE' || !state.rendererReady) return;
@@ -90,7 +99,7 @@ export function GameShell() {
   const mode = state?.flow.mode ?? 'TITLE';
   const audience = state?.audienceId;
   useEffect(()=>{if(mode!=='BATTLE')music.current?.setScene(['OVERWORLD','INTERIOR'].includes(mode)?'town':['ENCOUNTER','AUDIENCE','VS'].includes(mode)?'battle':'silent');},[mode]);
-  const menuAvailable=useCallback(()=>!!orchestratorRef.current&&['OVERWORLD','INTERIOR'].includes(orchestratorRef.current.state.flow.mode)&&!orchestratorRef.current.state.dialogue&&!orchestratorRef.current.world.sim.state.current.talkingNpcId,[]);
+  const menuAvailable=useCallback(()=>!!orchestratorRef.current&&['OVERWORLD','INTERIOR'].includes(orchestratorRef.current.state.flow.mode)&&!orchestratorRef.current.state.dialogue&&!orchestratorRef.current.world.getSnapshot().state.talkingNpcId,[]);
   const pauseMenu=useCallback(()=>orchestratorRef.current?.world.pause()??Promise.resolve(),[]);
   const resumeMenu=useCallback(()=>orchestratorRef.current?.world.resume()??Promise.resolve(),[]);
   const exitPortfolio=useCallback(()=>router.push('/about'),[router]);
@@ -133,7 +142,7 @@ export function GameShell() {
           <Window frame="plate" fill="blue" style={{minHeight:'calc(20*var(--u))',padding:'calc(5*var(--u))'}}><BitmapText text={state.hint} width={state.hint.length>23?210:162} color={palette.onDark}/></Window>
         </div>
       )}
-      {state?.error && <p role="alert" className="absolute left-2 top-2 z-50 bg-black p-2 text-xs text-red-200"><BitmapText text={state.error} width={224} color={palette.warning}/></p>}
+      {(state?.error||loadingError) && <p role="alert" className="absolute left-2 top-2 z-50 bg-black p-2 text-xs text-red-200"><BitmapText text={state?.error??loadingError??''} width={224} color={palette.warning}/></p>}
       <p role="status" aria-label="Game state" className="sr-only">
         Flow {mode}; runtime {orchestrator ? 'ready' : 'loading'}; {state?.location ? `Map ${state.location.mapId}; room ${state.location.roomId}; player tile ${state.location.tile.x},${state.location.tile.y}; facing ${state.location.facing}` : 'World starting'}; movement {state?.movementTarget ? `${state.movementTarget.x},${state.movementTarget.y}` : 'idle'}; encounter step {state?.encounterStep ?? 'idle'}; battle {state?.battleVisible ? 'mounted' : 'hidden'}; first encounter {state?.firstEncounterDone ? 'complete' : 'pending'}.
       </p>

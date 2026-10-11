@@ -1,5 +1,6 @@
 import { GameShell } from './GameShell';
 import Link from 'next/link';
+import {LOCAL_SOURCE_CHALLENGER} from '../runtime/world/sourceChallenger';
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
         Skip to portfolio content
       </a>
 
-      <GameShell />
+      <GameShell sourceWorld={process.env.NODE_ENV==='development'&&process.env.EMERALD_LOCAL==='1'&&process.env.POKEFOLIO_WORLD!=='legacy'} sourceChallenger={LOCAL_SOURCE_CHALLENGER} />
 
       <noscript>
         <section id="portfolio-content" className="p-4 bg-[#FDF5C4] text-[#202020] absolute inset-0 z-50 overflow-auto" aria-label="Portfolio Content Fallback">

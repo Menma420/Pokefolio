@@ -1,0 +1,15 @@
+import {chromium} from '@playwright/test';
+import {writeFile,mkdir} from 'node:fs/promises';
+const out='artifacts/emerald-source/screenshots';await mkdir(out,{recursive:true});
+const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const page=await browser.newPage({viewport:{width:960,height:640},deviceScaleFactor:1});
+page.on('pageerror',e=>console.error('PAGE ERROR',e.message));
+await page.goto('http://127.0.0.1:3101/dev/emerald?paused=1',{timeout:120000});
+await page.locator('[data-ready="true"]').first().waitFor({timeout:90000});
+await page.waitForTimeout(1000);
+console.log('Captured native Littleroot checkpoint at 4x');
+await page.screenshot({path:`${out}/initial-4x.png`});
+await writeFile(`${out}/initial-4x.state.json`,await page.locator('[aria-label="Source-derived Littleroot Town"]').getAttribute('data-state'));
+const native=await page.locator('[aria-label="Source-derived Littleroot Town"] canvas').first().evaluate(c=>c.toDataURL('image/png'));
+await writeFile(`${out}/native-240x160.png`,Buffer.from(native.split(',')[1],'base64'));
+await browser.close();

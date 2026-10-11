@@ -51,3 +51,11 @@ docs/design/
 # local artifacts
 artifacts/*.zip
 artifacts/phase-*/
+
+# Private source reconstruction; never publish extracted Nintendo/Game Freak assets.
+/pokeemerald/
+/artifacts/emerald-source/
+/.local/emerald/
+/.next-emerald-local/
+/tools/emerald-reconstruction/__pycache__/
+/tests/emerald-reconstruction/__pycache__/

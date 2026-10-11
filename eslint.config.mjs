@@ -9,9 +9,12 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    ".next-emerald-local/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "pokeemerald/**",
+    "artifacts/emerald-source/**",
   ]),
   {
     ignores: ["src/content/**", "tests/**"],
