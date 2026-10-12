@@ -1,4 +1,7 @@
 'use client';
+import {useSourceUi} from '../emerald/SourceUi';
+import {SourceBag} from '../emerald/SourceMenus';
+import {SourceDex,SourceProjects,SourceExperience,SourceTrainerCard} from '../emerald/SourcePortfolio';
 import {getPortfolioProjects,getSkillCategories,getSkills,getSkillProjects,getExperiences,getTrainerCard,getBagCategories,PLAYER_MENU,getProjectTech,getProjectWriteup} from '../../content/portfolio';
 import type {ProjectDef} from '../../domain/types';
 import {BattleArtwork} from '../battle/BattleArtwork';
@@ -17,7 +20,9 @@ const categoryShort:Record<string,string>={LANGUAGE:'LANGUAGE',BACKEND:'BACKEND'
 export function typeLabel(type:string){return type.toUpperCase().replace(/_/g,' ');}
 
 export function Dex({view,tap,category,related}:{view:PortfolioView;tap:(i:number)=>void;category:(delta:number)=>void;related:(i:number)=>void}) {
+ const sourceUi=useSourceUi();
  const entries=getSkills(view.category),skill=entries[view.cursor];
+ if(sourceUi?.portfolio)return <SourceDex view={view} tap={tap} category={category} related={related}/>;
  if(view.screen==='dex-detail'&&skill) {
   const body=pages(skill.description,168,4),links=getSkillProjects(view.category,view.cursor).slice(0,3);
   return <Screen name="Pokédex detail" action={view.relatedFocus?'USE':'NEXT'}><Header name="POKÉDEX" right="ENTRY"/>
@@ -50,7 +55,9 @@ function ProjectIdentity({project}:{project:ProjectDef}) {
  return <Window frame="plate" style={{...box(8,27,224,46),padding:0}}><PortfolioArt name={`project-${project.slug}-48` as PortfolioAsset} x={3} y={-1}/><Text text={project.visual.plateName!} x={55} y={7} width={160} maxLines={1}/><Text text={typeLabel(project.type)} x={55} y={21} width={160} maxLines={1}/><span className="sr-only">{project.name}; role {project.role}; period {project.period}{project.team?`; team ${project.team}`:''}</span></Window>;
 }
 export function Projects({view,tap,page,link}:{view:PortfolioView;tap:(i:number)=>void;page:(d:number)=>void;link:(url:string,name:string)=>void}) {
+ const sourceUi=useSourceUi();
  const project=PROJECTS[view.project]??PROJECTS[0]!;
+ if(sourceUi?.portfolio)return <SourceProjects view={view} tap={tap} page={page} link={link}/>;
  if(view.screen==='project-detail') {
   const labels=['OVERVIEW','TECH & IMPACT','LINKS'];
   const overview=[project.summary.pages.join(' '),`Role: ${project.role}.`,project.period!=='Not specified'?`Period: ${project.period}.`:'',project.team?`Team: ${project.team}.`:''].filter(Boolean).join(' ');
@@ -72,7 +79,9 @@ export function Projects({view,tap,page,link}:{view:PortfolioView;tap:(i:number)
 }
 
 export function Experience({view,tap,section}:{view:PortfolioView;tap:(i:number)=>void;section:(d:number)=>void}) {
+ const sourceUi=useSourceUi();
  const role=EXPERIENCE[view.cursor]!,selected=role.sections[view.section]!,body=pages(selected.text,208,4),start=firstRow(view.cursor,3);
+ if(sourceUi?.portfolio)return <SourceExperience view={view} tap={tap} section={section}/>;
  if(view.screen==='experience-detail')return <Screen name="Experience detail" action="NEXT"><Header name="EXPERIENCE"/>
   <Window frame="plate" style={{...box(8,27,224,39),padding:0}}><GameIcon name="experience" x={9} y={7}/><Text text={role.company} x={24} y={7} width={190} maxLines={1}/><Text text={`${role.role} / ${role.period}`} x={9} y={21} width={206} maxLines={1}/></Window>
   <button aria-label="Previous experience section" onClick={()=>section(-1)} style={box(8,69,20,14)}><Text text="◂" x={7} y={3} color={palette.onDark}/></button><Text text={`${selected.name} ${view.section+1}/${role.sections.length}`} x={32} y={72} color={palette.onDark}/><button aria-label="Next experience section" onClick={()=>section(1)} style={box(212,69,20,14)}><Text text="▸" x={7} y={3} color={palette.onDark}/></button>
@@ -85,7 +94,9 @@ export function Experience({view,tap,section}:{view:PortfolioView;tap:(i:number)
 }
 
 export function Bag({view,tap,category}:{view:PortfolioView;tap:(i:number)=>void;category:(d:number)=>void}) {
+ const sourceUi=useSourceUi();
  const current=BAG[view.category]!,start=firstRow(view.cursor,4),item=current.items[view.cursor];
+ if(sourceUi)return <SourceBag view={view} tap={tap} category={category}/>;
  return <section aria-label="Bag" data-portfolio-screen="Bag" data-screen-recipe="inventory" aria-hidden={view.screen==='bag-reading'||undefined} inert={view.screen==='bag-reading'} style={box(0,0,240,160)}><PixelPattern color={palette.outer} secondary={palette.blue} step={8}/><Header name="BAG" right={current.name} onLeft={()=>category(-1)} onRight={()=>category(1)}/>
   <PortfolioArt name="bag-body" x={12} y={29}/>
   {BAG.map((pocket,i)=><button type="button" key={pocket.name} aria-label={`${pocket.name} pocket`} aria-pressed={i===view.category} onClick={()=>category(i-view.category)} style={box(8+i*18,95,17,17)}>{i===view.category&&<Rect x={0} y={0} width={17} height={17} color={palette.gold}/>}<PortfolioArt name={pocket.art as PortfolioAsset} x={0} y={0}/></button>)}
@@ -95,6 +106,8 @@ export function Bag({view,tap,category}:{view:PortfolioView;tap:(i:number)=>void
 }
 
 export function TrainerCard({notice}:{notice?:string|null}={}) {
+ const sourceUi=useSourceUi();
+ if(sourceUi?.portfolio)return <SourceTrainerCard notice={notice}/>;
  return <Screen name="Trainer Card" fill="gold" action={null}><Window frame="menu" fill="gold" style={{...box(8,10,224,130),padding:0}}>
   <Rect x={5} y={5} width={214} height={18} color={palette.header}/><Text text={PROFILE.name} x={12} y={10} width={200} color={palette.onDark}/>
   <Window frame="plate" fill="blue" style={{...box(10,30,60,83),padding:0}}><PortfolioArt name="trainer-portrait" x={6} y={12} label="Original portrait of Uttkarsh"/></Window>

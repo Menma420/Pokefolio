@@ -1,8 +1,9 @@
 import {afterEach,describe,expect,it,vi} from 'vitest';
 import {GET} from '../../src/app/dev/emerald/data/route';
+import {GET as UI} from '../../src/app/dev/emerald/ui/route';
 
 afterEach(()=>vi.unstubAllEnvs());
-describe('private source asset endpoint',()=>{
+describe.each([['world',GET],['UI',UI]])('private %s source asset endpoint',(_name,GET)=>{
  it.each(['production','test'])('is unavailable in %s even with local opt-in',async mode=>{
   vi.stubEnv('NODE_ENV',mode);vi.stubEnv('EMERALD_LOCAL','1');
   expect((await GET(new Request('http://127.0.0.1/dev/emerald/data'))).status).toBe(404);

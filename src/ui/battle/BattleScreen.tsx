@@ -1,10 +1,12 @@
 'use client';
+import {useSourceUi,SourceBattleChoices,SourceButtons} from '../emerald/SourceUi';
 
 import { useEffect, useState, useCallback,useContext } from 'react';
 import { BattleContext, BattleEvent } from '../../core/battle/types';
 import { CompiledNode, NodeId } from '../../domain/types';
 import { globalInputRouter, InputAction } from '../../core/input';
 import { globalDialogueService } from '../../runtime/services/DialogueService';
+import {SourceProjectIdentity} from '../emerald/SourcePortfolio';
 import { GameViewport, Window, CommandGrid, DialogueBox } from '../kit';
 import { getProject } from '../../content/registry';
 import { Audiences } from '../../content/audiences';
@@ -35,6 +37,7 @@ export interface BattleScreenProps {
 }
 
 export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageText, summary, linkAvailable, dispatch }: BattleScreenProps) {
+  const sourceUi=useSourceUi();
   const pixels=useContext(PixelContext),clock=useContext(ClockContext);
   const {pressed,confirm}=useConfirmation();
   const [summaryPresentation,setSummaryPresentation]=useState<{projectId:typeof ctx.projectId;gate:'details'|'switch'|null}>({projectId:ctx.projectId,gate:null});
@@ -78,14 +81,14 @@ export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageTe
     if(ctx.view!=='root' && ctx.view!=='topics' && !(ctx.view==='answer'&&ctx.answerPhase==='commands'))return;
     globalInputRouter.register('battle-screen','BATTLE',(action:InputAction)=>{
       if(pressed!==null)return;
-      const choiceAction=!inCommandMenu?(action==='RIGHT'?'DOWN':action==='LEFT'?'UP':action):action;
-      const next=navigate(menuIndex,options.length,inCommandMenu?2:1,choiceAction);
+      const choiceAction=!inCommandMenu&&!sourceUi?(action==='RIGHT'?'DOWN':action==='LEFT'?'UP':action):action;
+      const next=navigate(menuIndex,options.length,inCommandMenu||sourceUi?2:1,choiceAction);
       if(next!==menuIndex){setMenuIndex(next);audioService.play('cursor.move');}
       if(action==='A')activate(menuIndex);
       if(action==='B'){audioService.play('ui.cancel');dispatch({type:'BACK'});}
     });
     return ()=>globalInputRouter.unregister('battle-screen');
-  },[summaryGate,ctx.view,ctx.answerPhase,pressed,menuIndex,options.length,inCommandMenu,activate,dispatch,setMenuIndex]);
+  },[summaryGate,ctx.view,ctx.answerPhase,pressed,menuIndex,options.length,inCommandMenu,activate,dispatch,setMenuIndex,sourceUi]);
   const activateFromPointer=(index:number)=>{
     if(index!==menuIndex){setMenuIndex(index);audioService.play('cursor.move');return;}
     activate(index);
@@ -118,7 +121,7 @@ export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageTe
           {art?.oldLogo?<BattleArtwork name={`project-${previousProject?.visual.artKey}`} y={art.withdrawY}/>:art?.logo==='flash'?<div className="absolute inset-0" style={{background:palette.onDark}}/>:<BattleArtwork name={`project-${project?.visual.artKey}`} silhouette={art?.logo==='silhouette'}/>}
         </div>}
 
-        {!presenting && !showSummary && ctx.view === 'topics' && visibleTopics.length > 0 && (
+        {!sourceUi && !presenting && !showSummary && ctx.view === 'topics' && visibleTopics.length > 0 && (
           <div className="absolute top-[calc(108*var(--u))] left-0 z-20 h-[calc(52*var(--u))] w-full overflow-hidden">
             <Window frame="menu" style={{height:'calc(52*var(--u))',padding:0}}>
               <TopicGrid options={visibleTopics.map(topic=>topic.shortLabel??topic.label)} labels={visibleTopics.map(topic=>topic.label)} index={menuIndex} pressed={pressed} onSelect={activateFromPointer}/>
@@ -126,8 +129,8 @@ export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageTe
           </div>
         )}
 
-        {showCommandGrid && <Window frame="message" fill="blue" className="absolute z-20" style={{position:'absolute',left:0,top:'calc(112*var(--u))',width:'calc(112*var(--u))',height:'calc(48*var(--u))'}}><BitmapText text="WHAT DO YOU WANT TO KNOW?" width={98}/></Window>}
-        {showCommandGrid && (
+        {!sourceUi && showCommandGrid && <Window frame="message" fill="blue" className="absolute z-20" style={{position:'absolute',left:0,top:'calc(112*var(--u))',width:'calc(112*var(--u))',height:'calc(48*var(--u))'}}><BitmapText text="WHAT DO YOU WANT TO KNOW?" width={98}/></Window>}
+        {!sourceUi && showCommandGrid && (
           <div className="absolute top-[calc(112*var(--u))] left-[calc(112*var(--u))] z-20 w-[calc(128*var(--u))]">
             <Window frame="menu" style={{height:'calc(48*var(--u))'}}>
               <CommandGrid
@@ -141,8 +144,9 @@ export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageTe
           </div>
         )}
 
-        {showSummary&&<><Window frame="menu" fill="blue" style={{...box(8,8,224,100),padding:0,zIndex:21}}><PortfolioArt name={`project-${project?.slug??'pokefolio'}-48` as PortfolioAsset} x={14} y={28}/><Text text="PROJECT" x={74} y={22} color={palette.inner}/><Text text={project?.visual.plateName??''} x={74} y={38} width={138} maxLines={2} pitch={10}/><Text text={project?.type.replaceAll('_',' ')??''} x={74} y={67} width={138}/></Window><DialogueBox text={summary} variant="battle" summary onBack={()=>setSummaryGate(null)} onComplete={()=>{const gate=summaryGate;setSummaryGate(null);if(gate==='details')dispatch({type:'DETAILS'});}}/></>}
-        {!showDialogue&&!showSummary&&!presenting&&ctx.view!=='party'&&<ActionHints a={ctx.view==='topics'?'ASK':'USE'} b={ctx.view==='root'||ctx.view==='topics'&&ctx.focusId===null?'EXIT':'BACK'}/>}
+        {sourceUi&&!presenting&&!showSummary&&(showCommandGrid||ctx.view==='topics')&&<div style={{...box(0,0,240,160),zIndex:20}}><SourceBattleChoices key={`${menuKey}-${menuIndex}`} kind={showCommandGrid?'commands':'topics'} options={showCommandGrid?availableCommands:visibleTopics.map(t=>t.shortLabel??t.label)} index={menuIndex}/><SourceButtons kind={showCommandGrid?'commands':'topics'} options={showCommandGrid?availableCommands:visibleTopics.map(t=>t.shortLabel??t.label)} labels={showCommandGrid?availableCommands:visibleTopics.map(t=>t.label)} index={menuIndex} onSelect={activateFromPointer} disabled={showCommandGrid?availableCommands.map(c=>c==='LINK'&&!linkAvailable):[]}/></div>}
+        {showSummary&&<>{sourceUi?.portfolio&&project?<SourceProjectIdentity project={project}/>:<Window frame="menu" fill="blue" style={{...box(8,8,224,100),padding:0,zIndex:21}}><PortfolioArt name={`project-${project?.slug??'pokefolio'}-48` as PortfolioAsset} x={14} y={28}/><Text text="PROJECT" x={74} y={22} color={palette.inner}/><Text text={project?.visual.plateName??''} x={74} y={38} width={138} maxLines={2} pitch={10}/><Text text={project?.type.replaceAll('_',' ')??''} x={74} y={67} width={138}/></Window>}<DialogueBox text={summary} variant="battle" summary onBack={()=>setSummaryGate(null)} onComplete={()=>{const gate=summaryGate;setSummaryGate(null);if(gate==='details')dispatch({type:'DETAILS'});}}/></>}
+        {!sourceUi&&!showDialogue&&!showSummary&&!presenting&&ctx.view!=='party'&&<ActionHints a={ctx.view==='topics'?'ASK':'USE'} b={ctx.view==='root'||ctx.view==='topics'&&ctx.focusId===null?'EXIT':'BACK'}/>}
         {showDialogue && !showSummary && (
           <>
           <DialogueBox

@@ -1,4 +1,5 @@
 'use client';
+import {useSourceUi} from '../emerald/SourceUi';
 import {useContext,useEffect,useLayoutEffect,useRef,useState,useCallback} from 'react';
 import {useStore} from 'zustand';
 import {globalInputRouter,type InputAction} from '../../core/input';
@@ -31,6 +32,7 @@ const push=(screen:PortfolioScreen,values:Partial<PortfolioView>={})=>{
 };
 
 export function PlayerMenu({available,pause,resume,onExit,onSpeakingChange}:{onSpeakingChange?:(speaking:boolean)=>void;available:()=>boolean;pause:()=>Promise<unknown>;resume:()=>Promise<unknown>;onExit:()=>void}){
+ const sourceUi=useSourceUi();
  const clock=useContext(ClockContext),pixels=useContext(PixelContext);
  const stack=useStore(uiStore,s=>s.screenStack),view=stack.at(-1)??closed;
  const [pressed,setPressed]=useState<number|null>(null);
@@ -50,11 +52,13 @@ export function PlayerMenu({available,pause,resume,onExit,onSpeakingChange}:{onS
  const close=useCallback(()=>{
   if(current().screen==='menu')uiStore.getState().rememberMenuCursor(current().cursor);
   audioService.play('ui.cancel');
-  transitionCancel.current=playTransition(current().screen==='menu'?'slide-close':'fade',()=>{
+  const finish=()=>{
    transitionCancel.current=null;uiStore.getState().closeScreens();void resume();
    const target=returnFocus.current?.isConnected?returnFocus.current:document.querySelector<HTMLElement>('[aria-label="Game frame"]');target?.focus({preventScroll:true});
-  },undefined,clock);
- },[clock,resume]);
+  };
+  if(sourceUi&&current().screen==='menu')finish();
+  else transitionCancel.current=playTransition(current().screen==='menu'?'slide-close':'fade',finish,undefined,clock);
+ },[clock,resume,sourceUi]);
  const open=useCallback((screen:'menu'|'bag')=>{
   if(!available()||uiStore.getState().isTransitioning)return false;
   returnFocus.current=document.activeElement instanceof HTMLElement&&document.activeElement!==document.body?document.activeElement:null;
@@ -62,10 +66,10 @@ export function PlayerMenu({available,pause,resume,onExit,onSpeakingChange}:{onS
   void pause().catch(()=>{if(mounted.current)patch({notice:'World pause failed.'});});
   if(screen==='menu'){
    uiStore.getState().openScreen(createPortfolioView('menu',{cursor:uiStore.getState().lastMenuCursor}));
-   transitionCancel.current=playTransition('slide',()=>{transitionCancel.current=null;},undefined,clock);
+   if(!sourceUi)transitionCancel.current=playTransition('slide',()=>{transitionCancel.current=null;},undefined,clock);
   }else change('bag',{},true);
   return true;
- },[available,clock,change,pause]);
+ },[available,clock,change,pause,sourceUi]);
  useEffect(()=>{mounted.current=true;const pending=tasks.current;return ()=>{mounted.current=false;transitionCancel.current?.();pending.forEach(task=>task.cancel());pending.clear();uiStore.getState().closeScreens();globalInputRouter.unregister('portfolio-menu');};},[]);
  useEffect(()=>globalInputRouter.registerWorldShortcut(action=>current().screen==='closed'?open(action==='X'?'menu':'bag'):false),[open]);
  const notice=useCallback((text:string,duration=45*FRAME_MS)=>{
@@ -160,9 +164,9 @@ export function PlayerMenu({available,pause,resume,onExit,onSpeakingChange}:{onS
   if(action==='UP'||action==='DOWN'){
    const d=action==='UP'?-1:1,experience=v.screen==='experience'||v.screen==='experience-detail';
    const count=v.screen==='menu'?PLAYER_MENU.length:v.screen==='exit'?2:v.screen==='dex'||v.screen==='dex-detail'?getSkills(v.category).length:v.screen==='projects'?getPortfolioProjects().length:experience?getExperiences().length:v.screen==='bag'?getBagCategories()[v.category]!.items.length:v.screen==='options'?7:v.screen==='project-detail'&&v.section===2?getPortfolioProjects()[v.project]!.links.others.length+2:0;
-   if(!count)return;const next=bounded(v.cursor,d,count);audioService.play(next===v.cursor?'ui.buzz':'cursor.move');patch({cursor:next,page:0,related:0,relatedFocus:false,notice:null,...(experience?{section:0}:{})});
+   if(!count)return;const next=sourceUi&&v.screen==='menu'?(v.cursor+d+count)%count:bounded(v.cursor,d,count);audioService.play(next===v.cursor?'ui.buzz':'cursor.move');patch({cursor:next,page:0,related:0,relatedFocus:false,notice:null,...(experience?{section:0}:{})});
   }
- },[activate,back,category,change,close,option,section]);
+ },[activate,back,category,change,close,option,section,sourceUi]);
  useEffect(()=>{if(view.screen==='closed')return;globalInputRouter.register('portfolio-menu','MENU',handle);return ()=>globalInputRouter.unregister('portfolio-menu');},[view.screen,handle]);
  useEffect(()=>{if(view.screen!=='closed'&&!allowed){transitionCancel.current?.();uiStore.getState().closeScreens();}},[allowed,view.screen]);
  useLayoutEffect(()=>{
@@ -181,7 +185,8 @@ export function PlayerMenu({available,pause,resume,onExit,onSpeakingChange}:{onS
   {view.screen==='card'&&<TrainerCard notice={view.notice}/>}
   {view.screen==='options'&&<OptionsScreen view={view} values={values} tap={tap}/>}
   {view.screen==='controls'&&<ControlsScreen/>}
-  {reading&&<div style={{...box(0,0,240,160),zIndex:3}}><PixelPattern color={palette.header} step={1}/><Window frame="document" style={{...box(12,12,216,92),padding:0}}><PortfolioArt name="documents-large" x={16} y={24}/><Text text="KEY ITEM" x={64} y={20}/><Text text={getBagCategories()[view.category]?.items[view.cursor]?.name??'DOCUMENT'} x={64} y={37} width={140} maxLines={2}/><Text text="READ WITH A" x={64} y={65}/></Window><DialogueBox text={reading} variant="battle" dismissible onComplete={()=>uiStore.getState().popScreen()}/></div>}
+  {reading&&sourceUi&&<DialogueBox text={reading} variant="bag" dismissible onComplete={()=>uiStore.getState().popScreen()}/>}
+  {reading&&!sourceUi&&<div style={{...box(0,0,240,160),zIndex:3}}><PixelPattern color={palette.header} step={1}/><Window frame="document" style={{...box(12,12,216,92),padding:0}}><PortfolioArt name="documents-large" x={16} y={24}/><Text text="KEY ITEM" x={64} y={20}/><Text text={getBagCategories()[view.category]?.items[view.cursor]?.name??'DOCUMENT'} x={64} y={37} width={140} maxLines={2}/><Text text="READ WITH A" x={64} y={65}/></Window><DialogueBox text={reading} variant="battle" dismissible onComplete={()=>uiStore.getState().popScreen()}/></div>}
   <span role="status" aria-label="Portfolio state" className="sr-only">Screen {view.screen}; cursor {view.cursor}; category {view.category}; page {view.page}; section {view.section}; depth {stack.length}. {view.notice}</span>
  </section></PixelContext.Provider>;
 }

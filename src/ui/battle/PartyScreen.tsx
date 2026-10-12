@@ -1,4 +1,6 @@
 'use client';
+import {SourceParty} from '../emerald/SourcePortfolio';
+import {useSourceUi} from '../emerald/SourceUi';
 import { useEffect,useState } from 'react';
 import { ProjectId,type ProjectDef } from '../../domain/types';
 import { globalInputRouter,InputAction } from '../../core/input';
@@ -15,6 +17,7 @@ export interface PartyScreenProps {activeProjectId:ProjectId;projects:PartyOptio
 
 /** Six vertically stacked party slots; the active project is marked IN PLAY. */
 export function PartyScreen({activeProjectId,projects,onSelect,onCancel}:PartyScreenProps) {
+ const sourceUi=useSourceUi();
  const {pressed,confirm}=useConfirmation();
  const [selectedIndex,setSelectedIndex]=useState(Math.max(0,projects.findIndex(project=>project.id===activeProjectId)));
  const [moved,setMoved]=useState(false);
@@ -30,6 +33,7 @@ export function PartyScreen({activeProjectId,projects,onSelect,onCancel}:PartySc
   globalInputRouter.register('party-screen','BATTLE',handle);return ()=>globalInputRouter.unregister('party-screen');
  },[selectedIndex,projects,pressed,confirm,onSelect,onCancel]);
  const selected=projects[selectedIndex],activeSelected=selected?.id===activeProjectId;
+ if(sourceUi?.portfolio)return <GameViewport><SourceParty projects={projects} cursor={selectedIndex} active={projects.findIndex(p=>p.id===activeProjectId)} onTap={i=>{if(i!==selectedIndex)select(i);else confirm(i,()=>onSelect(projects[i]!.id));}} onCancel={()=>{audioService.play('ui.cancel');onCancel();}} description={moved?selected?.visual?.tagline??'CHOOSE A PROJECT':activeSelected?'CHOOSE A PROJECT. IN PLAY':'CHOOSE A PROJECT.'}/></GameViewport>;
  return <GameViewport><section aria-label="Choose a project" data-party-layout="vertical-roster" className="absolute inset-0" style={{background:palette.header}}>
   <Text text="PARTY" x={8} y={1} color={palette.onDark}/>
   {projects.map((project,index)=>{

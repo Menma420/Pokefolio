@@ -21,7 +21,7 @@ function path(s:State,x:number,y:number){
 }
 async function navigate(p:Page,x:number,y:number){for(let i=0;i<160;i++){const s=await source(p);if(s.player.x===x&&s.player.y===y&&s.player.step===0)return;const keys=path(s,x,y);if(!keys?.length){await p.waitForTimeout(100);continue;}const d=moves.find(d=>d.key===keys[0])!;await p.keyboard.press(d.key);try{await expect.poll(async()=>{const n=await source(p);return [n.player.x,n.player.y,n.player.step];},{timeout:1800}).toEqual([s.player.x+d.dx,s.player.y+d.dy,0]);}catch{/* A source wanderer can occupy the next tile; replan from its new snapshot. */}}
  throw new Error('Source navigation did not settle');}
-async function capture(p:Page,name:string){const reveal=p.getByRole('button',{name:'Reveal dialogue'});if(await reveal.count())await reveal.click();const dir='artifacts/emerald-source/screenshots';await mkdir(dir,{recursive:true});await p.screenshot({path:`${dir}/${name}.png`});await writeFile(`${dir}/${name}.state.json`,JSON.stringify({viewportCSS:p.viewportSize(),dpr:await p.evaluate(()=>devicePixelRatio),scale:await p.getByRole('region',{name:'Game frame'}).first().getAttribute('data-scale'),source:await source(p)},null,2));}
+async function capture(p:Page,name:string){const reveal=p.getByRole('button',{name:'Reveal dialogue'});if(await reveal.count())await reveal.click();const dir=process.env.EMERALD_EVIDENCE_DIR??'artifacts/emerald-source/screenshots';await mkdir(dir,{recursive:true});await p.screenshot({path:`${dir}/${name}.png`});await writeFile(`${dir}/${name}.state.json`,JSON.stringify({viewportCSS:p.viewportSize(),dpr:await p.evaluate(()=>devicePixelRatio),scale:await p.getByRole('region',{name:'Game frame'}).first().getAttribute('data-scale'),source:await source(p)},null,2));}
 async function talk(p:Page,gfx:string,touch=false){
  for(let i=0;i<25;i++){
   const s=await source(p),actor=s.objects.find(o=>o.gfx===gfx)!;
@@ -51,7 +51,7 @@ async function authoredPages(p:Page,gfx:string,repeat=false){
 }
 async function captureEasterEgg(p:Page,gfx:string){
  const reveal=p.getByRole('button',{name:'Reveal dialogue'});if(await reveal.count())await reveal.click();
- const dir='artifacts/emerald-source/phase-p0-interactions/screenshots',name=`easter-egg-${gfx.toLowerCase()}`;
+ const dir=process.env.EMERALD_EVIDENCE_DIR??'artifacts/emerald-source/phase-p0-interactions/screenshots',name=`easter-egg-${gfx.toLowerCase()}`;
  await p.screenshot({path:`${dir}/${name}.png`});await writeFile(`${dir}/${name}.state.json`,JSON.stringify({viewportCSS:p.viewportSize(),dpr:await p.evaluate(()=>devicePixelRatio),scale:await p.getByRole('region',{name:'Game frame'}).first().getAttribute('data-scale'),source:await source(p)},null,2));
 }
 async function sign(p:Page,script:string){const s=await source(p),bg=bundle.maps[s.map]!.events.bg_events.find(v=>v.script===script)!;const candidates=moves.filter(d=>!bg.player_facing_dir||bg.player_facing_dir.endsWith('ANY')||bg.player_facing_dir.endsWith(d.facing.toUpperCase())).map(d=>({x:bg.x-d.dx,y:bg.y-d.dy,d,keys:path(s,bg.x-d.dx,bg.y-d.dy)})).filter(v=>v.keys).sort((a,b)=>a.keys!.length-b.keys!.length);const at=candidates[0]!;expect(at,script).toBeDefined();await navigate(p,at.x,at.y);await p.keyboard.press(at.d.key);await expect.poll(async()=>(await source(p)).player.facing).toBe(at.d.facing);await p.keyboard.press('Enter');await expect.poll(async()=>(await source(p)).interaction.active).toBe(true);}

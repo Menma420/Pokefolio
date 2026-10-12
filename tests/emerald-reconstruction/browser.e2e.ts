@@ -12,7 +12,7 @@ async function step(page:Page,key:string,dx:number,dy:number){
  await page.waitForFunction(scene=>JSON.parse(document.querySelector(scene)!.getAttribute('data-state')!).player.step===0,scene);
  const after=await state(page);expect([after.player.x,after.player.y]).toEqual([before.player.x+dx,before.player.y+dy]);
 }
-const directory='artifacts/emerald-source/screenshots';
+const directory=process.env.EMERALD_EVIDENCE_DIR??'artifacts/emerald-source/screenshots';
 async function capture(page:Page,name:string){await mkdir(directory,{recursive:true});await page.screenshot({path:`${directory}/${name}.png`});await writeFile(`${directory}/${name}.state.json`,JSON.stringify(await state(page),null,2));}
 test('private diagnostic writes do not reload the live source scene',async({page})=>{
  await ready(page);let reloads=0;page.on('framenavigated',frame=>{if(frame===page.mainFrame())reloads++;});

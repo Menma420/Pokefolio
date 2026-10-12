@@ -7,7 +7,7 @@ import {paginateDialogue} from '../../src/ui/kit/text';
 const canvas='canvas[data-world-art="source-emerald"]';
 const state=(page:Page)=>page.getByRole('status',{name:'Game state'});
 const source=async(page:Page)=>JSON.parse((await page.locator(canvas).getAttribute('data-source-state'))!);
-const output='artifacts/emerald-source/screenshots';
+const output=process.env.EMERALD_EVIDENCE_DIR??'artifacts/emerald-source/screenshots';
 async function capture(page:Page,name:string){
  await mkdir(output,{recursive:true});await page.screenshot({path:`${output}/${name}.png`});
  await writeFile(`${output}/${name}.state.json`,JSON.stringify({viewportCSS:page.viewportSize(),dpr:await page.evaluate(()=>devicePixelRatio),scale:await page.getByRole('region',{name:'Game frame'}).first().getAttribute('data-scale'),flow:await state(page).textContent(),source:await source(page)},null,2));

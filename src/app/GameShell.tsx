@@ -1,4 +1,6 @@
 'use client';
+import {SourceUiContext} from '../ui/emerald/SourceUi';
+import type {EmeraldUi} from '../core/emerald/ui';
 
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useStore } from 'zustand';
@@ -42,6 +44,7 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
   const [loadingError,setLoadingError]=useState<string|null>(null);
   const [state, setState] = useState<GameExperienceState | null>(null);
   const transition = useStore(uiStore, (value: UiState) => value.isTransitioning);
+  const [sourceUi,setSourceUi]=useState<EmeraldUi|null>(null);
   const portfolioOpen=useStore(uiStore,value=>value.screenStack.length>0);
   const frame=useStore(uiStore,value=>value.transitionFrame);
   const transitionType = useStore(uiStore, (value: UiState) => value.transitionType);
@@ -60,7 +63,7 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
       const useSource=sourceWorld&&new URLSearchParams(location.search).get('world')!=='legacy';
       let session:EmeraldWorldSession|undefined;
       let bundle:EmeraldBundle|undefined;
-      if(useSource){const response=await fetch('/dev/emerald/data');if(!response.ok)throw new Error('Private source data unavailable. Run pnpm emerald:extract, or use /?world=legacy.');bundle=await response.json() as EmeraldBundle;}
+      if(useSource){const response=await fetch('/dev/emerald/data');if(!response.ok)throw new Error('Private source data unavailable. Run pnpm emerald:extract, or use /?world=legacy.');bundle=await response.json() as EmeraldBundle;const uiResponse=await fetch('/dev/emerald/ui');if(!uiResponse.ok)throw new Error('Private UI extraction missing. Run pnpm emerald:extract-ui.');const ui=await uiResponse.json() as EmeraldUi;if(ui.sourceCommit!==bundle.sourceCommit)throw new Error('Source UI revision mismatch');if(!disposed)setSourceUi(ui);}
       if(disposed)return;
       runtime=new GameOrchestrator<WorldSessionContract>(bridge,globalInputRouter,clock,bundle?((b,i,c)=>session=new EmeraldWorldSession(bundle!,sourceChallenger,b,i,c)):undefined);
       const current=runtime;orchestratorRef.current=current;
@@ -105,7 +108,7 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
   const exitPortfolio=useCallback(()=>router.push('/about'),[router]);
 
   return (
-    <GameViewport>
+    <SourceUiContext.Provider value={sourceUi}><GameViewport>
       <div role="img" aria-label={mode==='BATTLE'?'Battle landscape':'Overworld scene'} className="absolute left-0 top-0 h-[calc(160*var(--u))] w-[calc(240*var(--u))]" style={{ imageRendering: 'pixelated' }}>
         <div ref={hostRef} className="h-full w-full" />
       </div>
@@ -149,7 +152,7 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
       {orchestrator&&<PlayerMenu available={menuAvailable} pause={pauseMenu} resume={resumeMenu} onExit={exitPortfolio} onSpeakingChange={setPortfolioSpeaking}/>}
       {mode!=='BATTLE' && <TouchController mode={portfolioSpeaking||!!state?.dialogue?'dialogue':mode==='TITLE'?'title':['INTRO','ENCOUNTER','AUDIENCE','VS'].includes(mode)?'dialogue':'world'}/>}
       {!state?.battleVisible&&<TransitionLayer active={transition} type={transitionType ?? undefined} />}
-    </GameViewport>
+    </GameViewport></SourceUiContext.Provider>
   );
 }
 

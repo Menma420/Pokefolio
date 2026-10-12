@@ -1,4 +1,6 @@
 'use client';
+import {sourceDownArrow,sourceTextWidth} from '../../core/emerald/ui';
+import {useSourceUi,SourceBattleMessage,SourceSurface,sourcePages} from '../emerald/SourceUi';
 import { useEffect, useState, useRef, useContext } from 'react';
 import { useStore } from 'zustand';
 import { Clock, FRAME_MS, ScheduledTask } from '../../core/clock';
@@ -13,17 +15,18 @@ import {globalDialogueService} from '../../runtime/services/DialogueService';
 import { audioService } from '../../runtime/AudioService';
 import {ActionHints} from './ActionHints';
 import {isReducedMotion} from '../../runtime/motion';
-interface DialogueBoxProps { text:string; onComplete:()=>void; onBack?:()=>void; summary?:boolean; speaker?:string; clock?:Clock; disableInputContext?:boolean; variant?:'field'|'battle'; dismissible?:boolean; speed?:'slow'|'normal'|'fast'|'instant'; awaitInput?:boolean }
+interface DialogueBoxProps { text:string; onComplete:()=>void; onBack?:()=>void; summary?:boolean; speaker?:string; clock?:Clock; disableInputContext?:boolean; variant?:'field'|'battle'|'bag'; dismissible?:boolean; speed?:'slow'|'normal'|'fast'|'instant'; awaitInput?:boolean }
 export function DialogueBox(props:DialogueBoxProps) {
  // Remount presentation on prose changes; old scheduled tasks are cancelled on unmount.
  return <DialoguePage key={props.text} {...props}/>;
 }
 function DialoguePage({text,onComplete,onBack,summary,speaker,clock: injectedClock,disableInputContext=false,variant='field',dismissible=false,speed,awaitInput=true}:DialogueBoxProps) {
+ const sourceUi=useSourceUi();
  const sharedClock=useContext(ClockContext);
  const clock=injectedClock??sharedClock;
  const settings=useStore(settingsStore);
  const reduced=settings.reducedMotion||settings.animationReduced||isReducedMotion();
- const pages=paginateDialogue(text,variant==='field'?210:226,variant==='field'?8:0);
+ const pages=sourceUi&&variant!=='field'?sourcePages(sourceUi,text,variant==='bag'?216:208):paginateDialogue(text,variant==='field'?210:226,variant==='field'?8:0);
  const [page,setPage]=useState(0); const [length,setLength]=useState(0); const [bob,setBob]=useState(0);
  const releasePresentation=useRef<(()=>void)|null>(null);
  useEffect(()=>{if(globalDialogueService.getActive()?.text===text)return;const owner=globalDialogueService.present(text);releasePresentation.current=owner.release;return ()=>{owner.release();if(releasePresentation.current===owner.release)releasePresentation.current=null;};},[text]);
@@ -48,9 +51,9 @@ function DialoguePage({text,onComplete,onBack,summary,speaker,clock: injectedClo
  },[clock,current,delay]);
  useEffect(()=>{
   if(!done || reduced) return;
-  const task=clock.schedule(()=>setBob(value=>1-value),16*FRAME_MS);
+  const task=clock.schedule(()=>setBob(value=>sourceUi&&variant!=='field'?(value+1)%4:1-value),(sourceUi&&variant!=='field'?9:16)*FRAME_MS);
   return ()=>task.cancel();
- },[bob,clock,done,reduced]);
+ },[bob,clock,done,reduced,sourceUi,variant]);
  const advance=()=>{
   audioService.play('ui.confirm');
   if(!done) { typingTask.current?.cancel(); setLength(current.length); }
@@ -66,6 +69,7 @@ function DialoguePage({text,onComplete,onBack,summary,speaker,clock: injectedClo
   });
   return ()=>globalInputRouter.unregister('dialogue-box');
  });
+ if(sourceUi&&variant!=='field')return <SourceBattleMessage bag={variant==='bag'} text={current.slice(0,visibleLength)}><div role="status" aria-live="polite" aria-atomic="true" className="sr-only">{done?current:''}</div>{speaker&&<span className="sr-only">{speaker}</span>}{awaitInput&&<button type="button" aria-label={done?'Continue dialogue':'Reveal dialogue'} onClick={advance} style={{position:'absolute',left:'calc(216*var(--u))',top:'calc(144*var(--u))',width:'calc(16*var(--u))',height:'calc(16*var(--u))',background:'transparent'}}>{done&&<div style={{position:'absolute',left:'calc(-216*var(--u))',top:'calc(-144*var(--u))'}}><SourceSurface kind="message-arrow" paint={sourceDownArrow(sourceUi,reduced?0:[0,1,2,1][bob]!,Math.min(216,16+sourceTextWidth(sourceUi,current.split('\n').at(-1)??'')),137,variant==='bag')}/></div>}</button>}</SourceBattleMessage>;
  return <Window frame="message" className="absolute z-30" style={{left:`calc(${variant==='field'?8:0}*var(--u))`,top:'calc(112*var(--u))',width:`calc(${variant==='field'?224:240}*var(--u))`,height:`calc(${variant==='field'?40:48}*var(--u))`}}>
   {speaker&&<Window frame="plate" style={{position:'absolute',left:'calc(8*var(--u))',top:'calc(-14*var(--u))',width:'calc(70*var(--u))',height:'calc(18*var(--u))',minHeight:'calc(18*var(--u))',padding:'calc(5*var(--u))'}}><BitmapText text={speaker}/></Window>}
   <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">{done?current:''}</div>
