@@ -4,6 +4,7 @@ import type {GameBridge,IdentifiedGameCommand} from '../../runtime/gameBridge/ty
 import {BattleScene} from '../BattleScene';
 import {battleAssetsReady,preloadBattleAssets} from '../battleAssets';
 import {mountWorldRaster} from '../WorldRaster';
+import type {SourcePlayerGraphics,SourceOpponentGraphics} from '../../core/emerald/playerGraphics';
 
 /** Bridge-compatible source display. The runtime session, not Phaser, ticks it. */
 class EmeraldGameScene extends Phaser.Scene {
@@ -11,8 +12,8 @@ class EmeraldGameScene extends Phaser.Scene {
  private texture!:Phaser.Textures.CanvasTexture;
  private indicator!:Phaser.GameObjects.Graphics;
  private exclaim:string|null=null;
- constructor(private bridge:GameBridge,private world:EmeraldWorld){super('SourceLittlerootGame');}
- preload(){preloadBattleAssets(this,this.bridge);}
+ constructor(private bridge:GameBridge,private world:EmeraldWorld,private playerGraphics?:SourcePlayerGraphics,private opponentGraphics?:SourceOpponentGraphics){super('SourceLittlerootGame');}
+ preload(){preloadBattleAssets(this,this.bridge,this.playerGraphics,this.opponentGraphics);}
  create(){
   if(!battleAssetsReady(this))return;
   this.texture=this.textures.createCanvas('source-game-native',240,160)!;
@@ -64,8 +65,8 @@ class EmeraldGameScene extends Phaser.Scene {
  }
 }
 
-export function mountEmeraldGame(host:HTMLElement,bridge:GameBridge,world:EmeraldWorld){
- const game=new Phaser.Game({type:Phaser.CANVAS,parent:host,width:240,height:160,scene:[new EmeraldGameScene(bridge,world),new BattleScene(bridge)],scale:{mode:Phaser.Scale.NONE},render:{pixelArt:true,antialias:false,roundPixels:true},audio:{noAudio:true},banner:false});
+export function mountEmeraldGame(host:HTMLElement,bridge:GameBridge,world:EmeraldWorld,player?:SourcePlayerGraphics,opponent?:SourceOpponentGraphics){
+ const game=new Phaser.Game({type:Phaser.CANVAS,parent:host,width:240,height:160,scene:[new EmeraldGameScene(bridge,world,player,opponent),new BattleScene(bridge,false,player,opponent)],scale:{mode:Phaser.Scale.NONE},render:{pixelArt:true,antialias:false,roundPixels:true},audio:{noAudio:true},banner:false});
  game.canvas.style.width='100%';game.canvas.style.height='100%';game.canvas.style.imageRendering='pixelated';game.canvas.dataset.worldScene='awake';
  return ()=>game.destroy(true);
 }

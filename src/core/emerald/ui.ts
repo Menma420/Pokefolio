@@ -1,3 +1,4 @@
+import type { SourcePlayerGraphics, SourceOpponentGraphics } from './playerGraphics';
 /** Data-only private UI adapter. Source pixels are fetched locally, never bundled. */
 export interface UiTemplate {
   bg: number;
@@ -49,6 +50,13 @@ export interface SourcePortfolio {
   };
 }
 export interface EmeraldUi {
+  intro?: SourceLayer & {
+    map: number[];
+    birch: SourceLayer & { width: number; height: number; center: number[]; graphicsPath: string; animation: string };
+    window: UiTemplate;
+  };
+  player?: SourcePlayerGraphics;
+  opponent?: SourceOpponentGraphics;
   portfolio?: SourcePortfolio;
   sourceCommit: string;
   downArrow: number[];
@@ -417,10 +425,10 @@ export function bagUi(
   }
   return p;
 }
-export function sourceDownArrow(ui: EmeraldUi, bob = 0, x = 216, y = 137, bag = false) {
+export function sourceDownArrow(ui: EmeraldUi, bob = 0, x = 216, y = 137, bag: boolean | 'field' = false) {
   const p = new UiPainter();
   const arrow = bag ? ui.downArrow : ui.battleDownArrow;
-  const palette = bag ? ui.standardPalette : ui.battle.palette;
+  const palette = bag === 'field' ? ui.messagePalette : bag ? ui.standardPalette : ui.battle.palette;
   for (let yy = 0; yy < 16; yy++)
     for (let xx = 0; xx < 8; xx++) {
       const i = arrow[(yy + bob) * 8 + xx];

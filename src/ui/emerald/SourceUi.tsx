@@ -9,6 +9,7 @@ import {
 } from '../../core/emerald/ui';
 import { PixelContext, ClockContext } from '../kit/PixelContext';
 import { Raster } from '../kit/Raster';
+import { fieldMessageUi } from '../../core/emerald/openingUi';
 export const SourceUiContext = createContext<EmeraldUi | null>(null);
 export const useSourceUi = () => useContext(SourceUiContext);
 export const nativeBox = (x: number, y: number, width: number, height: number) => ({
@@ -123,5 +124,12 @@ export function SourceBattleMessage({
       <div style={{ pointerEvents: 'auto' }}>{children}</div>
     </div>
   );
+}
+export function SourceFieldMessage({text,children}:{text:string;children:ReactNode}) {
+ const ui=useSourceUi()!;
+ return <div style={{...nativeBox(0,0,240,160),zIndex:30,pointerEvents:'none'}}>
+  <SourceSurface kind="field-message" paint={fieldMessageUi(ui,text)}/>
+  <div style={{pointerEvents:'auto'}}>{children}</div>
+ </div>;
 }
 export { sourcePages };

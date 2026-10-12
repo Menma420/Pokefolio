@@ -173,3 +173,114 @@ without overwriting the accepted P1 report. This does not change assertions.
 The authentic-emulator/full-screen oracle and pre-existing P1 affine/task-cycle
 gaps documented above remain open; reconstructed screenshots are not golden ROM
 frames. No external assets or dependencies are introduced.
+
+## P1.3 player identity assets
+
+The private UI bundle now also carries original Emerald Brendan (not RS Brendan):
+`graphics/trainers/front_pics/brendan.png` (64×64),
+`graphics/trainers/back_pics/brendan.png` (64×256, four 64×64 frames), and
+`graphics/trainers/palettes/brendan.pal`. Both PNGs pass the same independent
+upstream C 4bpp converter checks as the UI tiles. Manifest hashes include the
+front/back tables and animation declarations, `src/data.c`, `src/pokemon.c`,
+`src/trainer_pokemon_sprites.c`, and the controller/card sources.
+
+The Trainer Card blits the front image at its actual `(152,40)` source window
+plus Hoenn male `(1,0)` offset. The VS player identity uses the same original
+front graphic: Emerald has no equivalent portfolio VS screen, so this is an
+explicit adaptation. Its sprite alone sits eight pixels above the old portrait
+anchor to keep Brendan's shoes clear of the unchanged name row. Audience
+portraits remain untouched. The back image uses source idle frame **3**,
+verified from `sBackAnims_Brendan` and `sAnim_GeneralFrame3`; throw frame durations
+are retained as provenance, without replacing existing battle choreography.
+Its 32×32 center anchor translates to the existing 64×64 visitor slot; battle
+positions, visibility and timing remain owned by the existing bridge/Clock.
+The local standalone battle diagnostic uses the same private player data.
+
+Source-profile startup requires the new extraction and fails with an actionable
+rebuild message if it is missing. Production and the intentional `world=legacy`
+fallback retain their non-source artwork; original Brendan is never copied into
+public build assets. The intro host/opponent Uttkarsh art is a separate identity,
+as are Recruiter/Engineer/Friend portraits, NPCs and project emblems.
+
+P1.3 evidence and the complete retained/replaced inventory live together in the
+ignored `artifacts/emerald-source/phase-p1-3-avatar/` folder. Reproduce with:
+
+```sh
+pnpm emerald:extract-ui
+EMERALD_TEST_SOURCE=1 pnpm exec vitest run tests/emerald-reconstruction
+EMERALD_TEST_SOURCE=1 python3 tools/emerald-reconstruction/run.py test
+pnpm exec playwright test --config tools/emerald-reconstruction/playwright.config.ts avatars.e2e.ts
+```
+
+The tests compare all front/back source indices and RGB555 palette entries,
+rendered opaque sprite pixels at 1×/3×/4× in actual gameplay for every audience,
+and portrait screenshots at DPR 1/2/3 × native integer scales 1 through 8.
+These are asset/slot proofs, not authentic-emulator full-screen equality.
+
+### P1.4 opening and remaining windows
+
+`pnpm emerald:extract-ui` now also reads `src/main_menu.c` and
+`src/field_effect.c` to extract the actual `sSpriteTemplate_NewGameBirch` single
+64×64 frame (`graphics/birch_speech/birch.png`), its embedded palette, shadow
+BG tiles/map and bg0/bg1/bg2 palettes. The welcome snapshot is centered at
+(136,60), top-left (104,28), with FadePlatformOut's settled palette index 0.
+The source dialogue template is (2,15,27,4) tiles: (16,120,216,32).
+PokéFolio retains its own title/intro timing and all three original narration
+lines; it does not add Emerald's Lotad, gender/name selection or 216-frame delay.
+The welcome `Welcome to the world of Uttkarsh.` is prepended; the original
+`Here, you play as Uttkarsh.` line is retained immediately after it.
+
+`openingUi.ts` paints the original intro and message window. Audience selection
+is an explicitly adapted `script_menu.c` standard-frame/PrintMenuTable screen:
+16px rows, source arrow glyph, source field text palette, existing portraits and
+labels. VS retains its art/timing and uses the same source standard outer frame
+for the portfolio nameplate, and the source field message family below it.
+Production/legacy mode has no extracted assets; its original background and
+original UI remain, but the old custom intro character is no longer rendered.
+
+The battle red/teal message and purple command frame are **verified source
+colors**, not stale custom CSS. `textbox_0.pal` contains the message colors;
+`LoadBattleMenuWindowGfx` in `src/battle_bg.c:744` loads user frame option 0
+(`graphics/text_window/1.png`) into 0x12/0x22 and palette bank 1. These accepted
+P1 render rules remain unchanged. The P1.4 request explicitly permits colors
+verified for the corresponding source context.
+
+Evidence: `artifacts/emerald-source/phase-p1-4-ui/`. Run:
+
+```sh
+EMERALD_TEST_SOURCE=1 pnpm exec vitest run tests/emerald-reconstruction/opening-ui.test.tsx
+pnpm exec playwright test --config tools/emerald-reconstruction/playwright.config.ts opening-ui.e2e.ts
+EMERALD_TEST_SOURCE=1 python3 tools/emerald-reconstruction/run.py test
+```
+
+Python compares decoded indices against the original PNG and actual browser
+Birch pixels against that independent source image at 1×/3×/4×. Full-screen
+emulator equality remains unproven without an authentic independent reference.
+All extracted assets remain ignored and served only by development/loopback
+endpoints, with production tracing exclusions unchanged.
+
+## P1.5 opposing trainer
+
+The private UI extraction additionally provides `opponent.front`: original Emerald
+`TRAINER_PIC_STEVEN` (81), from `graphics/trainers/front_pics/steven.png`. Both
+`gTrainerFrontPic_Steven` and `gTrainerPalette_Steven` reference that indexed PNG
+in `src/data/graphics/trainers.h`. The front picture table selects one 64×64
+frame; `sAnims_Steven` selects `sAnim_GeneralFrame0` (frame 0, duration 0, END).
+The source coordinate record is size 8, y_offset 1.
+
+`trainerSpriteImage` retains all indexed pixels, RGB555 colors and index-zero
+transparency. Its existing `playerSpriteImage` API remains compatible. Normal
+local gameplay and the standalone battle diagnostic preload Steven into the
+existing opponent texture key, without changing its 64×64 slot, position or
+choreography. VS uses that same frame at the existing opponent coordinates.
+The owner-requested follow-up also uses this same Steven front in the audience
+choice portrait slot (16,35), preserving all three perspective choices. Brendan,
+the Route 101 Youngster, the audience portrait registry and project art remain
+unchanged. PokéFolio's accepted composition/timing remains an adaptation,
+not an authentic Emerald full-screen reference.
+
+Run `pnpm emerald:extract-ui`, then `pnpm game:local`. Evidence and the complete
+replacement inventory are in `artifacts/emerald-source/phase-p1-5-opponent/`.
+No source asset is imported by application modules or copied into public assets.
+Production retains the existing original PokéFolio fallback, and the private
+source endpoints still return 404.

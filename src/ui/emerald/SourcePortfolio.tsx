@@ -6,6 +6,7 @@ import { FRAME_MS } from '../../core/clock';
 import { settingsStore } from '../../runtime/stores';
 import { isReducedMotion } from '../../runtime/motion';
 import { useSourceUi, SourceSurface, nativeBox } from './SourceUi';
+import { SourcePlayerArt } from './SourcePlayerArt';
 import {
   getSkills,
   getSkillCategories,
@@ -466,7 +467,7 @@ export function SourceTrainerCard({ notice }: { notice?: string | null }) {
       paint={p}
       description={`${profile.name}. ${profile.positioning}. ${profile.role}. ${profile.education}. ${profile.highlights.join(' ')}. ${profile.achievements.join(' ')}`}
     >
-      <PortfolioArt name="trainer-portrait" x={164} y={48} label="Original portrait of Uttkarsh" />
+      <SourcePlayerArt x={153} y={40} label="Brendan player portrait" />
     </Shell>
   );
 }

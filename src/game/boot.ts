@@ -3,6 +3,7 @@ import type { GameBridge } from '../runtime/gameBridge/types';
 import { WorldScene } from './WorldScene';
 import { BattleScene } from './BattleScene';
 import type {Clock} from '../core/clock';
+import type {SourcePlayerGraphics,SourceOpponentGraphics} from '../core/emerald/playerGraphics';
 
 export const GAME_WIDTH = 240;
 export const GAME_HEIGHT = 160;
@@ -33,7 +34,7 @@ export function mountWorldGame(host: HTMLElement, bridge: GameBridge, options:{p
 }
 
 /** Standalone battle renderer for the existing development arena. */
-export function mountBattleGame(host:HTMLElement,bridge:GameBridge):()=>void {
- const game=new Phaser.Game({type:Phaser.CANVAS,parent:host,width:240,height:160,scene:[new BattleScene(bridge,true)],scale:{mode:Phaser.Scale.NONE,width:240,height:160},render:{pixelArt:true,antialias:false,roundPixels:true},audio:{noAudio:true},banner:false});
+export function mountBattleGame(host:HTMLElement,bridge:GameBridge,player?:SourcePlayerGraphics,opponent?:SourceOpponentGraphics):()=>void {
+ const game=new Phaser.Game({type:Phaser.CANVAS,parent:host,width:240,height:160,scene:[new BattleScene(bridge,true,player,opponent)],scale:{mode:Phaser.Scale.NONE,width:240,height:160},render:{pixelArt:true,antialias:false,roundPixels:true},audio:{noAudio:true},banner:false});
  game.canvas.style.imageRendering='pixelated';return ()=>game.destroy(true);
 }

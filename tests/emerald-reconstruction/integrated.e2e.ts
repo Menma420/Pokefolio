@@ -1,6 +1,8 @@
 import {test,expect,type Page,type Download} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
+import {readFileSync} from 'node:fs';
+import {sourcePages} from '../../src/core/emerald/ui';
 import {INTRO_NARRATION} from '../../src/content/narrative';
 import {paginateDialogue} from '../../src/ui/kit/text';
 
@@ -135,7 +137,7 @@ for(const [name,path] of [['source','/'],['legacy','/?world=legacy']] as const){
   await expect.poll(()=>page.locator('canvas[data-world-raster]').evaluate(node=>{const canvas=node as HTMLCanvasElement;return canvas.getContext('2d')!.getImageData(0,0,canvas.width,canvas.height).data.some((v,i)=>i%4!==3&&v!==0);})).toBe(true);
   await page.clock.install();await page.clock.pauseAt(await page.evaluate(()=>Date.now()+100));await page.clock.runFor(300);
   await page.keyboard.press('Enter');await page.clock.runFor(600);await expect(state(page)).toContainText('Flow INTRO');
-  for(const line of INTRO_NARRATION)for(const text of paginateDialogue(line,210,8)){
+  for(const line of INTRO_NARRATION)for(const text of (name==='source'?sourcePages(JSON.parse(readFileSync('artifacts/emerald-source/ui/ui-bundle.json','utf8')),line,216):paginateDialogue(line,210,8))){
    const reveal=page.getByRole('button',{name:'Reveal dialogue'});if(await reveal.isVisible())await reveal.click();
    await expect(page.locator('div[role="status"].sr-only')).toHaveText(text);
    await page.getByRole('button',{name:'Continue dialogue'}).click();await page.clock.runFor(1);

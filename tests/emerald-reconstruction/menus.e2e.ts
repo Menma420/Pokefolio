@@ -6,7 +6,7 @@ const canvas = 'canvas[data-world-art="source-emerald"]';
 const state = (page: Page) => page.getByRole('status', { name: 'Game state' });
 const source = async (page: Page) =>
   JSON.parse((await page.locator(canvas).getAttribute('data-source-state'))!);
-const output = `artifacts/emerald-source/phase-p1-2-ui/${process.env.P12_CAPTURE_MODE ?? 'final'}`;
+const output = process.env.EMERALD_UI_EVIDENCE_DIR ?? `artifacts/emerald-source/phase-p1-2-ui/${process.env.P12_CAPTURE_MODE ?? 'final'}`;
 async function capture(page: Page, name: string) {
   await mkdir(output, { recursive: true });
   const scale = /-([134])x$/.exec(name)?.[1];

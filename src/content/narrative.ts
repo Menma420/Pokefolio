@@ -1,4 +1,5 @@
 export const INTRO_NARRATION = [
+  'Welcome to the world of Uttkarsh.',
   'Here, you play as Uttkarsh.',
   'But somewhere in this world, you are here too.',
   'Find yourself, and you may get the chance to face Uttkarsh—as yourself.',

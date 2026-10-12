@@ -107,7 +107,7 @@ export function BattleScreen({ ctx,art, visibleTopics, availableCommands, pageTe
     <GameViewport><PixelContext.Provider value={{...pixels,motionFrame:art?.frame??0}}>
       <section hidden={ctx.view==='party'} data-battle-beat={art?.beat??'idle'} data-battle-frame={art?.frame??0} aria-label="Interview battle" className="absolute inset-0 overflow-hidden text-white">
         <span className="sr-only" role="img" aria-label="Visitor trainer">The visitor is the player-side character.</span>
-        {art?.opponent.visible&&<span className="sr-only" role="img" aria-label="Uttkarsh trainer">Uttkarsh sends the active project from the opponent side.</span>}
+        {art?.opponent.visible&&<span className="sr-only" role="img" aria-label={sourceUi?.opponent?"Steven Stone opponent artwork":"Uttkarsh trainer"}>Uttkarsh sends the active project from the opponent side.</span>}
         <section aria-label="Current project" style={{position:'absolute',left:`calc(${8-plateOffset*40}*var(--u))`,top:'calc(8*var(--u))',width:'calc(136*var(--u))',height:'calc(32*var(--u))',zIndex:10}}>
           <Window frame="plate" style={{height:'100%',padding:0}}>
             <span className="sr-only">{project?.name??ctx.projectId}</span>

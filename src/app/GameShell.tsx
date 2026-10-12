@@ -8,6 +8,7 @@ import { globalInputRouter, KeyboardAdapter } from '../core/input';
 import { type GameBridge,createGameBridge } from '../runtime/gameBridge';
 import { GameExperienceState, GameOrchestrator } from '../runtime/Orchestrator';
 import { uiStore, UiState } from '../runtime/stores';
+import { SourceBirchIntro } from '../ui/emerald/SourceOpening';
 import { GameViewport, DialogueBox, TouchController, TransitionLayer, Window } from '../ui/kit';
 import { BattleOrchestrator } from '../ui/battle/BattleOrchestrator';
 import { VsScreen } from '../ui/battle/VsScreen';
@@ -63,12 +64,14 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
       const useSource=sourceWorld&&new URLSearchParams(location.search).get('world')!=='legacy';
       let session:EmeraldWorldSession|undefined;
       let bundle:EmeraldBundle|undefined;
-      if(useSource){const response=await fetch('/dev/emerald/data');if(!response.ok)throw new Error('Private source data unavailable. Run pnpm emerald:extract, or use /?world=legacy.');bundle=await response.json() as EmeraldBundle;const uiResponse=await fetch('/dev/emerald/ui');if(!uiResponse.ok)throw new Error('Private UI extraction missing. Run pnpm emerald:extract-ui.');const ui=await uiResponse.json() as EmeraldUi;if(ui.sourceCommit!==bundle.sourceCommit)throw new Error('Source UI revision mismatch');if(!disposed)setSourceUi(ui);}
+      let sourceGraphics:EmeraldUi['player'];
+      let opponentGraphics:EmeraldUi['opponent'];
+      if(useSource){const response=await fetch('/dev/emerald/data');if(!response.ok)throw new Error('Private source data unavailable. Run pnpm emerald:extract, or use /?world=legacy.');bundle=await response.json() as EmeraldBundle;const uiResponse=await fetch('/dev/emerald/ui');if(!uiResponse.ok)throw new Error('Private UI extraction missing. Run pnpm emerald:extract-ui.');const ui=await uiResponse.json() as EmeraldUi;if(ui.sourceCommit!==bundle.sourceCommit)throw new Error('Source UI revision mismatch');if(!ui.intro)throw new Error('Private Birch extraction missing. Run pnpm emerald:extract-ui.');if(!ui.player)throw new Error('Private Brendan extraction missing. Run pnpm emerald:extract-ui.');if(!ui.opponent)throw new Error('Private Steven extraction missing. Run pnpm emerald:extract-ui.');sourceGraphics=ui.player;opponentGraphics=ui.opponent;if(!disposed)setSourceUi(ui);}
       if(disposed)return;
       runtime=new GameOrchestrator<WorldSessionContract>(bridge,globalInputRouter,clock,bundle?((b,i,c)=>session=new EmeraldWorldSession(bundle!,sourceChallenger,b,i,c)):undefined);
       const current=runtime;orchestratorRef.current=current;
       removeState=current.subscribe(next=>{setGameBridge(bridge);setState(next);setOrchestrator(current);});
-      if(session){const {mountEmeraldGame}=await import('../game/emerald/GameScene');if(!disposed&&hostRef.current)destroyGame=mountEmeraldGame(hostRef.current,bridge,session.world);}
+      if(session){const {mountEmeraldGame}=await import('../game/emerald/GameScene');if(!disposed&&hostRef.current)destroyGame=mountEmeraldGame(hostRef.current,bridge,session.world,sourceGraphics,opponentGraphics);}
       else{const {mountWorldGame}=await import('../game/boot');if(!disposed&&hostRef.current)destroyGame=mountWorldGame(hostRef.current,bridge,{physicalPixels:true,reducedMotion:isReducedMotion,clock});}
     };
     void initialize().catch((error: unknown) => {
@@ -115,20 +118,20 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
 
       {mode === 'TITLE' && <TitleScreen ready={!!state?.rendererReady} locked={transition} confirmBlink={frame?.blink} onStart={() => orchestrator?.start()} />}
 
-      {mode === 'INTRO' && state?.dialogue && <div className="absolute inset-0 z-20"><PixelArtwork name="intro-background" /><PixelArtwork name="intro-uttkarsh" x={88} y={26} label="Uttkarsh welcomes you" /><DialogueBox text={state.dialogue} speed="normal" onComplete={() => orchestrator?.completeDialogue()} /></div>}
+      {mode === 'INTRO' && state?.dialogue && <div className="absolute inset-0 z-20"><>{sourceUi?.intro ? <SourceBirchIntro/> : <PixelArtwork name="intro-background" />}</><DialogueBox variant={sourceUi?"opening":"field"} text={state.dialogue} speed="normal" onComplete={() => orchestrator?.completeDialogue()} /></div>}
 
-      {(mode === 'ENCOUNTER' || mode === 'AUDIENCE') && state?.dialogue && <DialogueBox text={state.dialogue} speaker="VISITOR" onComplete={() => orchestrator?.completeDialogue()} />}
+      {(mode === 'ENCOUNTER' || mode === 'AUDIENCE') && state?.dialogue && <DialogueBox variant={sourceUi?"opening":"field"} text={state.dialogue} speaker="VISITOR" onComplete={() => orchestrator?.completeDialogue()} />}
       {(mode === 'OVERWORLD' || mode === 'INTERIOR') && state?.dialogue && <DialogueBox text={state.dialogue} dismissible onBack={() => orchestrator?.cancelWorldDialogue()} onComplete={() => orchestrator?.completeDialogue()} />}
 
       {mode === 'AUDIENCE' && state?.audiencePrompt && (
         <>
-          <DialogueBox text={state.audiencePrompt} disableInputContext awaitInput={false} onComplete={()=>{}}/>
+          <DialogueBox variant={sourceUi?"opening":"field"} text={state.audiencePrompt} disableInputContext awaitInput={false} onComplete={()=>{}}/>
           <AudienceChoice choices={state.audienceChoices} cursor={state.audienceCursor} select={(index,id)=>{if(index!==state.audienceCursor)orchestrator?.setAudienceCursor(index);else orchestrator?.selectAudience(id);}}/>
         </>
       )}
 
       {mode === 'VS' && audience && <VsScreen audienceId={audience} />}
-      {mode === 'BATTLE' && state?.dialogue && !state.battleVisible && <DialogueBox text={state.dialogue} speaker="VISITOR" onComplete={() => orchestrator?.completeDialogue()} />}
+      {mode === 'BATTLE' && state?.dialogue && !state.battleVisible && <DialogueBox variant={sourceUi?"opening":"field"} text={state.dialogue} speaker="VISITOR" onComplete={() => orchestrator?.completeDialogue()} />}
       {mode === 'BATTLE' && state?.battleVisible && audience && orchestrator && (
         <BattleOrchestrator
           initialProject={getFirstProject(audience)}
