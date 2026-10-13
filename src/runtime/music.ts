@@ -1,6 +1,7 @@
 import type {FlowMode} from '../core/flow';
 
-export type SourceMusicId = 'MUS_TITLE'|'MUS_ROUTE122'|'MUS_LITTLEROOT'|'MUS_BIRCH_LAB'|'MUS_ROUTE101'|'MUS_ENCOUNTER_MALE'|'MUS_ENCOUNTER_CHAMPION'|'MUS_VS_RIVAL'|'MUS_VS_CHAMPION'|'MUS_VS_TRAINER'|'MUS_VICTORY_LEAGUE'|'MUS_VICTORY_TRAINER';
+export const SOURCE_MUSIC_IDS = ['MUS_TITLE','MUS_ROUTE122','MUS_LITTLEROOT','MUS_BIRCH_LAB','MUS_ROUTE101','MUS_ENCOUNTER_MALE','MUS_ENCOUNTER_CHAMPION','MUS_VS_RIVAL','MUS_VS_CHAMPION','MUS_VS_TRAINER','MUS_VICTORY_LEAGUE','MUS_VICTORY_TRAINER'] as const;
+export type SourceMusicId = typeof SOURCE_MUSIC_IDS[number];
 export type MusicId = SourceMusicId|'silent'|'town'|'battle'|'victory';
 export interface MusicAsset {
  src:string|null; present:boolean; validated:boolean; loop:boolean; gain:number;

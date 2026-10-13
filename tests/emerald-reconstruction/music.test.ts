@@ -1,6 +1,8 @@
 import {afterEach,beforeEach,describe,expect,it,vi} from 'vitest';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {MusicService} from '../../src/runtime/MusicService';
 import {musicForState,type SourceMusicManifest} from '../../src/runtime/music';
 import {FakeClock} from '../../src/core/clock';
@@ -99,6 +101,15 @@ describe('P1.7 semantic source music routing',()=>{
  });
 });
 describe('private audio serving boundary',()=>{
+ it('rejects invalid IDs without private assets, while valid requests report the missing manifest',async()=>{
+  const root=fs.mkdtempSync(join(tmpdir(),'pokefolio-audio-ci-')),cwd=vi.spyOn(process,'cwd').mockReturnValue(root);
+  vi.stubEnv('NODE_ENV','development');vi.stubEnv('EMERALD_LOCAL','1');
+  try{
+   for(const key of ['../../imports.json','MUS_UNKNOWN','__proto__',''])expect((await GET(new Request('http://localhost/dev/emerald/audio?track='+encodeURIComponent(key)))).status,key).toBe(404);
+   expect((await GET(new Request('http://localhost/dev/emerald/audio?track=MUS_TITLE'))).status).toBe(503);
+   expect((await GET(new Request('http://localhost/dev/emerald/audio'))).status).toBe(503);
+  }finally{cwd.mockRestore();fs.rmdirSync(root);}
+ });
  it.each(['production','test'])('returns 404 in %s even with opt-in',async mode=>{vi.stubEnv('NODE_ENV',mode);vi.stubEnv('EMERALD_LOCAL','1');expect((await GET(new Request('http://127.0.0.1/dev/emerald/audio?track=MUS_LITTLEROOT'))).status).toBe(404);});
  it('requires development, opt-in, loopback and an exact allowlisted track',async()=>{vi.stubEnv('NODE_ENV','development');vi.stubEnv('EMERALD_LOCAL','0');expect((await GET(new Request('http://localhost/dev/emerald/audio'))).status).toBe(404);vi.stubEnv('EMERALD_LOCAL','1');expect((await GET(new Request('https://example.org/dev/emerald/audio'))).status).toBe(404);expect((await GET(new Request('http://localhost/dev/emerald/audio?track=../../imports.json'))).status).toBe(404);});
 });

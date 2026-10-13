@@ -2,17 +2,20 @@ import {readFile} from 'node:fs/promises';
 import {resolve,basename} from 'node:path';
 import {createHash} from 'node:crypto';
 import type {SourceMusicManifest} from '../../../../runtime/music';
+import {SOURCE_MUSIC_IDS} from '../../../../runtime/music';
 export const dynamic='force-dynamic';
 /** This is a loopback-development resource, never a public static audio route. */
 export async function GET(request:Request){
  const url=new URL(request.url);
  if(process.env.NODE_ENV!=='development'||process.env.EMERALD_LOCAL!=='1'||!['127.0.0.1','localhost','[::1]'].includes(url.hostname))return new Response(null,{status:404});
+ const key=url.searchParams.get('track');
+ // Reject invalid requests even in clean CI checkouts without private files.
+ if(key!==null&&!SOURCE_MUSIC_IDS.some(id=>id===key))return new Response(null,{status:404});
  const headers={'Cache-Control':'no-store','X-Robots-Tag':'noindex, nofollow'};
  try{
   const root=resolve(process.cwd(),'artifacts/emerald-source/audio');
   const manifest=JSON.parse(await readFile(resolve(root,'manifest.json'),'utf8')) as SourceMusicManifest;
-  const key=url.searchParams.get('track');
-  if(!key)return Response.json(manifest,{headers});
+  if(key===null)return Response.json(manifest,{headers});
   if(!Object.prototype.hasOwnProperty.call(manifest.tracks,key))return new Response(null,{status:404});
   const track=manifest.tracks[key as keyof SourceMusicManifest['tracks']];
   if(!track.present||!track.validated||!track.filename||basename(track.filename)!==track.filename)return new Response(null,{status:404});
