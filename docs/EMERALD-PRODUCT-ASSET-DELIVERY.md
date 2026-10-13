@@ -53,11 +53,14 @@ The packager does not grant distribution rights or perform deployment.
 
 Before a public deployment can run the game:
 
-1. Resolve authorization to distribute the included Nintendo/Game Freak graphics,
-   map data and music. The current task does not grant that authorization.
+1. Obtain owner authorization to distribute the included graphics, map data and
+   music. The owner confirmed public distribution for the Blob-upload task; the
+   uploader and runtime still require an explicit authorization flag.
 2. Upload the prepared release to a host/storage location authorized for those
    assets. Keep all files from the same `release.json` together in one versioned
-   directory. No upload is performed by this repository's build.
+   directory. No upload is performed by this repository's build. Use the
+   [manifest-only Blob uploader](../tools/emerald-reconstruction/BLOB-DELIVERY.md)
+   for explicit publication, downloaded-hash verification and exact base-URL output.
 3. Set these **server-only** deployment variables, then redeploy:
 
    ```text

@@ -24,7 +24,8 @@
     "game:local": "EMERALD_LOCAL=1 next dev --webpack --hostname 127.0.0.1 --port 3101",
     "emerald:import-audio": "python3 tools/emerald-reconstruction/import_audio.py",
     "emerald:audit-audio": "python3 tools/emerald-reconstruction/audit_audio_source.py",
-    "emerald:prepare-delivery": "python3 tools/emerald-reconstruction/prepare_delivery.py"
+    "emerald:prepare-delivery": "python3 tools/emerald-reconstruction/prepare_delivery.py",
+    "emerald:upload-assets": "node --import tsx tools/emerald-reconstruction/upload_delivery_cli.mjs"
   },
   "dependencies": {
     "@axe-core/react": "^4.13.0",
@@ -43,6 +44,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vercel/blob": "2.8.1",
     "@vitejs/plugin-react": "^6.1.1",
     "dependency-cruiser": "^16.10.4",
     "eslint": "^9",
