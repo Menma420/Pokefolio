@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 test('source title matrix and unchanged start, intro and returning flow', async ({ page }) => {
-  const folder = `artifacts/emerald-source/phase-title/${process.env.SOURCE_TITLE_BASELINE ? 'before' : 'p1-6-after'}`;
+  const folder = process.env.SOURCE_TITLE_EVIDENCE_DIR ?? `artifacts/emerald-source/phase-title/${process.env.SOURCE_TITLE_BASELINE ? 'before' : 'p1-6-after'}`;
+  const prefix = process.env.SOURCE_TITLE_EVIDENCE_PREFIX ?? 'title';
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.clock.install();
@@ -41,9 +42,9 @@ test('source title matrix and unchanged start, intro and returning flow', async 
         await page.clock.runFor(17);
       }
     }
-    await page.screenshot({ path: `${folder}/title-${scale}x.png` });
+    await page.screenshot({ path: `${folder}/${prefix}-${scale}x.png` });
     await writeFile(
-      `${folder}/title-${scale}x.state.json`,
+      `${folder}/${prefix}-${scale}x.state.json`,
       JSON.stringify(
         {
           viewportCSS: { width, height },

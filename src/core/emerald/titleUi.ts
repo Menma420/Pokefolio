@@ -1,4 +1,6 @@
 import { UiPainter, sourceTextWidth, type EmeraldUi } from './ui';
+import titleWordmark from '../../../assets-src/opening/pokefolio-wordmark.json';
+export {titleWordmark};
 
 export interface SourceTitle {
   palette: number[];
@@ -108,11 +110,13 @@ export function titleUi(
       );
     }
   }
+  // PokéFolio branding is app-owned and independent of the private source release.
+  // The source background palette, wave, blend and prompt are unchanged.
   if (showLogo)
-    for (let y = 0; y < t.logo.height; y++)
-      for (let x = 0; x < t.logo.width; x++) {
-        const index = t.logo.pixels[y * t.logo.width + x]!;
-        if (index) p.pixel(x + t.logo.x, y + t.logo.y + logoY, palette[index]!);
+    for (let y = 0; y < titleWordmark.height; y++)
+      for (let x = 0; x < titleWordmark.width; x++) {
+        const index = titleWordmark.pixels[y * titleWordmark.width + x]!;
+        if (index) p.pixel(x + titleWordmark.x, y + titleWordmark.y + logoY, titleWordmark.palette[index]!);
       }
   if (showPrompt) {
     const prompt = titlePrompt(ui);

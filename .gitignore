@@ -62,3 +62,6 @@ artifacts/phase-*/
 /.next-emerald-local/
 /tools/emerald-reconstruction/__pycache__/
 /tests/emerald-reconstruction/__pycache__/
+
+# Generated original title-art tooling cache.
+/assets-src/opening/__pycache__/
