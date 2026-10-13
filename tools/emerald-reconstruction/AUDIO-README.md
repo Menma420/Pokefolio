@@ -75,11 +75,13 @@ interval against decoded duration before starting playback. Whole-file repeat
 is explicitly labelled unverified, including the album fade-out gap risk.
 Source MIDI loop ticks are not automatically MP3 timestamps.
 
-The runtime fetches `/dev/emerald/audio` once per source session. It requests
-individual recordings only through `?track=MUS_*`; the endpoint verifies the
-imported hash before serving. Both manifest and media require development,
-`EMERALD_LOCAL=1` and a loopback hostname. Production returns 404. Next's existing
-`/dev/emerald/**` tracing exclusion covers the private tree and upstream source.
+The product runtime fetches `/api/game-assets/music` once per session, and present
+tracks resolve to `/api/game-assets/MUS_*`. Development reads the ignored local
+imports; production requires separately authorized release delivery. See
+[product asset delivery](../../docs/EMERALD-PRODUCT-ASSET-DELIVERY.md).
+The old `/dev/emerald/audio?track=MUS_*` endpoint remains diagnostic-only, requiring
+development, `EMERALD_LOCAL=1` and loopback; it still returns 404 in production.
+Both product and diagnostic routes exclude the private tree from deployment traces.
 
 ## State mapping / verified corrections
 

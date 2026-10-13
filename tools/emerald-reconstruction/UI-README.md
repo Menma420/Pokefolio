@@ -1,3 +1,13 @@
+# Product runtime and asset delivery
+
+The normal game now loads this completed UI through `/api/game-assets/ui` in
+development and production. Asset distribution remains an explicit prerequisite;
+see [deployment configuration](../../docs/EMERALD-PRODUCT-ASSET-DELIVERY.md).
+`/dev/emerald/ui` retains its original diagnostic-only guards. The historical
+phase notes below do not select the production world implementation.
+
+---
+
 # Private Emerald UI reconstruction
 
 This adapter reconstructs the field Start Menu, field Bag, and normal battle

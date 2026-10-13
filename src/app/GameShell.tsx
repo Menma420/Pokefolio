@@ -28,12 +28,13 @@ import { listenForAudioUnlock } from '../runtime/AudioUnlocker';
 import { isReducedMotion } from '../runtime/motion';
 import { MusicService, type MusicTrace } from '../runtime/MusicService';
 import type {SourceMusicManifest} from '../runtime/music';
+import {gameAssetUrl,loadEmeraldGameAssets} from '../runtime/emeraldAssets';
 import {EmeraldWorldSession,type SourceChallengerBinding} from '../runtime/world/EmeraldWorldSession';
 import type {WorldSessionContract} from '../runtime/world/WorldSessionContract';
 import type {EmeraldBundle} from '../core/emerald/types';
 
 type GameRuntime=GameOrchestrator<WorldSessionContract>;
-export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld?:boolean;sourceChallenger?:SourceChallengerBinding|null}) {
+export function GameShell({sourceWorld=true,allowLegacyFallback=false,sourceChallenger=null}:{sourceWorld?:boolean;allowLegacyFallback?:boolean;sourceChallenger?:SourceChallengerBinding|null}) {
   const clock=useContext(ClockContext);
   const router=useRouter();
   const [portfolioSpeaking,setPortfolioSpeaking]=useState(false);
@@ -48,6 +49,7 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
   const [state, setState] = useState<GameExperienceState | null>(null);
   const transition = useStore(uiStore, (value: UiState) => value.isTransitioning);
   const [sourceUi,setSourceUi]=useState<EmeraldUi|null>(null);
+  const [useSource,setUseSource]=useState(sourceWorld);
   const portfolioOpen=useStore(uiStore,value=>value.screenStack.length>0);
   const frame=useStore(uiStore,value=>value.transitionFrame);
   const transitionType = useStore(uiStore, (value: UiState) => value.transitionType);
@@ -63,12 +65,13 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
     let disposed = false;
     let destroyGame: (() => void) | undefined;
     const initialize=async()=>{
-      const useSource=sourceWorld&&new URLSearchParams(location.search).get('world')!=='legacy';
+      const useSource=sourceWorld&&!(allowLegacyFallback&&new URLSearchParams(location.search).get('world')==='legacy');
+      setUseSource(useSource);
       let session:EmeraldWorldSession|undefined;
       let bundle:EmeraldBundle|undefined;
       let sourceGraphics:EmeraldUi['player'];
       let opponentGraphics:EmeraldUi['opponent'];
-      if(useSource){const response=await fetch('/dev/emerald/data');if(!response.ok)throw new Error('Private source data unavailable. Run pnpm emerald:extract, or use /?world=legacy.');bundle=await response.json() as EmeraldBundle;const uiResponse=await fetch('/dev/emerald/ui');if(!uiResponse.ok)throw new Error('Private UI extraction missing. Run pnpm emerald:extract-ui.');const ui=await uiResponse.json() as EmeraldUi;if(ui.sourceCommit!==bundle.sourceCommit)throw new Error('Source UI revision mismatch');if(!ui.intro)throw new Error('Private Birch extraction missing. Run pnpm emerald:extract-ui.');if(!ui.player)throw new Error('Private Brendan extraction missing. Run pnpm emerald:extract-ui.');if(!ui.opponent)throw new Error('Private Steven extraction missing. Run pnpm emerald:extract-ui.');sourceGraphics=ui.player;opponentGraphics=ui.opponent;if(!disposed)setSourceUi(ui);}
+      if(useSource){const assets=await loadEmeraldGameAssets();bundle=assets.bundle;sourceGraphics=assets.ui.player;opponentGraphics=assets.ui.opponent;if(!disposed)setSourceUi(assets.ui);}
       if(disposed)return;
       if(useSource&&bundle){
         // Optional music cannot block renderer/input startup. An unavailable private
@@ -76,7 +79,7 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
         const empty={sourceCommit:bundle.sourceCommit,maps:{},tracks:{}} as SourceMusicManifest;
         music.current?.configureSource(empty);
         // Do not await optional soundtrack I/O before constructing the world.
-        void fetch('/dev/emerald/audio').then(async response=>response.ok?await response.json() as SourceMusicManifest:null).then(supplied=>{
+        void fetch(gameAssetUrl('music')).then(async response=>response.ok?await response.json() as SourceMusicManifest:null).then(supplied=>{
           if(disposed||!supplied||supplied.sourceCommit!==bundle!.sourceCommit)return;
           music.current?.configureSource(supplied);
           const next=orchestratorRef.current?.state;
@@ -105,7 +108,7 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
       orchestratorRef.current = null;
       uiStore.getState().endTransition();
     };
-  }, [clock,sourceWorld,sourceChallenger]);
+  }, [clock,sourceWorld,allowLegacyFallback,sourceChallenger]);
 
   useEffect(() => {
     if (!orchestrator || state?.flow.mode !== 'TITLE' || !state.rendererReady) return;
@@ -129,7 +132,9 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
         <div ref={hostRef} className="h-full w-full" />
       </div>
 
-      {mode === 'TITLE' && <TitleScreen ready={!!state?.rendererReady} locked={transition} confirmBlink={frame?.blink} onStart={() => orchestrator?.start()} />}
+      <output hidden data-game-runtime={useSource?'emerald':'legacy'} data-game-assets={loadingError?'unavailable':state?.rendererReady?'ready':'loading'} />
+      {mode === 'TITLE' && (!useSource||sourceUi) && <TitleScreen ready={!!state?.rendererReady} locked={transition} confirmBlink={frame?.blink} onStart={() => orchestrator?.start()} />}
+      {useSource&&!sourceUi&&!loadingError&&<p role="status" aria-label="Game asset loading" className="absolute left-2 top-2"><BitmapText text="LOADING POKEFOLIO..." width={224}/></p>}
 
       {mode === 'INTRO' && state?.dialogue && <div className="absolute inset-0 z-20"><>{sourceUi?.intro ? <SourceBirchIntro/> : <PixelArtwork name="intro-background" />}</><DialogueBox variant={sourceUi?"opening":"field"} text={state.dialogue} speed="normal" onComplete={() => orchestrator?.completeDialogue()} /></div>}
 

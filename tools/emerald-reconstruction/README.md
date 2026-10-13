@@ -1,10 +1,23 @@
+# Product architecture correction
+
+Emerald is now the default product runtime in development **and production**.
+The development-only diagnostic harness remains `/dev/emerald`; the normal game
+uses `/api/game-assets/*`. Production requires separately authorized asset
+delivery and never silently selects the old world when those assets are absent.
+See [product asset delivery](../../docs/EMERALD-PRODUCT-ASSET-DELIVERY.md) for the
+offline release packager, deployment configuration and private production tests.
+The earlier local-only reconstruction notes below describe the diagnostic and
+extraction history; they no longer define production runtime selection.
+
+---
+
 # Private source-driven Littleroot slice
 
 This is a working local reconstruction increment, **not an exact Emerald release**.
 Pinned upstream: `pret/pokeemerald` commit
 `731ad5bfd6e6f265508d0efcca0ba42f9dcf5881`.
-The opted-in local root game uses this same source world. Production and the
-legacy fallback retain the approved custom world; portfolio content is shared.
+The normal root game uses this same source world in every environment.
+Production asset delivery is configured separately; portfolio content is shared.
 
 ## Reproduce
 

@@ -24,9 +24,12 @@ const nextConfig: NextConfig = {
   distDir:localSourceDev?'.next-emerald-local':'.next',
   experimental: { useTypeScriptCli: false },
   devIndicators: false,
-  // Local extracted assets must never enter a standalone/serverless deployment,
-  // including through Next's static fs dependency tracing.
-  outputFileTracingExcludes: {'/dev/emerald/**':['./artifacts/emerald-source/**','./pokeemerald/**']},
+  // Runtime selection is Emerald in production. Distribution is separate:
+  // authorized releases come from an external asset host, never implicit fs tracing.
+  outputFileTracingExcludes: {
+    '/dev/emerald/**':['./artifacts/emerald-source/**','./pokeemerald/**'],
+    '/api/game-assets/**':['./artifacts/emerald-source/**','./pokeemerald/**'],
+  },
   webpack(config,{dev}) {
     if(localSourceDev&&dev){
       // Next's default ignore matches `.next`, not our isolated cache. The
