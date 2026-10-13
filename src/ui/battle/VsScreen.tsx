@@ -7,14 +7,13 @@ import { AudienceId } from '../../domain/types';
 import { Audiences } from '../../content/audiences';
 import { GameViewport } from '../kit';
 import { BitmapText } from '../kit/BitmapText';
+import { glyphAdvance } from '../kit/text';
 import { DialogueBox } from '../kit/DialogueBox';
 import { palette, vsPalette } from '../kit/palette';
 import { PixelArtwork, type OpeningArt } from '../opening/PixelArtwork';
 import { useArtFrame } from '../opening/useArtFrame';
 import { audioService } from '../../runtime/AudioService';
 import { isReducedMotion } from '../../runtime/motion';
-import { sourceNamePlate } from '../../core/emerald/openingUi';
-import { SourceSurface } from '../emerald/SourceUi';
 import { useSourceUi } from '../emerald/SourceUi';
 import { SourcePlayerArt } from '../emerald/SourcePlayerArt';
 import { SourceOpponentArt } from '../emerald/SourceOpponentArt';
@@ -48,18 +47,24 @@ export function VsScreen({ audienceId }: VsScreenProps) {
     }
     return {width,height,data};
   },[colors,n,stripes]);
+  const sourceCharacters = !!(sourceUi?.player && sourceUi?.opponent);
+  const playerName = sourceCharacters ? 'UTTKARSH' : audience?.challengerTitle.toUpperCase() ?? 'VISITOR';
+  const challengerName = sourceCharacters ? audience?.challengerTitle.toUpperCase() ?? 'VISITOR' : 'UTTKARSH';
+  const challengerWidth = [...challengerName].reduce((width, char) => width + glyphAdvance(char), 0);
+  const challengerX = 190 - Math.floor(challengerWidth / 2);
+  const announcement = audience?.announcement ?? 'The interview begins!';
   const portrait = (audience?.portraitKey ?? 'portrait-recruiter') as OpeningArt;
   return <GameViewport><section aria-label="Interview challenge" data-vs-frame={frame} data-vs-colors={colors.join(',')} className="absolute inset-0 overflow-hidden" style={{background:colors[0]}}>
     <Raster image={background} style={{position:'absolute',left:0,top:0}} />
-    {sourceUi?.player ? <SourcePlayerArt x={18-slide} y={34} label="Brendan visitor portrait" /> :
+    {sourceUi?.player ? <SourcePlayerArt x={18-slide} y={34} label="Uttkarsh — Brendan portrait" /> :
       <PixelArtwork name="portrait-visitor" x={18-slide} y={42} label="Visitor portrait" />}
-    {sourceUi?.opponent ? <SourceOpponentArt x={158+slide} y={0} label="Steven Stone opponent portrait" /> :
+    {sourceUi?.opponent ? <SourceOpponentArt x={158+slide} y={0} label={`${audience?.challengerTitle ?? 'Visitor'} challenger portrait`} /> :
       <PixelArtwork name={portrait} x={158+slide} y={0} label="Uttkarsh challenger artwork" />}
     {(reduced || frame >= 30) && <PixelArtwork name="vs-lettering" x={92+shake} y={33} label="VS" />}
     {!reduced&&frame>=30&&frame<32&&<div aria-hidden="true" data-vs-impact style={{position:'absolute',inset:0,background:palette.onDark}}/>}
-    {(reduced || frame >= 44) && <div style={{position:'absolute',left:'calc(12*var(--u))',top:'calc(98*var(--u))'}}><BitmapText text={audience?.challengerTitle.toUpperCase() ?? 'VISITOR'} color={palette.onDark} shadow={palette.outer}/></div>}
-    {(reduced || frame >= 44) && (sourceUi ? <div data-vs-title style={{position:'absolute',inset:0,pointerEvents:'none'}}><SourceSurface kind="vs-nameplate" paint={sourceNamePlate(sourceUi,'UTTKARSH',104+titleOffset,80)}/><span className="sr-only">UTTKARSH</span></div> : <div data-vs-title style={{position:'absolute',left:`calc(${104+titleOffset}*var(--u))`,top:'calc(80*var(--u))',width:'calc(128*var(--u))',height:'calc(16*var(--u))',padding:'calc(4*var(--u))'}}><PixelArtwork name="vs-title-bar" /><BitmapText text="UTTKARSH" color={palette.onDark} shadow={palette.outer} style={{position:'relative'}} /></div>)}
+    {(reduced || frame >= 44) && <div data-vs-player-name={playerName} style={{position:'absolute',left:'calc(12*var(--u))',top:'calc(98*var(--u))'}}><BitmapText text={playerName} color={palette.onDark} shadow={palette.outer}/></div>}
+    {(reduced || frame >= 44) && <div data-vs-title data-vs-challenger-name={challengerName} style={{position:'absolute',left:`calc(${challengerX+titleOffset}*var(--u))`,top:'calc(68*var(--u))',pointerEvents:'none'}}><BitmapText text={challengerName} color={palette.onDark} shadow={palette.outer}/></div>}
 
-    {(reduced || frame >= 50) && <DialogueBox variant={sourceUi?"opening":"field"} text={audience?.announcement ?? 'The interview begins!'} speed={reduced ? 'instant' : 'fast'} disableInputContext awaitInput={false} onComplete={()=>{}} />}
+    {(reduced || frame >= 50) && <DialogueBox variant={sourceUi?"opening":"field"} text={announcement} speed={reduced ? 'instant' : 'fast'} disableInputContext awaitInput={false} onComplete={()=>{}} />}
   </section></GameViewport>;
 }

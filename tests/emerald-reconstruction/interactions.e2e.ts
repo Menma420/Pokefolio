@@ -43,6 +43,8 @@ async function authoredPages(p:Page,gfx:string,repeat=false){
  const expected=(repeat?npc.repeatInteraction:npc.firstInteraction).messages.flatMap(message=>message.pages.map(lines=>lines.join('\n')));
  for(const text of expected){
   await expect(p.getByRole('button',{name:/^(Reveal|Continue) dialogue$/})).toBeVisible();
+  await expect(p.locator('[data-source-ui="field-message"]')).toHaveCount(1);
+  await expect(p.locator('[data-typed]')).toHaveCount(0);
   const reveal=p.getByRole('button',{name:'Reveal dialogue'});if(await reveal.count())await reveal.click();
   await expect(p.locator('div[role="status"].sr-only')).toHaveText(text);
   await p.getByRole('button',{name:'Continue dialogue'}).click();
@@ -59,6 +61,8 @@ test('normal root: all town NPCs and four signs, repeat dialogue, lock and exact
  await start(page);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  for(const gfx of ['OBJ_EVENT_GFX_TWIN','OBJ_EVENT_GFX_FAT_MAN','OBJ_EVENT_GFX_BOY_2']){
   await talk(page,gfx);const before=await source(page);await captureEasterEgg(page,gfx);
+  if(gfx==='OBJ_EVENT_GFX_TWIN'&&process.env.EMERALD_CAPTURE_SCALES==='1'){for(const n of [1,3,4]){await page.setViewportSize({width:240*n,height:160*n});await expect(page.getByRole('region',{name:'Game frame'}).first()).toHaveAttribute('data-scale',String(n));await expect.poll(()=>page.locator('[data-source-ui="field-message"] canvas').evaluate((c:HTMLCanvasElement)=>c.width)).toBe(240*n);await capture(page,`npc-emerald-field-${n}x`);}}
+
   await page.keyboard.press('ArrowLeft');await page.keyboard.press('x');await page.keyboard.press('y');expect((await source(page)).player).toMatchObject({x:before.player.x,y:before.player.y});expect((await source(page)).interaction.executions).toBe(before.interaction.executions);await expect(page.getByRole('menu')).toHaveCount(0);
   await authoredPages(page,gfx);const after=await source(page);expect(after.camera).toEqual(before.camera);expect(after.player).toMatchObject({x:before.player.x,y:before.player.y});expect(after.interaction.error).toBeNull();
   await talk(page,gfx);await authoredPages(page,gfx,true);

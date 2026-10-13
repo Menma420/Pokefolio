@@ -1,4 +1,5 @@
 import type { SourcePlayerGraphics, SourceOpponentGraphics } from './playerGraphics';
+import type { SourceTitle } from './titleUi';
 /** Data-only private UI adapter. Source pixels are fetched locally, never bundled. */
 export interface UiTemplate {
   bg: number;
@@ -50,6 +51,7 @@ export interface SourcePortfolio {
   };
 }
 export interface EmeraldUi {
+  title?: SourceTitle;
   intro?: SourceLayer & {
     map: number[];
     birch: SourceLayer & { width: number; height: number; center: number[]; graphicsPath: string; animation: string };

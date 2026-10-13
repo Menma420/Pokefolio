@@ -1,20 +1,20 @@
 {
   "town": {
-    "duration": 88.44,
-    "sampleRate": 48000,
-    "channels": 2,
-    "samples": 4245120
+    "duration": 32.0,
+    "sampleRate": 22050,
+    "channels": 1,
+    "samples": 705600
   },
   "battle": {
-    "duration": 139.46666666666667,
-    "sampleRate": 48000,
-    "channels": 2,
-    "samples": 6694400
+    "duration": 32.0,
+    "sampleRate": 22050,
+    "channels": 1,
+    "samples": 705600
   },
   "victory": {
-    "duration": 31.266666666666666,
-    "sampleRate": 48000,
-    "channels": 2,
-    "samples": 1500800
+    "duration": 4.0,
+    "sampleRate": 22050,
+    "channels": 1,
+    "samples": 88200
   }
 }

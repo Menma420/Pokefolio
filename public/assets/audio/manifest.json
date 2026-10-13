@@ -1,17 +1,18 @@
 {
   "town": {
-    "src": "/assets/audio/town-d2e14292f0f8.mp3",
-    "sha256": "d2e14292f0f874bfe2e3d0d5f3d8fa224ed19bbfda29f4017770b818cc5d193a",
+    "src": "/assets/audio/town-b27b77172394.wav",
+    "sha256": "9efd9c35e329a859dd2adbcc726db31ea1eb52b540f297826dd0ce7e29b21666",
     "loop": true
   },
   "battle": {
-    "src": "/assets/audio/battle-272bddc9934b.mp3",
-    "sha256": "272bddc9934bc26ce8e4c3568d111de627f814abe088133bdd37ecb440db652f",
+    "src": "/assets/audio/battle-ed85a60eb10e.wav",
+    "sha256": "f5583fb21d083547afb8a5e43c813d8c82fb202c5bd8632167d724497cbad7c9",
     "loop": true
   },
   "victory": {
-    "src": "/assets/audio/victory-4db66a56b231.mp3",
-    "sha256": "4db66a56b2315b03fcb95f6533daaf3e9f5086146dbc452a83c2504afe99944b",
+    "src": "/assets/audio/victory-beaa93cd02de.wav",
+    "sampleRate": 22050,
+    "duration": 4,
     "loop": false
   },
   "cursor.move": {

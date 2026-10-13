@@ -22,11 +22,12 @@ export function DialogueBox(props:DialogueBoxProps) {
 }
 function DialoguePage({text,onComplete,onBack,summary,speaker,clock: injectedClock,disableInputContext=false,variant='field',dismissible=false,speed,awaitInput=true}:DialogueBoxProps) {
  const sourceUi=useSourceUi();
+ const sourceField=variant==='field'||variant==='opening';
  const sharedClock=useContext(ClockContext);
  const clock=injectedClock??sharedClock;
  const settings=useStore(settingsStore);
  const reduced=settings.reducedMotion||settings.animationReduced||isReducedMotion();
- const pages=sourceUi&&variant!=='field'?sourcePages(sourceUi,text,variant==='bag'||variant==='opening'?216:208):paginateDialogue(text,variant==='field'?210:226,variant==='field'?8:0);
+ const pages=sourceUi?text.split('\f').flatMap(part=>sourcePages(sourceUi,part,variant==='bag'||sourceField?216:208)):paginateDialogue(text,variant==='field'?210:226,variant==='field'?8:0);
  const [page,setPage]=useState(0); const [length,setLength]=useState(0); const [bob,setBob]=useState(0);
  const releasePresentation=useRef<(()=>void)|null>(null);
  useEffect(()=>{if(globalDialogueService.getActive()?.text===text)return;const owner=globalDialogueService.present(text);releasePresentation.current=owner.release;return ()=>{owner.release();if(releasePresentation.current===owner.release)releasePresentation.current=null;};},[text]);
@@ -51,7 +52,7 @@ function DialoguePage({text,onComplete,onBack,summary,speaker,clock: injectedClo
  },[clock,current,delay]);
  useEffect(()=>{
   if(!done || reduced) return;
-  const task=clock.schedule(()=>setBob(value=>sourceUi&&variant!=='field'?(value+1)%4:1-value),(sourceUi&&variant!=='field'?9:16)*FRAME_MS);
+  const task=clock.schedule(()=>setBob(value=>sourceUi?(value+1)%4:1-value),(sourceUi?9:16)*FRAME_MS);
   return ()=>task.cancel();
  },[bob,clock,done,reduced,sourceUi,variant]);
  const advance=()=>{
@@ -69,8 +70,8 @@ function DialoguePage({text,onComplete,onBack,summary,speaker,clock: injectedClo
   });
   return ()=>globalInputRouter.unregister('dialogue-box');
  });
- const Message=variant==='opening'?SourceFieldMessage:SourceBattleMessage;
- if(sourceUi&&variant!=='field')return <Message bag={variant==='bag'} text={current.slice(0,visibleLength)}><div role="status" aria-live="polite" aria-atomic="true" className="sr-only">{done?current:''}</div>{speaker&&<span className="sr-only">{speaker}</span>}{awaitInput&&<button type="button" aria-label={done?'Continue dialogue':'Reveal dialogue'} onClick={advance} style={{position:'absolute',left:'calc(216*var(--u))',top:'calc(144*var(--u))',width:'calc(16*var(--u))',height:'calc(16*var(--u))',background:'transparent'}}>{done&&<div style={{position:'absolute',left:'calc(-216*var(--u))',top:'calc(-144*var(--u))'}}><SourceSurface kind="message-arrow" paint={sourceDownArrow(sourceUi,reduced?0:[0,1,2,1][bob]!,Math.min(216,16+sourceTextWidth(sourceUi,current.split('\n').at(-1)??'')),137,variant==='opening'?'field':variant==='bag')}/></div>}</button>}</Message>;
+ const Message=sourceField?SourceFieldMessage:SourceBattleMessage;
+ if(sourceUi)return <Message bag={variant==='bag'} text={current.slice(0,visibleLength)}><div role="status" aria-live="polite" aria-atomic="true" className="sr-only">{done?current:''}</div>{speaker&&<span className="sr-only">{speaker}</span>}{awaitInput&&<button type="button" aria-label={done?'Continue dialogue':'Reveal dialogue'} onClick={advance} style={{position:'absolute',left:'calc(216*var(--u))',top:'calc(144*var(--u))',width:'calc(16*var(--u))',height:'calc(16*var(--u))',background:'transparent'}}>{done&&<div style={{position:'absolute',left:'calc(-216*var(--u))',top:'calc(-144*var(--u))'}}><SourceSurface kind="message-arrow" paint={sourceDownArrow(sourceUi,reduced?0:[0,1,2,1][bob]!,Math.min(216,16+sourceTextWidth(sourceUi,current.split('\n').at(-1)??'')),137,sourceField?'field':variant==='bag')}/></div>}</button>}</Message>;
  return <Window frame="message" className="absolute z-30" style={{left:`calc(${variant==='field'?8:0}*var(--u))`,top:'calc(112*var(--u))',width:`calc(${variant==='field'?224:240}*var(--u))`,height:`calc(${variant==='field'?40:48}*var(--u))`}}>
   {speaker&&<Window frame="plate" style={{position:'absolute',left:'calc(8*var(--u))',top:'calc(-14*var(--u))',width:'calc(70*var(--u))',height:'calc(18*var(--u))',minHeight:'calc(18*var(--u))',padding:'calc(5*var(--u))'}}><BitmapText text={speaker}/></Window>}
   <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">{done?current:''}</div>

@@ -196,12 +196,41 @@ for (const audience of ['Recruiter', 'Engineer', 'Friend']) {
     await page.keyboard.press('Enter');
     await page.clock.runFor(1000);
     await expect(page.locator('[data-vs-title]')).toBeVisible();
+    await expect(page.locator('[data-vs-player-name]')).toHaveAttribute(
+      'data-vs-player-name',
+      'UTTKARSH',
+    );
+    await expect(page.locator('[data-vs-challenger-name]')).toHaveAttribute(
+      'data-vs-challenger-name',
+      audience === 'Friend' ? 'VISITOR' : audience.toUpperCase(),
+    );
+    await expect(page.getByRole('img', { name: 'Uttkarsh — Brendan portrait' })).toBeVisible();
+    await expect(
+      page.getByRole('img', {
+        name: `${audience === 'Friend' ? 'Visitor' : audience} challenger portrait`,
+      }),
+    ).toBeVisible();
     if (!process.env.OPPONENT_CAPTURE_MODE) {
       await expect(page.locator('[data-source-opponent="steven-front"]')).toHaveCount(1);
       await expect(page.locator('[data-source-player="front"]')).toHaveCount(1);
       await expect(page.getByLabel('Uttkarsh challenger artwork')).toHaveCount(0);
     }
+    const playerInk = page.locator('[data-vs-player-name] [data-bitmap-text]');
+    const challengerInk = page.locator('[data-vs-challenger-name] [data-bitmap-text]');
+    for (const attr of ['data-native-height', 'data-ink', 'data-shadow'])
+      await expect(challengerInk).toHaveAttribute(attr, (await playerInk.getAttribute(attr))!);
+    await expect(page.locator('[data-source-ui="vs-nameplate"]')).toHaveCount(0);
+    await expect(page.locator('[data-opening-art="vs-title-bar"]')).toHaveCount(0);
     await matrix(page, `vs-${audience.toLowerCase()}`);
+    const labelBounds = await challengerInk.boundingBox();
+    const spriteBounds = await page.locator('[data-source-opponent="steven-front"]').boundingBox();
+    const scale = Number(
+      await page.getByRole('region', { name: 'Game frame' }).first().getAttribute('data-scale'),
+    );
+    expect(
+      Math.abs(labelBounds!.x + labelBounds!.width / 2 - spriteBounds!.x - spriteBounds!.width / 2),
+    ).toBeLessThanOrEqual(scale / 2);
+    expect(labelBounds!.y - spriteBounds!.y - spriteBounds!.height).toBe(4 * scale);
     await page.clock.runFor(400);
     for (
       let i = 0;
@@ -256,7 +285,7 @@ test('P1.5 standalone diagnostic shares source Steven without replacing Brendan'
   ).toHaveCount(1);
 });
 
-test('victory stops after four seconds in the actual encounter-to-battle flow', async ({
+test('P1.7 ordinary interview EXIT restores map music without a victory cue', async ({
   page,
 }) => {
   test.setTimeout(180000);
@@ -341,31 +370,12 @@ test('victory stops after four seconds in the actual encounter-to-battle flow', 
           time: number;
         }[],
     );
-  await expect
-    .poll(async () => (await timing()).some((e) => e.type === 'ended' && e.duration === 4), {
-      timeout: 10000,
-    })
-    .toBe(true);
-  await expect
-    .poll(async () => {
-      const events = await timing(),
-        start = events.find((e) => e.type === 'start' && e.duration === 4)!;
-      // The transport's onended listener runs before our observer. Compare
-      // audio times rather than assuming listener registration order.
-      return events.some((e) => e.type === 'start' && e.loop && e.time >= start.time + 3.95);
-    })
-    .toBe(true);
-  const events = await timing(),
-    start = events.find((e) => e.type === 'start' && e.duration === 4)!,
-    end = events.find((e) => e.type === 'ended' && e.duration === 4)!;
-  expect(start.loop).toBe(false);
-  expect(start.offset).toBe(0);
-  expect(start.bufferDuration).toBeGreaterThan(4);
-  expect(end.time - start.time).toBeGreaterThanOrEqual(3.95);
-  expect(end.time - start.time).toBeLessThan(4.25);
-  await mkdir('artifacts/emerald-source/phase-p1-5-opponent/logs', { recursive: true });
-  await writeFile(
-    'artifacts/emerald-source/phase-p1-5-opponent/logs/victory-browser-timing.json',
-    JSON.stringify({ events, elapsed: end.time - start.time }, null, 2),
-  );
+  await expect.poll(async()=>JSON.parse((await page.locator('[data-music-trace]').textContent())!).filter((e:{event:string})=>e.event==='request').at(-1)?.id).toBe('MUS_ROUTE101');
+  await page.waitForTimeout(4500);
+  const events=await timing();
+  expect(events.every(e=>e.duration===null&&e.loop)).toBe(true);
+  expect(events.some(e=>e.duration===4)).toBe(false);
+  await expect(state(page)).toContainText('player tile 16,11; facing right;');
+  await mkdir('artifacts/emerald-source/phase-p1-7-audio', { recursive: true });
+  await writeFile('artifacts/emerald-source/phase-p1-7-audio/no-victory-browser-timing.json',JSON.stringify(events,null,2));
 });

@@ -50,6 +50,9 @@ docs/design/
 
 # local artifacts
 artifacts/*.zip
+artifacts/*.mp3
+artifacts/*.flac
+artifacts/*.ogg
 artifacts/phase-*/
 
 # Private source reconstruction; never publish extracted Nintendo/Game Freak assets.

@@ -4,6 +4,16 @@ export function onAudioUnlock(listener:()=>void):()=>void {unlockListeners.add(l
 
 export function getAudioContext(): AudioContext | null { return audioContext; }
 
+/** A first gesture may unlock title BGM without also confirming PRESS START.
+ * Keep listening after a failed resume, and release handlers with the game shell.
+ */
+export function listenForAudioUnlock():()=>void {
+ const remove=()=>{window.removeEventListener('pointerdown',gesture,true);window.removeEventListener('keydown',gesture,true);};
+ const gesture=()=>unlockAudio(remove);
+ window.addEventListener('pointerdown',gesture,true);window.addEventListener('keydown',gesture,true);
+ return remove;
+}
+
 export function unlockAudio(onReady?:()=>void): void {
   if (typeof window === 'undefined') return;
   try {

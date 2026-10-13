@@ -4,6 +4,7 @@ from pathlib import Path
 import json,re,subprocess,struct
 from PIL import Image
 from extract import Extraction,PIN,sha,rgb,words,encode4,decode4
+from extract_title import extract_title
 ROOT=Path(__file__).resolve().parents[2]
 
 class UiExtraction(Extraction):
@@ -129,8 +130,10 @@ def extract():
  backgroundPalette[1:9]=gradient[:8] # FadePlatformOut reaches tPalIndex=0 before the welcome text.
  intro={'tiles':gfx('graphics/birch_speech/shadow.png'),'map':words(e.read('graphics/birch_speech/map.bin')),'palette':backgroundPalette,'birch':{'tiles':gfx('graphics/birch_speech/birch.png'),'palette':pal('graphics/birch_speech/birch.png'),'width':64,'height':64,'center':center,'graphicsPath':'graphics/birch_speech/birch.png','animation':'sAnim_NewGameBirch: frame 0, duration 1, END'},'window':sequential_templates('src/main_menu.c','sNewGameBirchSpeechTextWindows')[0]}
  assert len(intro['map'])==32*20 and len(intro['birch']['tiles'])==4096
+ title=extract_title(e,pal,gfx,sine)
  bundle={'sourceCommit':head,'intro':intro,'player':player,'opponent':opponent,'frame':frame,'standardPalette':pal('graphics/interface/std_menu.pal'),'messagePalette':pal('graphics/text_window/message_box.png'),'messageTiles':gfx('graphics/text_window/message_box.png'),'arrows':{'tiles':gfx('graphics/interface/scroll_indicator.png'),'palette':pal('graphics/interface/red.pal'),'bounce':[int(sine[i*8]*2/256) for i in range(32)]},'bag':bag,'battle':battle,'downArrow':gfx('graphics/fonts/down_arrow.png'),'battleDownArrow':gfx('graphics/fonts/down_arrow_alt.png'),'fonts':fonts,'portfolio':{'dex':dex,'card':card,'party':party,'options':options},'start':{'x':22*8,'y':8,'width':7*8,'height':16*8,'textX':8,'textY':9,'pitch':16}}
- e.save('ui-bundle.json',bundle,'source-indexed assets, RGB555 palettes, parsed C templates and glyph widths; no art approximation')
+ bundle['title']=title
+ e.save('ui-bundle.json',bundle,'source-indexed assets, RGB555 palettes, parsed C templates and glyph widths; title lettering is an explicit PokéFolio adaptation')
  # Diagnostics are independent indexed PNG previews, not authentic emulator oracles.
  for name,data in [('bag',bag),('battle',battle)]:
   image=Image.new('RGB',(256,len(data['map'])//32*8));px=image.load()

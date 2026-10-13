@@ -7,6 +7,10 @@ import { SourceUiContext } from '../../src/ui/emerald/SourceUi';
 import { SourceOpponentArt } from '../../src/ui/emerald/SourceOpponentArt';
 import { AudienceChoice } from '../../src/ui/opening/AudienceChoice';
 import { ENCOUNTER_AUDIENCE_CHOICES } from '../../src/content/narrative';
+import { VsScreen } from '../../src/ui/battle/VsScreen';
+import { ClockContext } from '../../src/ui/kit/PixelContext';
+import { FakeClock } from '../../src/core/clock';
+import { act } from '@testing-library/react';
 import { Audiences } from '../../src/content/audiences';
 const path = 'artifacts/emerald-source/ui/ui-bundle.json';
 afterEach(cleanup);
@@ -79,7 +83,58 @@ describe.skipIf(process.env.EMERALD_TEST_SOURCE !== '1' || !existsSync(path))(
           [
             ...view.getByRole('group', { name: 'Audience selection' }).querySelectorAll('button'),
           ].map((b) => b.getAttribute('aria-current')),
-        ).toEqual([0, 1, 2].map((i) => i === cursor ? 'true' : null));
+        ).toEqual([0, 1, 2].map((i) => (i === cursor ? 'true' : null)));
+      }
+    });
+    it('labels Brendan as Uttkarsh and the challenger by perspective with matching typography', () => {
+      for (const audienceId of Object.values(Audiences).map((a) => a.id)) {
+        const clock = new FakeClock();
+        const view = render(
+          <ClockContext.Provider value={clock}>
+            <SourceUiContext.Provider value={load()}>
+              <VsScreen audienceId={audienceId} />
+            </SourceUiContext.Provider>
+          </ClockContext.Provider>,
+        );
+        act(() => clock.tick(1100));
+        act(() => clock.tick(2000));
+        expect(
+          view
+            .getByRole('img', { name: 'Uttkarsh — Brendan portrait' })
+            .getAttribute('data-source-player'),
+        ).toBe('front');
+        expect(
+          view.container
+            .querySelector('[data-vs-player-name]')
+            ?.getAttribute('data-vs-player-name'),
+        ).toBe('UTTKARSH');
+        expect(
+          view.container
+            .querySelector('[data-vs-challenger-name]')
+            ?.getAttribute('data-vs-challenger-name'),
+        ).toBe(Audiences[audienceId]!.challengerTitle.toUpperCase());
+        expect(
+          view
+            .getByRole('img', {
+              name: `${Audiences[audienceId]!.challengerTitle} challenger portrait`,
+            })
+            .getAttribute('data-source-opponent'),
+        ).toBe('steven-front');
+        expect(view.container.textContent).toContain(Audiences[audienceId]!.announcement);
+        expect(view.container.textContent).not.toContain('Steven');
+        const playerText = view.container.querySelector(
+          '[data-vs-player-name] [data-bitmap-text]',
+        )!;
+        const challengerText = view.container.querySelector(
+          '[data-vs-challenger-name] [data-bitmap-text]',
+        )!;
+        for (const attr of ['data-native-height', 'data-ink', 'data-shadow'])
+          expect(challengerText.getAttribute(attr)).toBe(playerText.getAttribute(attr));
+        // jsdom rejects calc() multiplication with var(); actual rendered
+        // centering and the four-pixel sprite gap are asserted in opponent.e2e.ts.
+        expect(view.container.querySelector('[data-source-ui="vs-nameplate"]')).toBeNull();
+        expect(view.container.querySelector('[data-opening-art="vs-title-bar"]')).toBeNull();
+        view.unmount();
       }
     });
     it('keeps Brendan and all audience portrait identities separate', () => {

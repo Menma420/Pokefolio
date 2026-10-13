@@ -108,6 +108,59 @@ describe.skipIf(process.env.EMERALD_TEST_SOURCE !== '1' || !existsSync(path))(
           if (a[(y * 240 + x) * 4] !== b[(y * 240 + x) * 4])
             expect(x >= 96 && x < 104 && y >= 49 && y < 81).toBe(true);
     });
+    it('uses the Emerald field frame by default for NPC text and preserves paging and completion', () => {
+      const ui = load(),
+        clock = new FakeClock();
+      let completed = 0;
+      const text = 'A first NPC line.\nA second line.\fAnother NPC page.\nThe last line.';
+      const view = render(
+        <SourceUiContext.Provider value={ui}>
+          <DialogueBox text={text} clock={clock} onComplete={() => completed++} />
+        </SourceUiContext.Provider>,
+      );
+      const pressA = () =>
+        act(() => {
+          globalInputRouter.handlePress('A');
+          globalInputRouter.handleRelease('A');
+        });
+      expect(view.container.querySelector('[data-source-ui="field-message"]')).not.toBeNull();
+      expect(view.container.querySelector('[data-source-ui="battle-message"]')).toBeNull();
+      expect(view.container.querySelector('[data-typed]')).toBeNull();
+      act(() => clock.tick(100));
+      expect(view.getByRole('button').getAttribute('aria-label')).toBe('Reveal dialogue');
+      pressA();
+      expect(view.getByRole('status').textContent).toBe('A first NPC line.\nA second line.');
+      expect(view.container.querySelector('[data-source-ui="message-arrow"]')).not.toBeNull();
+      pressA();
+      expect(completed).toBe(0);
+      pressA();
+      expect(view.getByRole('status').textContent).toBe('Another NPC page.\nThe last line.');
+      pressA();
+      expect(completed).toBe(1);
+    });
+    it('keeps explicit Back and dismissible NPC cancellation in the Emerald field window', () => {
+      for (const explicit of [false, true]) {
+        let completed = 0,
+          back = 0;
+        const view = render(
+          <SourceUiContext.Provider value={load()}>
+            <DialogueBox
+              text="An NPC message."
+              dismissible
+              onBack={explicit ? () => back++ : undefined}
+              onComplete={() => completed++}
+            />
+          </SourceUiContext.Provider>,
+        );
+        act(() => {
+          globalInputRouter.handlePress('B');
+          globalInputRouter.handleRelease('B');
+        });
+        expect(completed).toBe(explicit ? 0 : 1);
+        expect(back).toBe(explicit ? 1 : 0);
+        view.unmount();
+      }
+    });
     it('keeps Clock-driven typewriter and A reveal/advance ownership', () => {
       const clock = new FakeClock(),
         ui = load();

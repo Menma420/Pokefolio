@@ -24,8 +24,10 @@ import { PixelArtwork } from '../ui/opening/PixelArtwork';
 import { PlayerMenu } from '../ui/portfolio/PlayerMenu';
 import { useRouter } from 'next/navigation';
 import { audioService } from '../runtime/AudioService';
+import { listenForAudioUnlock } from '../runtime/AudioUnlocker';
 import { isReducedMotion } from '../runtime/motion';
-import { MusicService } from '../runtime/MusicService';
+import { MusicService, type MusicTrace } from '../runtime/MusicService';
+import type {SourceMusicManifest} from '../runtime/music';
 import {EmeraldWorldSession,type SourceChallengerBinding} from '../runtime/world/EmeraldWorldSession';
 import type {WorldSessionContract} from '../runtime/world/WorldSessionContract';
 import type {EmeraldBundle} from '../core/emerald/types';
@@ -37,8 +39,8 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
   const [portfolioSpeaking,setPortfolioSpeaking]=useState(false);
   const [gameBridge,setGameBridge]=useState<GameBridge|undefined>(undefined);
   const music=useRef<MusicService|null>(null);
-  useEffect(()=>{const service=new MusicService(clock);music.current=service;const dispose=service.mount(),disposeSfx=audioService.mount();return ()=>{dispose();disposeSfx();music.current=null;};},[clock]);
-  useEffect(()=>gameBridge?.onEvent('battleReady',()=>music.current?.setScene('battle')),[gameBridge]);
+  const [musicTrace,setMusicTrace]=useState<readonly MusicTrace[]>([]);
+  useEffect(()=>{const service=new MusicService(clock,undefined,undefined,setMusicTrace);music.current=service;const dispose=service.mount(),disposeSfx=audioService.mount(),disposeUnlock=listenForAudioUnlock();return ()=>{disposeUnlock();dispose();disposeSfx();music.current=null;};},[clock]);
   const hostRef = useRef<HTMLDivElement>(null);
   const orchestratorRef = useRef<GameRuntime | null>(null);
   const [orchestrator, setOrchestrator] = useState<GameRuntime | null>(null);
@@ -68,9 +70,22 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
       let opponentGraphics:EmeraldUi['opponent'];
       if(useSource){const response=await fetch('/dev/emerald/data');if(!response.ok)throw new Error('Private source data unavailable. Run pnpm emerald:extract, or use /?world=legacy.');bundle=await response.json() as EmeraldBundle;const uiResponse=await fetch('/dev/emerald/ui');if(!uiResponse.ok)throw new Error('Private UI extraction missing. Run pnpm emerald:extract-ui.');const ui=await uiResponse.json() as EmeraldUi;if(ui.sourceCommit!==bundle.sourceCommit)throw new Error('Source UI revision mismatch');if(!ui.intro)throw new Error('Private Birch extraction missing. Run pnpm emerald:extract-ui.');if(!ui.player)throw new Error('Private Brendan extraction missing. Run pnpm emerald:extract-ui.');if(!ui.opponent)throw new Error('Private Steven extraction missing. Run pnpm emerald:extract-ui.');sourceGraphics=ui.player;opponentGraphics=ui.opponent;if(!disposed)setSourceUi(ui);}
       if(disposed)return;
+      if(useSource&&bundle){
+        // Optional music cannot block renderer/input startup. An unavailable private
+        // manifest remains silent rather than leaking into production-score fallback.
+        const empty={sourceCommit:bundle.sourceCommit,maps:{},tracks:{}} as SourceMusicManifest;
+        music.current?.configureSource(empty);
+        // Do not await optional soundtrack I/O before constructing the world.
+        void fetch('/dev/emerald/audio').then(async response=>response.ok?await response.json() as SourceMusicManifest:null).then(supplied=>{
+          if(disposed||!supplied||supplied.sourceCommit!==bundle!.sourceCommit)return;
+          music.current?.configureSource(supplied);
+          const next=orchestratorRef.current?.state;
+          if(next)music.current?.sync({mode:next.flow.mode,mapId:next.location?.mapId??null,opponent:'steven'});
+        }).catch(()=>{/* Missing optional music cannot block the game. */});
+      }
       runtime=new GameOrchestrator<WorldSessionContract>(bridge,globalInputRouter,clock,bundle?((b,i,c)=>session=new EmeraldWorldSession(bundle!,sourceChallenger,b,i,c)):undefined);
       const current=runtime;orchestratorRef.current=current;
-      removeState=current.subscribe(next=>{setGameBridge(bridge);setState(next);setOrchestrator(current);});
+      removeState=current.subscribe(next=>{music.current?.sync({mode:next.flow.mode,mapId:next.location?.mapId??null,opponent:useSource?'steven':'generic'});setGameBridge(bridge);setState(next);setOrchestrator(current);});
       if(session){const {mountEmeraldGame}=await import('../game/emerald/GameScene');if(!disposed&&hostRef.current)destroyGame=mountEmeraldGame(hostRef.current,bridge,session.world,sourceGraphics,opponentGraphics);}
       else{const {mountWorldGame}=await import('../game/boot');if(!disposed&&hostRef.current)destroyGame=mountWorldGame(hostRef.current,bridge,{physicalPixels:true,reducedMotion:isReducedMotion,clock});}
     };
@@ -99,12 +114,10 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
   }, [orchestrator, state?.flow.mode, state?.rendererReady]);
 
   const handleBattleExit = useCallback(() => {
-    music.current?.playVictory();
     orchestratorRef.current?.battleEnded();
   }, []);
   const mode = state?.flow.mode ?? 'TITLE';
   const audience = state?.audienceId;
-  useEffect(()=>{if(mode!=='BATTLE')music.current?.setScene(['OVERWORLD','INTERIOR'].includes(mode)?'town':['ENCOUNTER','AUDIENCE','VS'].includes(mode)?'battle':'silent');},[mode]);
   const menuAvailable=useCallback(()=>!!orchestratorRef.current&&['OVERWORLD','INTERIOR'].includes(orchestratorRef.current.state.flow.mode)&&!orchestratorRef.current.state.dialogue&&!orchestratorRef.current.world.getSnapshot().state.talkingNpcId,[]);
   const pauseMenu=useCallback(()=>orchestratorRef.current?.world.pause()??Promise.resolve(),[]);
   const resumeMenu=useCallback(()=>orchestratorRef.current?.world.resume()??Promise.resolve(),[]);
@@ -149,6 +162,7 @@ export function GameShell({sourceWorld=false,sourceChallenger=null}:{sourceWorld
         </div>
       )}
       {(state?.error||loadingError) && <p role="alert" className="absolute left-2 top-2 z-50 bg-black p-2 text-xs text-red-200"><BitmapText text={state?.error??loadingError??''} width={224} color={palette.warning}/></p>}
+      <output hidden data-music-trace>{JSON.stringify(musicTrace)}</output>
       <p role="status" aria-label="Game state" className="sr-only">
         Flow {mode}; runtime {orchestrator ? 'ready' : 'loading'}; {state?.location ? `Map ${state.location.mapId}; room ${state.location.roomId}; player tile ${state.location.tile.x},${state.location.tile.y}; facing ${state.location.facing}` : 'World starting'}; movement {state?.movementTarget ? `${state.movementTarget.x},${state.movementTarget.y}` : 'idle'}; encounter step {state?.encounterStep ?? 'idle'}; battle {state?.battleVisible ? 'mounted' : 'hidden'}; first encounter {state?.firstEncounterDone ? 'complete' : 'pending'}.
       </p>

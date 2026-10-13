@@ -259,6 +259,15 @@ emulator equality remains unproven without an authentic independent reference.
 All extracted assets remain ignored and served only by development/loopback
 endpoints, with production tracing exclusions unchanged.
 
+Ordinary field NPC, sign and object dialogue also uses this source message
+family through the default `DialogueBox` variant. It shares the opening's
+original frame, normal bitmap font, field palette and continuation arrow;
+explicit authored form-feed page breaks are preserved before source-font
+wrapping. DialogueService, Clock, input ownership, cancellation, NPC scripts
+and Mom's rest-effect ordering remain unchanged. Production/legacy mode still
+uses its existing non-source fallback. Follow-up evidence is kept in the same
+P1.4 folder under `npc-field/` and `NPC-FIELD-FOLLOWUP.md`.
+
 ## P1.5 opposing trainer
 
 The private UI extraction additionally provides `opponent.front`: original Emerald
@@ -284,3 +293,62 @@ replacement inventory are in `artifacts/emerald-source/phase-p1-5-opponent/`.
 No source asset is imported by application modules or copied into public assets.
 Production retains the existing original PokéFolio fallback, and the private
 source endpoints still return 404.
+
+## Source title screen
+
+The local/private root title uses `src/title_screen.c`'s settled Rayquaza title
+phase, decoded from `graphics/title_screen/rayquaza.png/.bin` and
+`clouds.png/.bin`. `src/graphics.c` and `graphics_file_rules.mk` define the
+224-entry logo palette followed by the 16-entry Rayquaza/cloud palette. Text
+BG tile bank/flip bits, cloud alpha coefficients (6,15), four-pixel scanline
+wave, vertical scroll and four-frame marking palette updates use source integer
+rules. Original `press_start.png` remains decoded for provenance with the source
+4×1 object tile ordering, offsets 1/5/9/13/17 and top-left (48,104).
+
+Only branding/prompt composition is adapted: a native-pixel `PokéFolio` wordmark
+replaces both Pokémon and Emerald Version; the Nintendo/Game Freak copyright banner is not
+presented as PokéFolio attribution. The original 8bpp affine logo and byte
+tilemap are extracted and independently converter-verified for provenance,
+but are not displayed. No browser font or image smoothing is used.
+
+PokéFolio retains its title preload/input/confirmation/intro flow and short
+logo-entry treatment; it does not reproduce Emerald's 256+144-frame title lead-in,
+shine/OBJ-window effects, attract loop, or main/save-selection menu. Reduced
+motion freezes presentation animation. Source assets remain exclusively in the
+ignored private UI bundle; production and explicit legacy mode keep the original
+PokéFolio fallback.
+
+Rebuild with `pnpm emerald:extract-ui`, then `pnpm game:local`. Evidence, source
+audit, before/after 1×/3×/4×/largest-fit captures and independent source-layer
+pixel checks are in `artifacts/emerald-source/phase-title/`. Run:
+
+```sh
+pnpm emerald:e2e title.e2e.ts
+EMERALD_TEST_SOURCE=1 pnpm exec vitest run tests/emerald-reconstruction/title.test.tsx
+EMERALD_TEST_SOURCE=1 python3 tools/emerald-reconstruction/run.py test
+```
+
+Pixel checks compare independently decoded source layers, not an authentic
+emulator full-screen oracle. Full-screen emulator equality is not claimed.
+
+### P1.6 mixed-case title correction
+
+`title_wordmark.py` is the reproducible authored lettering source. Its exact
+brand sequence is `PokéFolio`: capital P/F; lowercase o/k/é/o/l/i/o, with a
+separate acute accent and i dot. Glyphs use a fixed native baseline, a single
+pixel outline and three indices from the unchanged source title palette.
+The generated artwork is 180×34, centered at (30,18); actual ink bounds are
+(30,20,180,30). No rotation, scaling, font screenshot or uppercase conversion.
+
+The displayed prompt is now `Press Start`, rendered by the existing source
+normal bitmap glyph painter at (89,119), with a one-pixel opaque dark contour.
+Its width is 61px; native centering is within half a pixel using integer X.
+The existing 16-frame blink, title input, semantic button, Clock, intro flow
+and all background sampling/animation remain unchanged. The source prompt
+object graphics remain in the private bundle for provenance, but are not the
+displayed prompt.
+
+P1.6 evidence stays in the existing `artifacts/emerald-source/phase-title/`
+folder: `P1.6-REPORT.md`, `p1-6-before/`, `p1-6-after/` and prefixed logs.
+Four pre-correction native background hashes are hard regression assertions;
+independent source-pixel checks exclude only the new logo/prompt rectangles.
