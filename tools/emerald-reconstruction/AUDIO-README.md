@@ -19,9 +19,11 @@ requests remain intact and silence is explicit, with no generic-music substituti
 The three champion catalogue entries are also unused by this product flow.
 
 Littleroot and both houses, lab, Route 101, Title, generic trainer and inactive
-trainer-victory recordings now decode locally. The first keyboard/pointer gesture
-unlocks BGM without requiring Start, so an arrow on the title can leave its music
-playing while idle. Confirmation still enters the existing opening flow.
+trainer-victory recordings now decode locally. GameShell attempts audio startup
+on mount, allowing title BGM without input when the browser permits audible
+autoplay. If blocked, the first keyboard/pointer gesture retries without requiring
+Start, so an arrow can leave title music playing while idle. Confirmation still
+enters the existing opening flow. Saved music mute is respected in both cases.
 No new conversion pipeline is needed or built for these recordings.
 
 Current evidence is in the single `artifacts/emerald-source/phase-p1-8-audio/`
@@ -113,8 +115,10 @@ A change stops/disconnects the previous BGM before starting the replacement.
 Pending decodes are coalesced; generation guards prevent stale asynchronous
 starts. Source Ready/intro/music cannot block input if a recording is unavailable.
 
-Title music is armed on activation; browser autoplay requires the existing
-first-input unlock before it can sound. The existing title/intro/battle/warp
+Title music is armed on activation, with an immediate AudioContext start/resume
+attempt. A suspended or rejected attempt never blocks game startup or polls for
+permission. Browsers that require user activation retain the existing first-input
+fallback; application code cannot override that browser policy. The existing title/intro/battle/warp
 choreography owns transitions; this phase does not port the original GBA
 mixer's frame-by-frame fade envelope. Source transitions select IDs at those
 existing flow/map boundaries, with non-overlapping stop/start playback.
@@ -122,6 +126,15 @@ Music mute/visibility preserve offsets. Unlock or explicit retry can recover a
 failed playback. SFX remain on AudioService and do not replace BGM.
 `playVictory()` remains a tested compatibility API for explicit legacy completion;
 **GameShell does not call it**. No soundtrack victory is selected on interview EXIT.
+
+Automatic-start verification uses `autoplay.playwright.config.ts`: independent
+Chromium instances explicitly allow or block autoplay, with no page input before
+the initial assertions. Zero-input reads use CDP `userGesture:false` because
+Playwright evaluations themselves grant user activation. Tests verify title playback without input, blocked-policy
+gesture recovery, one active track, intro routing and persisted mute/unmute.
+These policy flags are test-only; they are never passed to visitors' browsers.
+See [Chrome's autoplay policy](https://developer.chrome.com/blog/autoplay).
+Evidence: `artifacts/emerald-source/phase-audio-autoplay/`.
 
 ## Native sound feasibility / outstanding gate
 

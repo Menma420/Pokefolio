@@ -41,7 +41,7 @@ export function GameShell({sourceWorld=true,allowLegacyFallback=false,sourceChal
   const [gameBridge,setGameBridge]=useState<GameBridge|undefined>(undefined);
   const music=useRef<MusicService|null>(null);
   const [musicTrace,setMusicTrace]=useState<readonly MusicTrace[]>([]);
-  useEffect(()=>{const service=new MusicService(clock,undefined,undefined,setMusicTrace);music.current=service;const dispose=service.mount(),disposeSfx=audioService.mount(),disposeUnlock=listenForAudioUnlock();return ()=>{disposeUnlock();dispose();disposeSfx();music.current=null;};},[clock]);
+  useEffect(()=>{const service=new MusicService(clock,undefined,undefined,setMusicTrace);music.current=service;const dispose=service.mount(),disposeSfx=audioService.mount(),disposeUnlock=listenForAudioUnlock({autoplay:true});return ()=>{disposeUnlock();dispose();disposeSfx();music.current=null;};},[clock]);
   const hostRef = useRef<HTMLDivElement>(null);
   const orchestratorRef = useRef<GameRuntime | null>(null);
   const [orchestrator, setOrchestrator] = useState<GameRuntime | null>(null);
