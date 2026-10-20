@@ -8,7 +8,9 @@ export function expandBattlePixels(source:Uint8ClampedArray,n:number,prefixX:num
  const data=new Uint8ClampedArray(width*height*4);const input=new Uint32Array(source.buffer,source.byteOffset,240*160);
  const output=new Uint32Array(data.buffer);const row=new Uint32Array(240*n);
  for(let y=0;y<160;y++){
-  for(let x=0;x<240;x++)row.fill(input[y*240+x]!,x*n,(x+1)*n);
+  // A typed-array fill call per native cell dominates on throttled/mobile CPUs.
+  // Copy packed RGBA words directly, retaining the exact padding/scale contract.
+  for(let x=0;x<240;x++){const pixel=input[y*240+x]!;for(let dx=0;dx<n;dx++)row[x*n+dx]=pixel;}
   for(let dy=0;dy<n;dy++)output.set(row,(prefixY+y*n+dy)*width+prefixX);
  }
  return {width,height,data};

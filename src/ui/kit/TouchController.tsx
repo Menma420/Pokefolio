@@ -1,5 +1,5 @@
 'use client';
-import { useContext,useEffect,useState,PointerEvent,useMemo,useSyncExternalStore } from 'react';
+import { memo,useContext,useEffect,useState,PointerEvent,useMemo,useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { useStore } from 'zustand';
 import { InputAction,globalInputRouter } from '../../core/input';
@@ -70,24 +70,33 @@ function TouchButton({action,label,x,y,size=60,dimmed=false,locked=false}:{actio
   <Raster image={image} style={{position:'absolute',left:(size-artSize)/2,top:(size-artSize)/2+(active?m/dpr:0),}}/>
  </button>;
 }
-export function TouchController({mode='world',artScale=3}:{mode?:Mode;artScale?:3|4}) {
+export const TouchController = memo(function TouchController({mode='world',artScale=3}:{mode?:Mode;artScale?:3|4}) {
  const mounted=useSyncExternalStore(()=>()=>{},()=>true,()=>false);
  const touch=useContext(TouchLayout);const locked=useStore(uiStore,s=>s.isTransitioning);
  const [dpr,setDpr]=useState(1);
  useEffect(()=>{const update=()=>setDpr(window.devicePixelRatio||1);update();window.addEventListener('resize',update);return ()=>window.removeEventListener('resize',update);},[]);
- if(!mounted||!touch||typeof document==='undefined')return null;
  const topOnly=mode==='title';const dimmed=mode==='battle'||mode==='dialogue';
  const pad=artScale===3?160:216,hit=16*artScale,ab=20*artScale,bankHeight=artScale===3?172:232,mid=(pad-hit)/2;
- return createPortal(<PixelContext.Provider value={{n:Math.round(artScale*dpr),dpr}}><div aria-label="Touch controller" className="touch-controller" data-mode={mode} style={{position:'fixed',inset:0,zIndex:50,pointerEvents:'none','--ui-inner':palette.inner,'--pad-half':`${pad/2}px`,'--bank-half':`${bankHeight/2}px`} as React.CSSProperties}>
+ const m=Math.round(artScale*dpr);
+ const pixels=useMemo(()=>({n:m,dpr}),[m,dpr]);
+ // Decorative deck/cross pixels do not depend on the world tick or button state.
+ // Keep their buffers until display geometry changes; hidden/title controls need none.
+ const art=useMemo(()=>!mounted||!touch||topOnly?null:{
+  pad:deckArt(Math.ceil(pad/artScale)+4,Math.ceil(pad/artScale)+4,m),
+  cross:crossArt(m),
+  bank:deckArt(Math.ceil(pad/artScale)+4,Math.ceil(bankHeight/artScale)+4,m),
+ },[mounted,touch,topOnly,pad,bankHeight,artScale,m]);
+ if(!mounted||!touch||typeof document==='undefined')return null;
+ return createPortal(<PixelContext.Provider value={pixels}><div aria-label="Touch controller" className="touch-controller" data-mode={mode} style={{position:'fixed',inset:0,zIndex:50,pointerEvents:'none','--ui-inner':palette.inner,'--pad-half':`${pad/2}px`,'--bank-half':`${bankHeight/2}px`} as React.CSSProperties}>
   {!topOnly&&<div className="touch-pad" style={{position:'absolute',left:'calc(16px + var(--safe-left, env(safe-area-inset-left, 0px)))',bottom:'calc(16px + var(--safe-bottom, env(safe-area-inset-bottom, 0px)))',width:pad,height:pad,pointerEvents:'auto'}}>
-<Raster image={deckArt(Math.ceil(pad/artScale)+4,Math.ceil(pad/artScale)+4,Math.round(artScale*dpr))} style={{position:'absolute',left:-2*artScale,top:-2*artScale,opacity:0.5,pointerEvents:'none'}}/>
-<Raster image={crossArt(Math.round(artScale*dpr))} style={{position:'absolute',left:(pad-40*artScale)/2,top:(pad-40*artScale)/2,opacity:0.5}}/>
+<Raster image={art!.pad} style={{position:'absolute',left:-2*artScale,top:-2*artScale,opacity:0.5,pointerEvents:'none'}}/>
+<Raster image={art!.cross} style={{position:'absolute',left:(pad-40*artScale)/2,top:(pad-40*artScale)/2,opacity:0.5}}/>
    <TouchButton action="UP" label="Move up" x={mid} y={0} size={hit} locked={locked}/><TouchButton action="LEFT" label="Move left" x={0} y={mid} size={hit} locked={locked}/><TouchButton action="RIGHT" label="Move right" x={pad-hit} y={mid} size={hit} locked={locked}/><TouchButton action="DOWN" label="Move down" x={mid} y={pad-hit} size={hit} locked={locked}/>
   </div>}
   <div className="touch-buttons" style={{position:'absolute',right:'calc(16px + var(--safe-right, env(safe-area-inset-right, 0px)))',bottom:'calc(16px + var(--safe-bottom, env(safe-area-inset-bottom, 0px)))',width:pad,height:bankHeight,pointerEvents:'auto'}}>
-   {!topOnly&&<Raster image={deckArt(Math.ceil(pad/artScale)+4,Math.ceil(bankHeight/artScale)+4,Math.round(artScale*dpr))} style={{position:'absolute',left:-2*artScale,top:-2*artScale,opacity:0.5,pointerEvents:'none'}}/>}
+   {!topOnly&&<Raster image={art!.bank} style={{position:'absolute',left:-2*artScale,top:-2*artScale,opacity:0.5,pointerEvents:'none'}}/>}
    {!topOnly&&<><TouchButton action="X" label="Menu (X)" x={0} y={0} size={hit} dimmed={dimmed} locked={locked}/><TouchButton action="Y" label="Bag (Y)" x={pad-hit} y={0} size={hit} dimmed={dimmed} locked={locked}/><TouchButton action="B" label="B back" x={0} y={bankHeight-ab} size={ab} locked={locked}/></>}
    <TouchButton action="A" label="A confirm" x={28*artScale} y={mid} size={ab} locked={locked}/>
   </div>
  </div></PixelContext.Provider>,document.body);
-}
+});

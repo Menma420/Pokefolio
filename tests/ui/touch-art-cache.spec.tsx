@@ -1,0 +1,24 @@
+import {afterEach,it,expect,vi} from 'vitest';
+import {render,cleanup,fireEvent} from '@testing-library/react';
+vi.mock('../../src/ui/kit/Raster',()=>({Raster:vi.fn(()=>null)}));
+vi.mock('../../src/runtime/AudioUnlocker',()=>({unlockAudio:vi.fn(async()=>{})}));
+import {Raster} from '../../src/ui/kit/Raster';
+import {TouchController} from '../../src/ui/kit/TouchController';
+import {TouchLayout} from '../../src/ui/kit/GameViewport';
+import {globalInputRouter} from '../../src/core/input';
+afterEach(()=>{cleanup();vi.restoreAllMocks();vi.unstubAllGlobals();vi.mocked(Raster).mockClear();});
+it('retains deck/cross buffers across world updates, input and mode changes; invalidates on DPR',()=>{
+ vi.stubGlobal('devicePixelRatio',3);
+ const press=vi.spyOn(globalInputRouter,'handlePress'),release=vi.spyOn(globalInputRouter,'handleRelease');
+ let mode:'world'|'battle'='world';const screen=()=> <TouchLayout.Provider value><TouchController mode={mode}/></TouchLayout.Provider>;
+ const view=render(screen());const calls=()=>vi.mocked(Raster).mock.calls.map(([p])=>p.image);
+ const deck=calls().find(i=>i.width===522&&i.height===522)!,cross=calls().find(i=>i.width===360)!;
+ expect(deck).toBeDefined();expect(cross).toBeDefined();vi.mocked(Raster).mockClear();
+ for(let i=0;i<10;i++)view.rerender(screen());expect(calls()).toHaveLength(0);
+ fireEvent.pointerDown(view.getByRole('button',{name:'A confirm'}),{pointerId:1});fireEvent.pointerUp(view.getByRole('button',{name:'A confirm'}),{pointerId:1});
+ expect(press).toHaveBeenCalledWith('A');expect(release).toHaveBeenCalledWith('A');expect(calls().some(i=>i.width===522||i.width===360)).toBe(false);
+ mode='battle';view.rerender(screen());expect(calls().filter(i=>i.width===522&&i.height===522).at(-1)).toBe(deck);expect(calls().filter(i=>i.width===360).at(-1)).toBe(cross);
+ vi.stubGlobal('devicePixelRatio',2);vi.mocked(Raster).mockClear();fireEvent(window,new Event('resize'));
+ expect(calls().some(i=>i.width===348&&i.height===348&&i!==deck)).toBe(true);
+ expect(view.getByRole('button',{name:'Menu (X)'}).getAttribute('aria-disabled')).toBe('true');
+});

@@ -164,7 +164,13 @@ export class UiPainter {
   readonly data = new Uint8ClampedArray(240 * 160 * 4);
   pixel(x: number, y: number, color: number) {
     if (x < 0 || y < 0 || x >= 240 || y >= 160) return;
-    this.data.set([...sourceRgb(color), 255], (y * 240 + x) * 4);
+    // Same RGB555 expansion as sourceRgb, without temporary arrays per painted pixel.
+    const at = (y * 240 + x) * 4;
+    const r = color & 31, g = (color >> 5) & 31, b = (color >> 10) & 31;
+    this.data[at] = (r << 3) | (r >> 2);
+    this.data[at + 1] = (g << 3) | (g >> 2);
+    this.data[at + 2] = (b << 3) | (b >> 2);
+    this.data[at + 3] = 255;
   }
   fill(x: number, y: number, w: number, h: number, color: number) {
     for (let yy = 0; yy < h; yy++) for (let xx = 0; xx < w; xx++) this.pixel(x + xx, y + yy, color);
@@ -228,14 +234,18 @@ export class UiPainter {
     const width = 240 * scale,
       height = 160 * scale,
       data = new Uint8ClampedArray(width * height * 4);
-    const row = new Uint8ClampedArray(width * 4);
+    // Copy complete RGBA words. Reading and writing the same typed-array format
+    // preserves byte order, alpha and every authored color on either endianness.
+    const native = new Uint32Array(this.data.buffer);
+    const expanded = new Uint32Array(data.buffer);
+    if (scale === 1) { expanded.set(native); return { width, height, data }; }
+    const row = new Uint32Array(width);
     for (let y = 0; y < 160; y++) {
       for (let x = 0; x < 240; x++) {
-        const src = (y * 240 + x) * 4;
-        for (let dx = 0; dx < scale; dx++)
-          for (let c = 0; c < 4; c++) row[(x * scale + dx) * 4 + c] = this.data[src + c]!;
+        const pixel = native[y * 240 + x]!;
+        for (let dx = 0; dx < scale; dx++) row[x * scale + dx] = pixel;
       }
-      for (let dy = 0; dy < scale; dy++) data.set(row, (y * scale + dy) * width * 4);
+      for (let dy = 0; dy < scale; dy++) expanded.set(row, (y * scale + dy) * width);
     }
     return { width, height, data };
   }
