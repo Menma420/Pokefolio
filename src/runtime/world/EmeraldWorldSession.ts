@@ -20,6 +20,15 @@ export class EmeraldWorldSession implements WorldSessionContract {
  readonly startMapId='LittlerootTown';
  readonly world:EmeraldWorld;
  private timer:ScheduledTask|undefined;
+ private nextTick=0;
+ // A suspended event loop is not elapsed play time. Ordinary late callbacks
+ // catch up at 60 fixed ticks/s; a >=1s stall starts a fresh input timeline.
+ private readonly suspendGapMs=1000;
+ private resetTimeline=()=>{
+  this.input.clearHeld();this.pendingDirection=undefined;
+  this.nextTick=this.clock.now()+FRAME_MS;
+  if(this.timer){this.timer.cancel();if(!this.disposed)this.schedule();}
+ };
  private started=false;private disposed=false;private pendingDirection:Facing|undefined;
  private talkingNpcId:string|null=null;private removeReady:()=>void;
  private maps=new Map<string,MapData>();
@@ -34,6 +43,7 @@ export class EmeraldWorldSession implements WorldSessionContract {
   this.world=new EmeraldWorld(bundle);this.world.paused=true;
   if(source)this.world.controlledObjects.add(source);
   this.removeReady=bridge.onEvent('worldReady',()=>{void this.initialize();});
+  if(typeof document!=='undefined')document.addEventListener('visibilitychange',this.resetTimeline);
   input.register('emerald-world-session','WORLD',action=>this.handleInput(action));
  }
  isInterior(mapId:string){return mapId!=='LittlerootTown'&&mapId!=='Route101';}
@@ -50,21 +60,34 @@ export class EmeraldWorldSession implements WorldSessionContract {
  private publish(){this.bridge.publishSnapshot(this.getSnapshot());}
  private async initialize(){
   if(this.started||this.disposed)return;this.started=true;this.publish();
-  try{await this.bridge.send({type:'loadMap',mapId:this.world.renderer.map.name});await this.bridge.snapshot();if(!this.disposed)this.schedule(this.clock.now()+FRAME_MS);}
+  try{await this.bridge.send({type:'loadMap',mapId:this.world.renderer.map.name});await this.bridge.snapshot();if(!this.disposed){this.nextTick=this.clock.now()+FRAME_MS;this.schedule();}}
   catch(error){if(!this.disposed)this.bridge.emit({type:'assetFailed',key:'emerald-world-init',message:String(error)});}
  }
- private schedule(deadline:number){this.timer=this.clock.schedule(()=>{
+ private schedule(){this.timer=this.clock.schedule(()=>{
   if(this.disposed)return;
-  const p=this.world.player,previousMap=this.world.renderer.map.name,previousStep=p.step,previousFrame=this.world.frame;
-  const direction=this.input.getActiveHandler()?.context==='WORLD'?(actionFacing[this.input.getHeldDirection()??'A']??this.pendingDirection):undefined;
-  this.pendingDirection=undefined;this.world.tick(direction);
-  // Paused title/menu/battle frames have no simulation change. Scripted actor
-  // steps publish separately; don't repaint the sleeping source scene at 60Hz.
-  if(this.world.frame!==previousFrame)this.publish();
-  if(previousMap!==this.world.renderer.map.name)this.bridge.emit({type:'mapArrived',mapId:this.world.renderer.map.name,roomId:this.world.renderer.map.name});
-  if(previousStep&&p.step===0)this.bridge.emit({type:'stepCompleted',mapId:this.world.renderer.map.name,entityId:'player',tile:{x:p.x,y:p.y},cameraRoomId:this.world.renderer.map.name});
-  this.schedule(deadline+FRAME_MS);
- },Math.max(0,deadline-this.clock.now()));}
+  const now=this.clock.now();
+  if((typeof document!=='undefined'&&document.hidden)||now-this.nextTick>=this.suspendGapMs){this.resetTimeline();return;}
+  let changed=false;
+  // Snapshot/raster work can exceed FRAME_MS on a phone. Advance every due
+  // source tick, not one tick per callback, and paint only the latest state.
+  // Capture `now` once: time spent presenting this batch belongs to the next.
+  while(!this.disposed&&this.nextTick<=now+0.001){
+   this.nextTick+=FRAME_MS;
+   const p=this.world.player,previousMap=this.world.renderer.map.name,previousStep=p.step,previousFrame=this.world.frame;
+   const direction=this.input.getActiveHandler()?.context==='WORLD'?(actionFacing[this.input.getHeldDirection()??'A']??this.pendingDirection):undefined;
+   this.pendingDirection=undefined;this.world.tick(direction);
+   changed ||= this.world.frame!==previousFrame;
+   // Preserve publication/event ordering at semantic boundaries. Encounter
+   // ownership can pause the world here, before the next fixed tick is attempted.
+   if(previousMap!==this.world.renderer.map.name||previousStep&&p.step===0){if(changed)this.publish();changed=false;}
+   if(previousMap!==this.world.renderer.map.name)this.bridge.emit({type:'mapArrived',mapId:this.world.renderer.map.name,roomId:this.world.renderer.map.name});
+   if(previousStep&&p.step===0)this.bridge.emit({type:'stepCompleted',mapId:this.world.renderer.map.name,entityId:'player',tile:{x:p.x,y:p.y},cameraRoomId:this.world.renderer.map.name});
+  }
+  // Paused title/menu/battle frames have no change. Scripted actor steps still
+  // publish separately on their existing Clock choreography.
+  if(changed)this.publish();
+  this.schedule();
+ },Math.max(0,this.nextTick-this.clock.now()));}
  private handleInput(action:InputAction){
   if(this.world.paused||this.world.player.step||this.world.transition||this.interactionTarget)return;
   if(actionFacing[action])this.pendingDirection=actionFacing[action];
@@ -150,5 +173,5 @@ export class EmeraldWorldSession implements WorldSessionContract {
   await this.bridge.send({type:'loadMap',mapId:anchor.mapId});await this.bridge.send({type:'setCameraRoom',roomId:anchor.roomId});await this.resume();
  }
  sourceObject(id:string):SourceObject|undefined{return this.body(id).source;}
- dispose(){this.disposed=true;this.timer?.cancel();this.cancelScript?.();this.cancelInteraction();this.removeReady();this.input.unregister('emerald-world-session');}
+ dispose(){this.disposed=true;this.timer?.cancel();this.cancelScript?.();this.cancelInteraction();this.removeReady();if(typeof document!=='undefined')document.removeEventListener('visibilitychange',this.resetTimeline);this.input.unregister('emerald-world-session');}
 }
